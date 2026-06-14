@@ -2,7 +2,7 @@ import { Reveal } from './reveal'
 
 export function Mascot() {
   return (
-    <section className="overflow-hidden bg-teal-darkest">
+    <section id="mascot" className="overflow-hidden bg-teal-darkest">
       <div className="mx-auto grid max-w-7xl items-center gap-8 px-5 py-16 md:grid-cols-2 md:gap-12 md:px-8 md:py-24">
         {/* Poster */}
         <div className="flex justify-center md:justify-start">
