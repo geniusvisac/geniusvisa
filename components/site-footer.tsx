@@ -46,7 +46,7 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <div className="grid gap-12 md:grid-cols-[1.5fr_repeat(4,1fr)]">
           <div>
-            <img src="/images/logo-visa.png" alt="Genius Visa Consultants" className="size-12 rounded-full" />
+            <img src="/images/logo-visa.webp" alt="Genius Visa Consultants" className="size-12 rounded-full" />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-offwhite/55">
               Tu movilidad global, nuestra mision.
             </p>
