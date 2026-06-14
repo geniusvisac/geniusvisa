@@ -1,4 +1,4 @@
-import { MessageCircle } from "lucide-react"
+import { MessageCircle, Facebook } from "lucide-react"
 import { InstagramIcon } from "./icons"
 
 const columns = [
@@ -51,11 +51,9 @@ export function SiteFooter() {
               Tu movilidad global, nuestra mision.
             </p>
             <div className="mt-5 flex items-center gap-3">
-              <a href="https://instagram.com/geniusvisac" target="_blank" rel="noopener noreferrer" className="flex size-9 items-center justify-center rounded-full border border-white/15 text-offwhite/70 transition-colors hover:border-gold hover:text-gold">
-                <InstagramIcon className="size-4" />
-              </a>
-              <a href="https://wa.me/50497410936" target="_blank" rel="noopener noreferrer" className="flex size-9 items-center justify-center rounded-full border border-white/15 text-offwhite/70 transition-colors hover:border-gold hover:text-gold">
-                <MessageCircle className="size-4" />
+              <a href="https://instagram.com/geniusvisac" target="_blank" rel="noopener noreferrer" className="flex size-9 items-center justify-center rounded-full border border-white/15 text-offwhite/70 transition-colors hover:border-gold hover:text-gold"><InstagramIcon className="size-4" /></a>
+<a href="https://www.facebook.com/share/1BfV3v4agj/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="flex size-9 items-center justify-center rounded-full border border-white/15 text-offwhite/70 transition-colors hover:border-gold hover:text-gold"><Facebook className="size-4" /></a>
+<a href="https://wa.me/50497410936" target="_blank" rel="noopener noreferrer" className="flex size-9 items-center justify-center rounded-full border border-white/15 text-offwhite/70 transition-colors hover:border-gold hover:text-gold"><MessageCircle className="size-4" /></a>
               </a>
             </div>
           </div>
