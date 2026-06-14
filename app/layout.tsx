@@ -76,7 +76,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${playfair.variable} ${inter.variable} scroll-smooth bg-background`}
+      className={`${playfair.variable} ${inter.variable} bg-background`}
     >
       <head>
         <script
