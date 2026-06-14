@@ -1,41 +1,41 @@
-import { MessageCircle } from 'lucide-react'
-import { InstagramIcon } from './icons'
+import { MessageCircle } from "lucide-react"
+import { InstagramIcon } from "./icons"
 
 const columns = [
   {
-    title: 'Servicios',
+    title: "Servicios",
     links: [
-      { label: 'Visas de turismo', href: '#visas' },
-      { label: 'Visas de estudio', href: '#visas' },
-      { label: 'Visas de trabajo', href: '#visas' },
-      { label: 'Genius VC Travel', href: '#viajes' },
+      { label: "Visas de turismo", href: "#visas" },
+      { label: "Visas de estudio", href: "#visas" },
+      { label: "Visas de trabajo", href: "#visas" },
+      { label: "Genius VC Travel", href: "#viajes" },
     ],
   },
   {
-    title: 'Países',
+    title: "Países",
     links: [
-      { label: 'Honduras', href: '#' },
-      { label: 'Colombia', href: '#' },
-      { label: 'México', href: '#' },
-      { label: 'Ecuador', href: '#' },
-      { label: 'España', href: '#' },
+      { label: "Honduras", href: "#" },
+      { label: "Colombia", href: "#" },
+      { label: "México", href: "#" },
+      { label: "Ecuador", href: "#" },
+      { label: "España", href: "#" },
     ],
   },
   {
-    title: 'Empresa',
+    title: "Empresa",
     links: [
-      { label: 'Sobre nosotros', href: '#nosotros' },
-      { label: 'El Viajero Genius', href: '#mascot' },
-      { label: 'Testimonios', href: '#testimonios' },
-      { label: 'Contacto', href: '#contacto' },
+      { label: "Sobre nosotros", href: "#nosotros" },
+      { label: "El Viajero Genius", href: "#mascot" },
+      { label: "Testimonios", href: "#testimonios" },
+      { label: "Contacto", href: "#contacto" },
     ],
   },
   {
-    title: 'Legal',
+    title: "Legal",
     links: [
-      { label: 'Privacidad', href: '/privacidad' },
-      { label: 'Términos', href: '/terminos' },
-      { label: 'Cookies', href: '/privacidad#cookies' },
+      { label: "Privacidad", href: "/privacidad" },
+      { label: "Términos", href: "/terminos" },
+      { label: "Cookies", href: "/privacidad#cookies" },
     ],
   },
 ]
@@ -77,12 +77,9 @@ export function SiteFooter() {
               </a>
             </div>
           </div>
-
           {columns.map((col) => (
             <div key={col.title}>
-              <h3 className="text-sm font-semibold text-offwhite">
-                {col.title}
-              </h3>
+              <h3 className="text-sm font-semibold text-offwhite">{col.title}</h3>
               <ul className="mt-4 space-y-3">
                 {col.links.map((link) => (
                   <li key={link.label}>
@@ -98,7 +95,6 @@ export function SiteFooter() {
             </div>
           ))}
         </div>
-
         <div className="mt-14 border-t border-white/10 pt-6">
           <p className="text-center text-xs text-offwhite/45">
             © 2026 Genius Visa Consultants · Genius VC Travel. Tegucigalpa, Honduras.
