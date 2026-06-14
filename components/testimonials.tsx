@@ -30,7 +30,7 @@ const testimonials = [
 
 export function Testimonials() {
   return (
-    <section className="bg-background py-24 md:py-32">
+    <section id="testimonios" className="bg-background py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal className="mx-auto max-w-2xl text-center">
           <h2 className="text-balance font-heading text-4xl text-primary md:text-5xl">
