@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   keywords: 'visa americana Honduras, consultoria de visas, visa turismo, visa estudiante, visa trabajo, Tegucigalpa, Genius Visa Consultants, Genius VC Travel',
   authors: [{ name: 'Genius Visa Consultants' }],
   creator: 'Genius Visa Consultants',
+  verification: {
+  google: '<meta name="google-site-verification" content="qAyVuv7_SOws1gUzRbiJAgwah3jpbGI751Tjt0BrEHg" />',
+},
   publisher: 'Genius Visa Consultants',
   generator: 'Next.js',
   metadataBase: new URL('https://genius-visa-and-travel.vercel.app'),
