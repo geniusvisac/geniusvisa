@@ -6,6 +6,7 @@ import { AiEvaluation } from '@/components/ai-evaluation'
 import { TravelSection } from '@/components/travel-section'
 import { Mascot } from '@/components/mascot'
 import { Testimonials } from '@/components/testimonials'
+import { About } from '@/components/about'
 import { Contact } from '@/components/contact'
 import { SiteFooter } from '@/components/site-footer'
 
@@ -20,6 +21,7 @@ export default function Page() {
       <TravelSection />
       <Mascot />
       <Testimonials />
+      <About />
       <Contact />
       <SiteFooter />
     </main>
