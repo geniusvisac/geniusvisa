@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Genius Visa Consultants',
     description: 'Expertos en visas americanas. Evaluacion gratuita con IA.',
-    images: ['/images/viajero-genius-v2.png'],
+    images: images: ['/images/viajero-genius-v2.webp'],,
   },
   robots: {
     index: true,
