@@ -43,7 +43,7 @@ export function Navbar() {
           aria-label="Genius Visa Consultants y Genius VC Travel — inicio"
         >
           <img
-            src="/images/logo-visa.png"
+            src="/images/logo-visa.webp"
             alt="Genius Visa Consultants"
             className="size-14 rounded-full md:size-16"
           />
