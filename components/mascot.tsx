@@ -8,7 +8,11 @@ export function Mascot() {
         <div className="flex justify-center md:justify-start">
           <img
             src="/images/viajero-genius-v2.webp"
-            
+            alt="El Viajero Genius, figura misteriosa con sombrero dorado y abrigo blanco"
+            width={588}
+            height={880}
+            loading="lazy"
+            className="w-full max-w-sm rounded-2xl object-contain shadow-2xl ring-1 ring-gold/20"
           />
         </div>
 
