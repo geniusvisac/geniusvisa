@@ -8,6 +8,8 @@ const links = [
   { label: 'Inicio', href: '#inicio' },
   { label: 'Visas', href: '#visas' },
   { label: 'Viajes', href: '#viajes' },
+  { label: 'Precios', href: '#precios' },
+  { label: 'Garantías', href: '#garantias' },
   { label: 'Evaluación gratuita', href: '#evaluacion' },
   { label: 'Contacto', href: '#contacto' },
 ]
