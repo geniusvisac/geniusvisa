@@ -18,7 +18,7 @@ const columns = [
       { label: "Colombia", href: "#" },
       { label: "Mexico", href: "#" },
       { label: "Ecuador", href: "#" },
-      { label: "Espana", href: "#" },
+      { label: "España", href: "#" },
     ],
   },
   {
@@ -34,7 +34,7 @@ const columns = [
     title: "Legal",
     links: [
       { label: "Privacidad", href: "/privacidad" },
-      { label: "Terminos", href: "/terminos" },
+      { label: "Términos", href: "/terminos" },
       { label: "Cookies", href: "/privacidad" },
     ],
   },
@@ -66,7 +66,7 @@ export function SiteFooter() {
           <div>
             <img src="/images/logo-visa.webp" alt="Genius Visa Consultants" className="size-12 rounded-full" />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-offwhite/55">
-              Tu movilidad global, nuestra mision.
+              Tu movilidad global, nuestra misión.
             </p>
             <div className="mt-5 flex items-center gap-3">
               {socialLinks.map((social) => (
