@@ -3,8 +3,8 @@ import { Hero } from '@/components/hero'
 import { TrustBar } from '@/components/trust-bar'
 import { VisaServices } from '@/components/visa-services'
 import { Steps } from '@/components/steps'
+{/* <AiMockup /> */}
 import { AiEvaluation } from '@/components/ai-evaluation'
-import { AiMockup } from '@/components/ai-mockup'
 import { Pricing } from '@/components/pricing'
 import { Guarantees } from '@/components/guarantees'
 import { TravelSection } from '@/components/travel-section'
@@ -22,7 +22,6 @@ export default function Page() {
       <TrustBar />
       <VisaServices />
       <Steps />
-      <AiMockup />
       <AiEvaluation />
       <Pricing />
       <Guarantees />
