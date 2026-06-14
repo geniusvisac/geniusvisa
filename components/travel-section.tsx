@@ -5,20 +5,19 @@ const destinations = [
   {
     title: 'Escapadas de lujo',
     desc: 'Resorts y villas privadas en los destinos más exclusivos del mundo.',
-    image: '/images/escapadas-lujo.png',
+    image: '/images/escapadas-lujo.webp',
   },
   {
     title: 'Destinos de ensueño',
     desc: 'Paisajes inolvidables y experiencias diseñadas a tu medida.',
-    image: '/images/destinos-ensueno.png',
+    image: '/images/destinos-ensueno.webp',
   },
   {
     title: 'Experiencias únicas',
     desc: 'Viaja en primera clase con cada detalle cuidado por nosotros.',
-    image: '/images/experiencias-unicas.png',
+    image: '/images/experiencias-unicas.webp',
   },
 ]
-
 export function TravelSection() {
   return (
     <section id="viajes" className="bg-offwhite py-24 md:py-32">
