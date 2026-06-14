@@ -1,5 +1,4 @@
 'use client'
-
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
@@ -20,7 +19,6 @@ export function Reveal({
   useEffect(() => {
     const node = ref.current
     if (!node) return
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -28,15 +26,17 @@ export function Reveal({
           observer.unobserve(entry.target)
         }
       },
-      { threshold: 0.15, rootMargin: '0px 0px -60px 0px' },
+      { threshold: 0.15 },
     )
-
-    observer.observe(node)
-    return () => observer.disconnect()
+    // Pequeño delay para que el navegador termine de renderizar antes de observar
+    const timer = setTimeout(() => observer.observe(node), 100)
+    return () => {
+      clearTimeout(timer)
+      observer.disconnect()
+    }
   }, [])
 
   const Component = Tag as 'div'
-
   return (
     <Component
       ref={ref as React.RefObject<HTMLDivElement>}
