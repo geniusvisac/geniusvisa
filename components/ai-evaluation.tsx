@@ -20,7 +20,7 @@ export function AiEvaluation() {
           {/* Etiqueta de urgencia */}
           <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-[#C9A84C]/40 bg-[#C9A84C]/10 px-4 py-2">
             <span className="relative flex size-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#C9A84C] opacity-75"></span>
+              <span className="absolute inline-flex h-full w-full rounded-full bg-[#C9A84C] opacity-75"></span>
               <span className="relative inline-flex size-2 rounded-full bg-[#C9A84C]"></span>
             </span>
             <span className="text-xs font-semibold text-[#C9A84C] tracking-wide">Algoritmo actualizado con criterios consulares a Junio 2026</span>
