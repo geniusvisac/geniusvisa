@@ -7,7 +7,7 @@ export function Mascot() {
         {/* Poster */}
         <div className="flex justify-center md:justify-start">
           <img
-            src="/images/viajero-genius-v2.png"
+            src="/images/viajero-genius-v2.webp"
             alt="El Viajero Genius, una figura misteriosa con sombrero dorado y abrigo blanco"
             className="w-full max-w-sm rounded-2xl object-contain shadow-2xl ring-1 ring-gold/20"
           />
