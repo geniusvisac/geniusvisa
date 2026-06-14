@@ -97,9 +97,10 @@ export default function RootLayout({
               },
               openingHours: ['Mo-Fr 08:00-18:00', 'Sa 09:00-13:00'],
               sameAs: [
-                'https://instagram.com/geniusvisac',
-                'https://wa.me/50497410936',
-              ],
+  'https://instagram.com/geniusvisac',
+  'https://www.facebook.com/share/1BfV3v4agj/?mibextid=wwXIfr',
+  'https://wa.me/50497410936',
+],
             }),
           }}
         />
