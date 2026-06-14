@@ -1,5 +1,4 @@
 'use client'
-
 import { ArrowRight } from 'lucide-react'
 import { Reveal } from './reveal'
 
@@ -23,8 +22,7 @@ export function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 opacity-[0.06]"
         style={{
-          backgroundImage:
-            'radial-gradient(circle at 1px 1px, #f8f6f1 1px, transparent 0)',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, #f8f6f1 1px, transparent 0)',
           backgroundSize: '22px 22px',
         }}
       />
@@ -32,7 +30,6 @@ export function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute -right-24 top-1/4 size-[28rem] rounded-full bg-teal/10 blur-3xl"
       />
-
       <div className="relative mx-auto w-full max-w-7xl px-5 pb-24 pt-32 md:px-8 md:pt-40">
         <div className="max-w-3xl">
           <Reveal>
@@ -41,19 +38,16 @@ export function Hero() {
             </span>
           </Reveal>
 
-          <Reveal delay={100}>
-            <h1 className="mt-6 text-balance font-heading text-5xl leading-[1.05] text-offwhite md:text-7xl">
-              Tu movilidad global, nuestra misión
-            </h1>
-          </Reveal>
+          {/* H1 sin animación para que Google lo detecte como LCP */}
+          <h1 className="mt-6 text-balance font-heading text-5xl leading-[1.05] text-offwhite md:text-7xl">
+            Tu movilidad global, nuestra misión
+          </h1>
 
           <Reveal delay={200}>
             <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-offwhite/70 md:text-xl">
-              Más de 15 años conectando personas con el mundo. Visas, viajes y
-              libertad.
+              Más de 15 años conectando personas con el mundo. Visas, viajes y libertad.
             </p>
           </Reveal>
-
           <Reveal delay={300}>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
               <a
@@ -80,9 +74,7 @@ export function Hero() {
           <dl className="mt-16 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-white/10 pt-10 md:mt-24 md:grid-cols-4">
             {stats.map((stat) => (
               <div key={stat.label}>
-                <dt className="font-heading text-3xl text-gold md:text-4xl">
-                  {stat.value}
-                </dt>
+                <dt className="font-heading text-3xl text-gold md:text-4xl">{stat.value}</dt>
                 <dd className="mt-1 text-sm text-offwhite/60">{stat.label}</dd>
               </div>
             ))}
