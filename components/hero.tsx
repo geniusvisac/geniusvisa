@@ -6,10 +6,10 @@ import { Reveal } from './reveal'
 const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
 
 const stats = [
-  { value: '15+', label: 'Años' },
-  { value: '25+', label: 'Países' },
-  { value: 'Miles', label: 'De visas aprobadas' },
-  { value: '1 a 1', label: 'Atención personalizada' },
+  { value: '15+', label: 'Años de experiencia' },
+  { value: '25+', label: 'Países atendidos' },
+  { value: '98%', label: 'Clientes satisfechos' },
+  { value: '500+', label: 'Familias asesoradas' },
 ]
 
 export function Hero() {
