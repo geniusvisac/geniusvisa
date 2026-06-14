@@ -18,20 +18,21 @@ type Message = { role: string; text: string; isTyping?: boolean }
 export function AiMockup() {
   const [messages, setMessages] = useState<Message[]>([])
   const [running, setRunning] = useState(false)
-  const bottomRef = useRef<HTMLDivElement>(null)
+  const chatRef = useRef<HTMLDivElement>(null)
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([])
 
-  // Limpia timers al desmontar
   useEffect(() => {
     return () => timersRef.current.forEach(clearTimeout)
   }, [])
 
+  // Solo hace scroll dentro del chat, no de la pagina
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (messages.length > 0 && chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight
+    }
   }, [messages])
 
   function startDemo() {
-    // Limpia timers anteriores
     timersRef.current.forEach(clearTimeout)
     timersRef.current = []
     setMessages([])
@@ -47,7 +48,6 @@ export function AiMockup() {
       timersRef.current.push(t)
     })
 
-    // Apaga running al terminar
     const end = setTimeout(() => setRunning(false), 8000)
     timersRef.current.push(end)
   }
@@ -81,7 +81,6 @@ export function AiMockup() {
 
           <Reveal delay={200}>
             <div className="bg-[#1A3A3A] rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10">
-              {/* Header */}
               <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10 bg-[#0D2222]">
                 <div className="flex gap-1.5">
                   <span className="size-3 rounded-full bg-red-500/70"></span>
@@ -94,8 +93,7 @@ export function AiMockup() {
                 </div>
               </div>
 
-              {/* Chat */}
-              <div className="h-80 overflow-y-auto p-5 space-y-4">
+              <div ref={chatRef} className="h-80 overflow-y-auto p-5 space-y-4">
                 {messages.length === 0 && (
                   <div className="flex flex-col items-center justify-center h-full gap-3">
                     <span className="text-4xl">🤖</span>
@@ -118,10 +116,8 @@ export function AiMockup() {
                     </div>
                   </div>
                 ))}
-                <div ref={bottomRef} />
               </div>
 
-              {/* Footer */}
               <div className="px-5 py-4 border-t border-white/10 bg-[#0D2222]">
                 <button onClick={startDemo} disabled={running} className="w-full py-2.5 rounded-full bg-[#C9A84C]/10 border border-[#C9A84C]/30 text-[#C9A84C] text-sm font-semibold hover:bg-[#C9A84C]/20 transition-colors disabled:opacity-50">
                   {running ? 'Analizando perfil...' : messages.length > 0 ? '↺ Ver de nuevo' : '▶ Ver demostración'}
