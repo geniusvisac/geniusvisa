@@ -61,7 +61,7 @@ export function About() {
           {[
             { value: "15+", label: "Años de experiencia" },
             { value: "25+", label: "Países atendidos" },
-            { value: "Miles", label: "De visas gestionadas" },
+            { value: "98%", label: "Clientes satisfechos" },
             { value: "2 marcas", label: "1 misión" },
           ].map((stat) => (
             <div
