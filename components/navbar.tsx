@@ -48,12 +48,12 @@ export function Navbar() {
             className="size-14 rounded-full md:size-16"
           />
           <span className="hidden flex-col leading-tight sm:flex">
-            <span className="font-heading text-base tracking-wide md:text-lg">
-              Genius Visa Consultants
-            </span>
-            <span className="text-xs tracking-wide text-gold md:text-sm">
-              &amp; Genius VC Travel
-            </span>
+            <span className="font-sans text-base font-semibold tracking-widest uppercase text-offwhite md:text-sm">
+  Genius Visa Consultants
+</span>
+<span className="font-sans text-xs font-light tracking-widest uppercase text-gold">
+  & Genius VC Travel
+</span>
           </span>
         </a>
 
