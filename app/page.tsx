@@ -2,6 +2,7 @@ import { Navbar } from '@/components/navbar'
 import { Hero } from '@/components/hero'
 import { TrustBar } from '@/components/trust-bar'
 import { VisaServices } from '@/components/visa-services'
+import { Steps } from '@/components/steps'
 import { AiEvaluation } from '@/components/ai-evaluation'
 import { TravelSection } from '@/components/travel-section'
 import { Mascot } from '@/components/mascot'
@@ -17,6 +18,7 @@ export default function Page() {
       <Hero />
       <TrustBar />
       <VisaServices />
+      <Steps />
       <AiEvaluation />
       <TravelSection />
       <Mascot />
