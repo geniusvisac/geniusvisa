@@ -12,7 +12,7 @@ export function About() {
             Más de 15 años abriendo fronteras
           </h2>
           <p className="text-white/70 text-lg max-w-2xl mx-auto leading-relaxed">
-            Somos Genius — una firma de consultoría migratoria y viajes premium
+            Somos Genius una firma de consultoría migratoria y viajes premium
             fundada en Tegucigalpa, Honduras, con presencia en más de 25 países.
           </p>
         </div>
@@ -23,8 +23,8 @@ export function About() {
             <p className="text-white/75 leading-relaxed text-sm">
               Nacimos con una misión clara: hacer que el proceso de obtener una visa
               americana sea transparente, humano y exitoso. Desde nuestros inicios,
-              hemos acompañado a miles de personas — estudiantes, profesionales,
-              familias y emprendedores — a cumplir su sueño de moverse libremente
+              hemos acompañado estudiantes, profesionales,
+              familias y emprendedores a cumplir su sueño de moverse libremente
               por el mundo.
             </p>
           </div>
@@ -40,7 +40,7 @@ export function About() {
             <p className="text-white/75 leading-relaxed text-sm">
               En 2024 lanzamos Genius VC Travel, nuestra agencia de viajes premium,
               porque entendimos que la movilidad no termina cuando se aprueba la
-              visa — apenas comienza.
+              visa,apenas comienza.
             </p>
           </div>
         </div>
@@ -52,7 +52,7 @@ export function About() {
             Nosotros hacemos que esa oportunidad sea real."
           </blockquote>
           <p className="text-[#C9A84C] text-sm mt-4 tracking-widest uppercase">
-            — Equipo Genius
+            Equipo Genius
           </p>
         </div>
 
