@@ -4,6 +4,7 @@ import { TrustBar } from '@/components/trust-bar'
 import { VisaServices } from '@/components/visa-services'
 import { Steps } from '@/components/steps'
 import { AiEvaluation } from '@/components/ai-evaluation'
+import { Pricing } from '@/components/pricing'
 import { Guarantees } from '@/components/guarantees'
 import { TravelSection } from '@/components/travel-section'
 import { Mascot } from '@/components/mascot'
@@ -21,6 +22,7 @@ export default function Page() {
       <VisaServices />
       <Steps />
       <AiEvaluation />
+      <Pricing />
       <Guarantees />
       <TravelSection />
       <Mascot />
