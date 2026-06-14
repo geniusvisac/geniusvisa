@@ -12,13 +12,13 @@ const columns = [
     ],
   },
   {
-    title: "Países",
+    title: "Paises",
     links: [
       { label: "Honduras", href: "#" },
       { label: "Colombia", href: "#" },
-      { label: "México", href: "#" },
+      { label: "Mexico", href: "#" },
       { label: "Ecuador", href: "#" },
-      { label: "España", href: "#" },
+      { label: "Espana", href: "#" },
     ],
   },
   {
@@ -34,8 +34,8 @@ const columns = [
     title: "Legal",
     links: [
       { label: "Privacidad", href: "/privacidad" },
-      { label: "Términos", href: "/terminos" },
-      { label: "Cookies", href: "/privacidad#cookies" },
+      { label: "Terminos", href: "/terminos" },
+      { label: "Cookies", href: "/privacidad" },
     ],
   },
 ]
@@ -46,33 +46,15 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <div className="grid gap-12 md:grid-cols-[1.5fr_repeat(4,1fr)]">
           <div>
-            <div className="flex items-center gap-3 text-offwhite">
-              <img
-                src="/images/logo-visa.png"
-                alt="Genius Visa Consultants"
-                className="size-12 rounded-full"
-              />
-            </div>
-            <p className="mt-4 max-w-xs text-pretty text-sm leading-relaxed text-offwhite/55">
-              Tu movilidad global, nuestra misión.
+            <img src="/images/logo-visa.png" alt="Genius Visa Consultants" className="size-12 rounded-full" />
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-offwhite/55">
+              Tu movilidad global, nuestra mision.
             </p>
             <div className="mt-5 flex items-center gap-3">
-              
-                href="https://instagram.com/geniusvisac"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="flex size-9 items-center justify-center rounded-full border border-white/15 text-offwhite/70 transition-colors hover:border-gold hover:text-gold"
-              >
+              <a href="https://instagram.com/geniusvisac" target="_blank" rel="noopener noreferrer" className="flex size-9 items-center justify-center rounded-full border border-white/15 text-offwhite/70 transition-colors hover:border-gold hover:text-gold">
                 <InstagramIcon className="size-4" />
               </a>
-              
-                href="https://wa.me/50497410936"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="WhatsApp"
-                className="flex size-9 items-center justify-center rounded-full border border-white/15 text-offwhite/70 transition-colors hover:border-gold hover:text-gold"
-              >
+              <a href="https://wa.me/50497410936" target="_blank" rel="noopener noreferrer" className="flex size-9 items-center justify-center rounded-full border border-white/15 text-offwhite/70 transition-colors hover:border-gold hover:text-gold">
                 <MessageCircle className="size-4" />
               </a>
             </div>
@@ -83,10 +65,7 @@ export function SiteFooter() {
               <ul className="mt-4 space-y-3">
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    
-                      href={link.href}
-                      className="text-sm text-offwhite/55 transition-colors hover:text-gold"
-                    >
+                    <a href={link.href} className="text-sm text-offwhite/55 transition-colors hover:text-gold">
                       {link.label}
                     </a>
                   </li>
@@ -97,7 +76,7 @@ export function SiteFooter() {
         </div>
         <div className="mt-14 border-t border-white/10 pt-6">
           <p className="text-center text-xs text-offwhite/45">
-            © 2026 Genius Visa Consultants · Genius VC Travel. Tegucigalpa, Honduras.
+            2026 Genius Visa Consultants · Genius VC Travel. Tegucigalpa, Honduras.
           </p>
         </div>
       </div>
