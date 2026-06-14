@@ -1,71 +1,56 @@
 'use client'
-import { useEffect, useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Reveal } from './reveal'
 
 const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
 
 const conversation = [
-  {
-    role: 'user',
-    text: 'Tengo 28 años, soy ingeniero en Colombia y quiero visa B1/B2.',
-    delay: 500,
-  },
-  {
-    role: 'ai',
-    text: 'Analizando tu perfil consular...',
-    delay: 1800,
-    isTyping: true,
-  },
-  {
-    role: 'ai',
-    text: '✅ Perfil evaluado. Tu probabilidad estimada de aprobación es del 82%.',
-    delay: 3200,
-  },
-  {
-    role: 'ai',
-    text: '📋 Factores positivos: empleo estable, sin viajes previos rechazados, ingresos consistentes.',
-    delay: 4600,
-  },
-  {
-    role: 'ai',
-    text: '⚠️ Área de mejora: reforzar lazos de arraigo con carta laboral actualizada.',
-    delay: 6000,
-  },
-  {
-    role: 'ai',
-    text: '¿Quieres que un asesor humano revise tu caso en detalle?',
-    delay: 7400,
-  },
+  { role: 'user', text: 'Tengo 28 años, soy ingeniero en Colombia y quiero visa B1/B2.', delay: 500 },
+  { role: 'ai', text: 'Analizando tu perfil consular...', delay: 1800, isTyping: true },
+  { role: 'ai', text: '✅ Perfil evaluado. Tu probabilidad estimada de aprobación es del 82%.', delay: 3200 },
+  { role: 'ai', text: '📋 Factores positivos: empleo estable, sin viajes previos rechazados, ingresos consistentes.', delay: 4600 },
+  { role: 'ai', text: '⚠️ Área de mejora: reforzar lazos de arraigo con carta laboral actualizada.', delay: 6000 },
+  { role: 'ai', text: '¿Quieres que un asesor humano revise tu caso en detalle?', delay: 7400 },
 ]
 
-type Message = {
-  role: string
-  text: string
-  isTyping?: boolean
-}
+type Message = { role: string; text: string; isTyping?: boolean }
 
 export function AiMockup() {
   const [messages, setMessages] = useState<Message[]>([])
-  const [started, setStarted] = useState(false)
+  const [running, setRunning] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([])
 
+  // Limpia timers al desmontar
   useEffect(() => {
-    if (!started) return
-    setMessages([])
-    conversation.forEach((msg, i) => {
-      setTimeout(() => {
-        setMessages((prev) => {
-          const filtered = prev.filter((m) => !m.isTyping)
-          if (msg.isTyping) return [...filtered, msg]
-          return [...filtered, msg]
-        })
-      }, msg.delay)
-    })
-  }, [started])
+    return () => timersRef.current.forEach(clearTimeout)
+  }, [])
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
+
+  function startDemo() {
+    // Limpia timers anteriores
+    timersRef.current.forEach(clearTimeout)
+    timersRef.current = []
+    setMessages([])
+    setRunning(true)
+
+    conversation.forEach((msg) => {
+      const t = setTimeout(() => {
+        setMessages((prev) => {
+          const filtered = prev.filter((m) => !m.isTyping)
+          return [...filtered, msg]
+        })
+      }, msg.delay)
+      timersRef.current.push(t)
+    })
+
+    // Apaga running al terminar
+    const end = setTimeout(() => setRunning(false), 8000)
+    timersRef.current.push(end)
+  }
 
   return (
     <section className="bg-[#0D2222] py-24 md:py-32">
@@ -104,13 +89,13 @@ export function AiMockup() {
                   <span className="size-3 rounded-full bg-green-500/70"></span>
                 </div>
                 <div className="flex items-center gap-2 mx-auto">
-                  <span className="size-2 rounded-full bg-[#C9A84C] animate-pulse"></span>
+                  <span className="size-2 rounded-full bg-[#C9A84C]"></span>
                   <span className="text-xs text-white/50 font-medium">Genius AI · Evaluación Consular</span>
                 </div>
               </div>
 
               {/* Chat */}
-              <div className="h-80 overflow-y-auto p-5 space-y-4 scrollbar-none">
+              <div className="h-80 overflow-y-auto p-5 space-y-4">
                 {messages.length === 0 && (
                   <div className="flex flex-col items-center justify-center h-full gap-3">
                     <span className="text-4xl">🤖</span>
@@ -138,8 +123,8 @@ export function AiMockup() {
 
               {/* Footer */}
               <div className="px-5 py-4 border-t border-white/10 bg-[#0D2222]">
-                <button onClick={() => setStarted((v) => !v)} className="w-full py-2.5 rounded-full bg-[#C9A84C]/10 border border-[#C9A84C]/30 text-[#C9A84C] text-sm font-semibold hover:bg-[#C9A84C]/20 transition-colors">
-                  {started ? '↺ Ver demostración de nuevo' : '▶ Ver demostración'}
+                <button onClick={startDemo} disabled={running} className="w-full py-2.5 rounded-full bg-[#C9A84C]/10 border border-[#C9A84C]/30 text-[#C9A84C] text-sm font-semibold hover:bg-[#C9A84C]/20 transition-colors disabled:opacity-50">
+                  {running ? 'Analizando perfil...' : messages.length > 0 ? '↺ Ver de nuevo' : '▶ Ver demostración'}
                 </button>
               </div>
             </div>
