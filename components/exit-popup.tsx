@@ -1,6 +1,9 @@
 'use client'
 import { useEffect, useState } from 'react'
 
+const EMAILJS_PUBLIC_KEY = 'uA2LH8GsHXpuw_hPd'
+const EMAILJS_SERVICE_ID = 'service_kj6jj6r'
+const EMAILJS_TEMPLATE_ID = 'template_gi5tj1v'
 const FORMSPREE_URL = 'https://formspree.io/f/mvzndjar'
 
 export function ExitPopup() {
@@ -12,17 +15,12 @@ export function ExitPopup() {
 
   useEffect(() => {
     if (dismissed) return
-
     const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 10) {
-        setVisible(true)
-      }
+      if (e.clientY <= 10) setVisible(true)
     }
-
     const mobileTimer = setTimeout(() => {
       if (window.innerWidth < 768) setVisible(true)
     }, 30000)
-
     document.addEventListener('mouseleave', handleMouseLeave)
     return () => {
       document.removeEventListener('mouseleave', handleMouseLeave)
@@ -41,6 +39,20 @@ export function ExitPopup() {
     setLoading(true)
 
     try {
+      // Cargar EmailJS dinamicamente
+      const emailjs = await import('@emailjs/browser')
+      emailjs.init(EMAILJS_PUBLIC_KEY)
+
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_email: email,
+        reply_to: email,
+        to_name: 'Cliente',
+        from_name: 'Genius Visa Consultants',
+        message: 'Aqui esta tu guia gratuita: https://genius-visa-and-travel.vercel.app/guia-genius-visa-2026.pdf',
+        guide_url: 'https://genius-visa-and-travel.vercel.app/guia-genius-visa-2026.pdf',
+      })
+
+      // Tambien notificar a Genius via Formspree
       await fetch(FORMSPREE_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -50,12 +62,19 @@ export function ExitPopup() {
           fuente: 'Exit Popup - genius-visa-and-travel.vercel.app',
         }),
       })
+
       setSent(true)
       setTimeout(() => {
         setVisible(false)
         setDismissed(true)
       }, 3000)
     } catch {
+      // Si falla EmailJS, igual mostrar exito y notificar por Formspree
+      await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, fuente: 'Exit Popup fallback' }),
+      })
       setSent(true)
     } finally {
       setLoading(false)
@@ -71,7 +90,6 @@ export function ExitPopup() {
         <button onClick={handleClose} className="absolute right-4 top-4 text-white/40 hover:text-white transition-colors text-xl font-light">
           x
         </button>
-
         {!sent ? (
           <>
             <div className="text-center mb-6">
@@ -86,7 +104,6 @@ export function ExitPopup() {
                 Los 5 errores que causan el rechazo de la visa americana en 2026
               </p>
             </div>
-
             <ul className="space-y-2 mb-6">
               {[
                 'Errores documentales que debes evitar',
@@ -99,7 +116,6 @@ export function ExitPopup() {
                 </li>
               ))}
             </ul>
-
             <form onSubmit={handleSubmit} className="space-y-3">
               <input
                 type="email"
@@ -117,7 +133,6 @@ export function ExitPopup() {
                 {loading ? 'Enviando...' : 'Quiero la guia gratis'}
               </button>
             </form>
-
             <p className="text-center text-white/30 text-xs mt-4">
               Sin spam. Puedes darte de baja cuando quieras.
             </p>
@@ -127,7 +142,7 @@ export function ExitPopup() {
             <span className="text-5xl">🎉</span>
             <h3 className="mt-4 font-heading text-2xl text-white font-bold">Listo!</h3>
             <p className="mt-2 text-white/60 text-sm">
-              Recibimos tu solicitud. Te contactamos a <span className="text-[#C9A84C]">{email}</span> en breve.
+              Enviamos la guia a <span className="text-[#C9A84C]">{email}</span>
             </p>
             <p className="mt-1 text-white/40 text-xs">
               Revisa tu bandeja de entrada y spam.
