@@ -15,6 +15,7 @@ import { Contact } from '@/components/contact'
 import { SiteFooter } from '@/components/site-footer'
 import { WhatsappButton } from '@/components/whatsapp-button'
 import { SocialProof } from '@/components/social-proof'
+import { ExitPopup } from '@/components/exit-popup'
 
 export default function Page() {
   return (
@@ -36,6 +37,7 @@ export default function Page() {
       <SiteFooter />
       <SocialProof />
       <WhatsappButton />
+      <ExitPopup />
     </main>
   )
 }
