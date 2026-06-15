@@ -13,6 +13,7 @@ import { Testimonials } from '@/components/testimonials'
 import { About } from '@/components/about'
 import { Contact } from '@/components/contact'
 import { SiteFooter } from '@/components/site-footer'
+import { WhatsappButton } from '@/components/whatsapp-button'
 
 export default function Page() {
   return (
@@ -32,6 +33,7 @@ export default function Page() {
       <About />
       <Contact />
       <SiteFooter />
+      <WhatsappButton />
     </main>
   )
 }
