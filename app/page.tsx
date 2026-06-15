@@ -14,6 +14,7 @@ import { About } from '@/components/about'
 import { Contact } from '@/components/contact'
 import { SiteFooter } from '@/components/site-footer'
 import { WhatsappButton } from '@/components/whatsapp-button'
+import { SocialProof } from '@/components/social-proof'
 
 export default function Page() {
   return (
@@ -33,6 +34,7 @@ export default function Page() {
       <About />
       <Contact />
       <SiteFooter />
+      <SocialProof />
       <WhatsappButton />
     </main>
   )
