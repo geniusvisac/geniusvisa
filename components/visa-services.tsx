@@ -17,33 +17,37 @@ const services = [
     title: 'Visas de turismo',
     tag: 'B1 / B2',
     desc: 'Viaja por negocios o placer con un proceso claro y bien preparado.',
+    href: '/visas/b1-b2',
   },
   {
     icon: GraduationCap,
     title: 'Visas de estudio',
     tag: 'F1 / M1',
     desc: 'Estudia en Estados Unidos con un perfil sólido y acompañamiento total.',
+    href: '/visas/f1',
   },
   {
     icon: Briefcase,
     title: 'Visas de trabajo',
     tag: 'H1B / H2B / J1',
     desc: 'Oportunidades laborales y programas de intercambio profesional.',
+    href: '/visas/h1b',
   },
   {
     icon: Users,
     title: 'Visas familiares',
     tag: 'H4 / F2 / J2',
     desc: 'Reúnete con tu familia y viaja acompañado de tus seres queridos.',
+    href: '#contacto',
   },
   {
     icon: Globe,
     title: 'Reagrupación y otros',
     tag: 'Casos especiales',
     desc: 'Asesoría a la medida para procesos migratorios complejos.',
+    href: '#contacto',
   },
 ]
-
 export function VisaServices() {
   return (
     <section id="visas" className="bg-background py-24 md:py-32">
@@ -78,9 +82,7 @@ export function VisaServices() {
                   {service.desc}
                 </p>
                 <a
-                  href={EVAL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={service.href}
                   className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-gold transition-colors hover:text-teal-deep"
                 >
                   Saber más
