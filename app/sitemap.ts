@@ -9,6 +9,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: 'https://genius-visa-and-travel.vercel.app/visas/b1-b2',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://genius-visa-and-travel.vercel.app/visas/f1',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://genius-visa-and-travel.vercel.app/visas/h1b',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://genius-visa-and-travel.vercel.app/visas/familiares',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
       url: 'https://genius-visa-and-travel.vercel.app/privacidad',
       lastModified: new Date(),
       changeFrequency: 'yearly',
