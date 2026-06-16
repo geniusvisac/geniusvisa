@@ -107,6 +107,8 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased" suppressHydrationWarning>
         <script dangerouslySetInnerHTML={{ __html: `history.scrollRestoration = 'manual'; window.scrollTo(0, 0);` }} />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-KFQ4WWVTK5" />
+        <script dangerouslySetInnerHTML={{ __html: `window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-KFQ4WWVTK5');` }} />
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
