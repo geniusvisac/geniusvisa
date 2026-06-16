@@ -38,7 +38,7 @@ const services = [
     title: 'Visas familiares',
     tag: 'H4 / F2 / J2',
     desc: 'Reúnete con tu familia y viaja acompañado de tus seres queridos.',
-    href: '#contacto',
+    href: '/visas/familiares',
   },
   {
     icon: Globe,
