@@ -6,7 +6,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://genius-visa-and-travel.vercel.app/privacidad',
   },
-}export default function Privacidad() {
+}
+
+export default function Privacidad() {
   return (
     <main className="bg-[#1A3A3A] min-h-screen py-24 px-6">
       <div className="max-w-3xl mx-auto">
