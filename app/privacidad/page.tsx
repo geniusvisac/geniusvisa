@@ -1,4 +1,12 @@
-export default function Privacidad() {
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Política de Privacidad | Genius Visa Consultants',
+  description: 'Política de privacidad de Genius Visa Consultants y Genius VC Travel. Tegucigalpa, Honduras.',
+  alternates: {
+    canonical: 'https://genius-visa-and-travel.vercel.app/privacidad',
+  },
+}export default function Privacidad() {
   return (
     <main className="bg-[#1A3A3A] min-h-screen py-24 px-6">
       <div className="max-w-3xl mx-auto">
