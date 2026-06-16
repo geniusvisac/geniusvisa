@@ -4,6 +4,9 @@ export const metadata: Metadata = {
   title: 'Visas de Estudio F1 y M1 | Genius Visa Consultants',
   description: 'Obtén tu visa de estudiante F1 o M1 para estudiar en Estados Unidos. Evaluación gratuita con IA. Expertos en visas americanas. Honduras y Latinoamérica.',
   keywords: 'visa f1, visa m1, visa estudiante estados unidos, visa academica americana, estudiar en usa, visa f1 Honduras',
+  alternates: {
+    canonical: 'https://genius-visa-and-travel.vercel.app/visas/f1',
+  },
 }
 
 const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
