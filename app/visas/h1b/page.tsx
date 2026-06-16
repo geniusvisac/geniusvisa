@@ -1,25 +1,43 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Visa H1B de Trabajo | Genius Visa Consultants',
-  description: 'Obtén tu visa de trabajo H1B para trabajar en Estados Unidos. Asesoría especializada para profesionales. Evaluación gratuita. Honduras y Latinoamérica.',
-  keywords: 'visa h1b, visa trabajo estados unidos, visa profesional americana, trabajar en usa, visa h1b Honduras',
+  title: 'Visas de Trabajo H1B, H2B y J1 | Genius Visa Consultants',
+  description: 'Obtén tu visa de trabajo H1B, H2B o J1 para trabajar en Estados Unidos. Asesoría experta. Evaluación gratuita con IA. Honduras y Latinoamérica.',
+  keywords: 'visa h1b, visa h2b, visa j1, visa trabajo estados unidos, visa profesional americana, trabajar en usa',
 }
 
 const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
 const WA_URL = 'https://wa.me/50497410936'
 
-export default function VisaH1B() {
+const visas = [
+  {
+    code: 'H1B',
+    title: 'Visa H1B — Trabajador Especializado',
+    desc: 'La visa H1B permite a profesionales en ocupaciones especializadas trabajar temporalmente en Estados Unidos para un empleador específico que los patrocina. Está dirigida a profesionales con título universitario o equivalente en campos como tecnología, ingeniería, medicina, arquitectura, contabilidad y otros. El empleador debe demostrar que no encontró trabajadores calificados locales y debe pagar el salario prevaleciente del mercado. La visa H1B tiene un límite anual de 85,000 visas nuevas y su asignación se realiza mediante un sorteo.',
+  },
+  {
+    code: 'H2B',
+    title: 'Visa H2B — Trabajador Temporal No Agrícola',
+    desc: 'La visa H2B permite a empleadores estadounidenses contratar trabajadores extranjeros para empleos temporales no agrícolas cuando no hay suficientes trabajadores locales disponibles. Es común en sectores como hotelería, restaurantes, construcción, paisajismo, transporte y servicios de limpieza. El empleador debe demostrar la necesidad temporal del trabajo ya sea por demanda pico, necesidad de una sola vez, trabajo estacional o trabajo intermitente. Tiene un límite de 66,000 visas anuales divididas en dos períodos semestrales.',
+  },
+  {
+    code: 'J1',
+    title: 'Visa J1 — Intercambio Cultural y Profesional',
+    desc: 'La visa J1 es una visa de intercambio que permite a extranjeros participar en programas educativos y culturales aprobados en Estados Unidos. Está disponible para una amplia variedad de categorías incluyendo au pairs, estudiantes, profesores, investigadores, médicos, trabajadores en campamentos de verano, trainees (practicantes) e interns (internos). Muchos programas J1 tienen un requisito de residencia en el país de origen por dos años después de completar el programa antes de poder cambiar a otro estatus migratorio.',
+  },
+]
+
+export default function VisasTrabajo() {
   return (
     <main className="bg-[#1A3A3A] min-h-screen">
       <section className="py-32 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <span className="inline-block text-[#C9A84C] text-sm font-semibold tracking-widest uppercase mb-4">Visa de Trabajo</span>
+          <span className="inline-block text-[#C9A84C] text-sm font-semibold tracking-widest uppercase mb-4">Visas de Trabajo</span>
           <h1 className="font-heading text-5xl md:text-6xl text-white font-bold leading-tight mb-6">
-            Visa H1B<br/>Trabajador Especializado
+            Visas de Trabajo<br/>H1B · H2B · J1
           </h1>
           <p className="text-white/70 text-lg max-w-2xl mx-auto leading-relaxed mb-10">
-            La visa H1B permite a profesionales en ocupaciones especializadas trabajar temporalmente en Estados Unidos para un empleador específico que los patrocina.
+            Trabajar legalmente en Estados Unidos requiere la visa correcta y la preparación adecuada. Te guiamos en cada etapa del proceso para maximizar tus probabilidades de éxito.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-[#C9A84C] text-[#1A3A3A] px-8 py-4 rounded-full font-bold text-sm hover:opacity-90 transition-opacity">
@@ -34,29 +52,39 @@ export default function VisaH1B() {
 
       <section className="bg-[#F8F6F1] py-20 px-6">
         <div className="max-w-4xl mx-auto">
-          <h2 className="font-heading text-3xl text-[#1A3A3A] font-bold mb-6">¿Qué es la visa H1B?</h2>
-          <p className="text-[#1A3A3A]/70 leading-relaxed mb-4">
-            La visa H1B es una visa de no inmigrante para trabajadores en ocupaciones que requieren conocimientos teóricos y prácticos especializados, generalmente con un título universitario o equivalente. Es una de las vías más comunes para que profesionales internacionales trabajen legalmente en Estados Unidos.
+          <h2 className="font-heading text-3xl text-[#1A3A3A] font-bold mb-6">Visas de trabajo disponibles</h2>
+          <p className="text-[#1A3A3A]/70 leading-relaxed mb-10">
+            El tipo de visa de trabajo que necesitas depende de tu perfil profesional, el tipo de empleo y la duración del contrato. Te ayudamos a identificar cuál es la mejor opción para tu caso específico.
           </p>
-          <p className="text-[#1A3A3A]/70 leading-relaxed">
-            A diferencia de otras visas, la H1B requiere que un empleador estadounidense te patrocine. El empleador debe demostrar que no encontró trabajadores calificados locales y debe pagar el salario prevaleciente del mercado para el puesto.
-          </p>
+          <div className="space-y-6">
+            {visas.map((visa) => (
+              <div key={visa.code} className="rounded-2xl border border-[#1A3A3A]/10 bg-white p-8 hover:shadow-md transition-shadow">
+                <div className="flex items-center gap-4 mb-4">
+                  <span className="inline-flex items-center justify-center size-12 rounded-xl bg-[#1A3A3A] text-[#C9A84C] font-heading font-black text-lg">
+                    {visa.code}
+                  </span>
+                  <h3 className="font-heading text-xl font-bold text-[#1A3A3A]">{visa.title}</h3>
+                </div>
+                <p className="text-[#1A3A3A]/65 leading-relaxed text-sm">{visa.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       <section className="bg-white py-20 px-6">
         <div className="max-w-4xl mx-auto">
-          <h2 className="font-heading text-3xl text-[#1A3A3A] font-bold mb-8">Requisitos principales</h2>
+          <h2 className="font-heading text-3xl text-[#1A3A3A] font-bold mb-8">Requisitos generales</h2>
           <div className="grid md:grid-cols-2 gap-4">
             {[
-              'Oferta de trabajo de un empleador estadounidense patrocinador',
-              'Título universitario o equivalente en el campo especializado',
-              'Petición I-129 aprobada por USCIS',
+              'Oferta o contrato de trabajo de empleador o programa aprobado',
               'Pasaporte vigente con mínimo 6 meses de validez',
-              'Formulario DS-160 completado',
+              'Formulario DS-160 completado correctamente',
+              'Petición aprobada por USCIS (según tipo de visa)',
               'Comprobante de calificaciones académicas y experiencia',
-              'Carta de oferta de trabajo detallando cargo y salario',
-              'Evidencia de que el puesto requiere especialización',
+              'Certificado de elegibilidad del programa (para J1)',
+              'Evidencia de la naturaleza temporal del empleo (para H2B)',
+              'Carta de oferta de trabajo detallando cargo, duración y salario',
             ].map((req) => (
               <div key={req} className="flex items-start gap-3 p-4 bg-[#F8F6F1] rounded-xl">
                 <span className="text-[#C9A84C] font-bold mt-0.5">✓</span>
@@ -72,8 +100,8 @@ export default function VisaH1B() {
           <h2 className="font-heading text-3xl text-[#1A3A3A] font-bold mb-8">El proceso con Genius</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { num: '01', title: 'Evaluación de perfil', desc: 'Analizamos tu perfil profesional y académico para determinar tu elegibilidad y estrategia óptima.' },
-              { num: '02', title: 'Coordinación con empleador', desc: 'Te asesoramos en la comunicación con tu empleador patrocinador y en la preparación de la petición I-129.' },
+              { num: '01', title: 'Identificación de visa', desc: 'Analizamos tu perfil profesional y el tipo de empleo para determinar qué visa se adapta mejor a tu situación.' },
+              { num: '02', title: 'Preparación de documentos', desc: 'Coordinamos con tu empleador o programa patrocinador y preparamos toda la documentación requerida.' },
               { num: '03', title: 'Preparación consular', desc: 'Te preparamos para la entrevista consular con enfoque en demostrar tu calificación y la legitimidad del empleo.' },
             ].map((step) => (
               <div key={step.num} className="bg-white rounded-2xl p-6 shadow-sm">
@@ -89,7 +117,7 @@ export default function VisaH1B() {
       <section className="bg-[#1A3A3A] py-20 px-6">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="font-heading text-3xl text-white font-bold mb-4">¿Listo para trabajar en Estados Unidos?</h2>
-          <p className="text-white/60 mb-8">Contáctanos y un asesor especializado evaluará tu caso de forma personalizada.</p>
+          <p className="text-white/60 mb-8">Contáctanos y un asesor especializado evaluará tu caso de forma personalizada y gratuita.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center bg-[#C9A84C] text-[#1A3A3A] px-8 py-4 rounded-full font-bold text-sm hover:opacity-90 transition-opacity">
               Evaluar mi perfil gratis →
