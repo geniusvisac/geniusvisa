@@ -1,4 +1,13 @@
-export default function Terminos() {
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Términos y Condiciones | Genius Visa Consultants',
+  description: 'Términos y condiciones de uso de Genius Visa Consultants y Genius VC Travel. Tegucigalpa, Honduras.',
+  alternates: {
+    canonical: 'https://genius-visa-and-travel.vercel.app/terminos',
+  },
+}
+  export default function Terminos() {
   return (
     <main className="bg-[#1A3A3A] min-h-screen py-24 px-6">
       <div className="max-w-3xl mx-auto">
