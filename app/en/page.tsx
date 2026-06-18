@@ -121,9 +121,9 @@ export default function EnglishPage() {
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {[
               { icon: BookOpen, title: 'Tourist Visas', tag: 'B1 / B2', desc: 'Travel for business or pleasure with a clear and well-prepared process.', href: '/en/visas/b1-b2' },
-              { icon: GraduationCap, title: 'Student Visas', tag: 'F1 / M1', desc: 'Study in the United States with a solid profile and full support.', href: '/visas/f1' },
-              { icon: Briefcase, title: 'Work Visas', tag: 'H1B / H2B / J1', desc: 'Work opportunities and professional exchange programs.', href: '/visas/h1b' },
-              { icon: Users, title: 'Family Visas', tag: 'H4 / F2 / J2', desc: 'Reunite with your family and travel together with your loved ones.', href: '/visas/familiares' },
+              { icon: GraduationCap, title: 'Student Visas', tag: 'F1 / M1', desc: 'Study in the United States with a solid profile and full support.', href: '/en/visas/f1' },
+              { icon: Briefcase, title: 'Work Visas', tag: 'H1B / H2B / J1', desc: 'Work opportunities and professional exchange programs.', href: '/en/visas/h1b' },
+              { icon: Users, title: 'Family Visas', tag: 'H4 / F2 / J2', desc: 'Reunite with your family and travel together with your loved ones.', href: '/en/visas/familiares' },
               { icon: Globe, title: 'Special Cases', tag: 'Complex cases', desc: 'Tailored advisory for complex immigration processes.', href: '#contact' },
             ].map((service) => (
               <div key={service.title} className="group h-full rounded-2xl border border-gray-200 bg-white p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-[#3DB89E]/40 hover:shadow-xl">
