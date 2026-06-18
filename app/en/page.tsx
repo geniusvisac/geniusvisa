@@ -120,7 +120,7 @@ export default function EnglishPage() {
           </div>
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { icon: BookOpen, title: 'Tourist Visas', tag: 'B1 / B2', desc: 'Travel for business or pleasure with a clear and well-prepared process.', href: '/visas/b1-b2' },
+              { icon: BookOpen, title: 'Tourist Visas', tag: 'B1 / B2', desc: 'Travel for business or pleasure with a clear and well-prepared process.', href: '/en/visas/b1-b2' },
               { icon: GraduationCap, title: 'Student Visas', tag: 'F1 / M1', desc: 'Study in the United States with a solid profile and full support.', href: '/visas/f1' },
               { icon: Briefcase, title: 'Work Visas', tag: 'H1B / H2B / J1', desc: 'Work opportunities and professional exchange programs.', href: '/visas/h1b' },
               { icon: Users, title: 'Family Visas', tag: 'H4 / F2 / J2', desc: 'Reunite with your family and travel together with your loved ones.', href: '/visas/familiares' },
