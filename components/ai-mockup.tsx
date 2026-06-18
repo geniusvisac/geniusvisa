@@ -5,7 +5,7 @@ import { Reveal } from './reveal'
 const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
 
 const conversation = [
-  { role: 'user', text: 'Tengo 28 años, soy ingeniero en Colombia y quiero visa B1/B2.', delay: 500 },
+  { role: 'user', text: 'Tengo 28 años, soy ingeniero en Honduras y quiero visa B1/B2.', delay: 500 },
   { role: 'ai', text: 'Analizando tu perfil consular...', delay: 1800, isTyping: true },
   { role: 'ai', text: '✅ Perfil evaluado. Tu probabilidad estimada de aprobación es del 82%.', delay: 3200 },
   { role: 'ai', text: '📋 Factores positivos: empleo estable, sin viajes previos rechazados, ingresos consistentes.', delay: 4600 },
