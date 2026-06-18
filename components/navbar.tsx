@@ -70,7 +70,7 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-3">
-          <a href="/en" className="hidden text-xs text-white/50 hover:text-white transition-colors sm:block mr-2">EN</a>
+          <a href="/en" className="hidden text-xs text-white/50 hover:text-white transition-colors sm:block mr-2">🇺🇸 English</a>
           <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="hidden rounded-full border border-gold px-5 py-2 text-sm font-medium text-gold transition-all hover:bg-gold hover:text-teal-deep sm:inline-flex">Evalúa tu perfil</a>
           <button
             type="button"
