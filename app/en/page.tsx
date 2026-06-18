@@ -17,6 +17,12 @@ export const metadata: Metadata = {
 const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
 const WA_URL = 'https://wa.me/50497410936'
 
+const WA_ICON = (
+  <svg viewBox="0 0 24 24" className="size-7 fill-white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+)
+
 export default function EnglishPage() {
   return (
     <main className="bg-[#1A3A3A]">
@@ -43,10 +49,8 @@ export default function EnglishPage() {
             ))}
           </div>
           <div className="flex items-center gap-3">
-            <a href="/" className="hidden text-xs text-white/50 hover:text-white transition-colors sm:block">🇪🇸 Español</a>
-            <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="rounded-full border border-[#C9A84C] px-5 py-2 text-sm font-medium text-[#C9A84C] transition-all hover:bg-[#C9A84C] hover:text-[#1A3A3A]">
-              Evaluate my profile
-            </a>
+            <a href="/" className="hidden text-xs text-white/50 hover:text-white transition-colors sm:block">ES</a>
+            <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="rounded-full border border-[#C9A84C] px-5 py-2 text-sm font-medium text-[#C9A84C] transition-all hover:bg-[#C9A84C] hover:text-[#1A3A3A]">Evaluate my profile</a>
           </div>
         </nav>
       </header>
@@ -56,23 +60,14 @@ export default function EnglishPage() {
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.06]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #f8f6f1 1px, transparent 0)', backgroundSize: '22px 22px' }} />
         <div className="relative mx-auto w-full max-w-7xl px-5 pb-24 pt-32 md:px-8 md:pt-40">
           <div className="max-w-3xl">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[#C9A84C]/40 px-4 py-1.5 text-xs tracking-wide text-[#C9A84C]">
-              Genius Visa Consultants · Genius VC Travel
-            </span>
-            <h1 className="mt-6 font-heading text-5xl leading-[1.05] text-white md:text-7xl font-bold">
-              Your global mobility, our mission
-            </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70 md:text-xl">
-              Over 15 years connecting people with the world. Visas, travel and freedom.
-            </p>
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#C9A84C]/40 px-4 py-1.5 text-xs tracking-wide text-[#C9A84C]">Genius Visa Consultants · Genius VC Travel</span>
+            <h1 className="mt-6 font-heading text-5xl leading-[1.05] text-white md:text-7xl font-bold">Your global mobility, our mission</h1>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70 md:text-xl">Over 15 years connecting people with the world. Visas, travel and freedom.</p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
               <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#C9A84C] px-7 py-3.5 text-sm font-semibold text-[#1A3A3A] transition-transform duration-300 hover:scale-[1.03]">
-                Evaluate my profile for free
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                Evaluate my profile for free <ArrowRight className="size-4" />
               </a>
-              <a href="#visas" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-7 py-3.5 text-sm font-medium text-white transition-colors hover:border-white/70">
-                Our services
-              </a>
+              <a href="#visas" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-7 py-3.5 text-sm font-medium text-white transition-colors hover:border-white/70">Our services</a>
             </div>
             <dl className="mt-16 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-white/10 pt-10 md:mt-24 md:grid-cols-4">
               {[
@@ -101,10 +96,8 @@ export default function EnglishPage() {
                 { name: 'Ecuador', code: 'ec' }, { name: 'Honduras', code: 'hn' },
                 { name: 'Peru', code: 'pe' }, { name: 'Dom. Republic', code: 'do' },
                 { name: 'Argentina', code: 'ar' }, { name: 'Chile', code: 'cl' },
-                { name: 'Guatemala', code: 'gt' }, { name: 'Bolivia', code: 'bo' },
                 { name: 'Spain', code: 'es' }, { name: 'Canada', code: 'ca' },
-                { name: 'Brazil', code: 'br' }, { name: 'Portugal', code: 'pt' },
-                { name: 'Italy', code: 'it' }, { name: 'UK', code: 'gb' },
+                { name: 'Brazil', code: 'br' }, { name: 'UK', code: 'gb' },
                 { name: 'Venezuela', code: 've' }, { name: 'Costa Rica', code: 'cr' },
               ].map((country) => (
                 <li key={`${group}-${country.code}`} className="flex items-center gap-3 whitespace-nowrap text-sm tracking-wide text-white/70">
@@ -132,19 +125,15 @@ export default function EnglishPage() {
               { icon: Briefcase, title: 'Work Visas', tag: 'H1B / H2B / J1', desc: 'Work opportunities and professional exchange programs.', href: '/visas/h1b' },
               { icon: Users, title: 'Family Visas', tag: 'H4 / F2 / J2', desc: 'Reunite with your family and travel together with your loved ones.', href: '/visas/familiares' },
               { icon: Globe, title: 'Special Cases', tag: 'Complex cases', desc: 'Tailored advisory for complex immigration processes.', href: '#contact' },
-            ].map((service, i) => (
+            ].map((service) => (
               <div key={service.title} className="group h-full rounded-2xl border border-gray-200 bg-white p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-[#3DB89E]/40 hover:shadow-xl">
-                <span className="inline-flex size-12 items-center justify-center rounded-xl bg-[#1A3A3A] text-white">
-                  <service.icon className="size-6" />
-                </span>
+                <span className="inline-flex size-12 items-center justify-center rounded-xl bg-[#1A3A3A] text-white"><service.icon className="size-6" /></span>
                 <div className="mt-5 flex items-baseline gap-2">
                   <h3 className="font-heading text-xl text-[#1A3A3A]">{service.title}</h3>
                   <span className="text-xs text-[#C9A84C]">{service.tag}</span>
                 </div>
                 <p className="mt-2 text-sm leading-relaxed text-[#1A3A3A]/60">{service.desc}</p>
-                <a href={service.href} className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#C9A84C] transition-colors hover:text-[#1A3A3A]">
-                  Learn more <ArrowRight className="size-3.5" />
-                </a>
+                <a href={service.href} className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-[#C9A84C] transition-colors hover:text-[#1A3A3A]">Learn more <ArrowRight className="size-3.5" /></a>
               </div>
             ))}
             <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="group flex h-full flex-col justify-between rounded-2xl border border-[#C9A84C]/50 bg-[#1A3A3A] p-7 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl">
@@ -178,7 +167,7 @@ export default function EnglishPage() {
                 <span className="inline-block text-xs font-bold text-[#C9A84C] bg-[#C9A84C]/15 px-3 py-1 rounded-full mb-4 w-fit uppercase tracking-wider">{step.sub}</span>
                 <h3 className="font-heading text-2xl font-bold text-[#1A3A3A] mb-3">{step.title}</h3>
                 <p className="text-[#1A3A3A]/75 leading-relaxed text-sm flex-1 font-medium">{step.desc}</p>
-                {step.cta && <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 bg-[#C9A84C] text-[#1A3A3A] px-6 py-3 rounded-full text-sm font-bold hover:opacity-90 w-fit">Evaluate now →</a>}
+                {step.cta && <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 bg-[#C9A84C] text-[#1A3A3A] px-6 py-3 rounded-full text-sm font-bold hover:opacity-90 w-fit">Evaluate now</a>}
               </div>
             ))}
           </div>
@@ -216,7 +205,7 @@ export default function EnglishPage() {
             {[
               { icon: '🔒', q: 'Is my data safe?', a: 'Yes. We use bank-level encryption to protect all your consular and personal information. We never share your data with third parties.' },
               { icon: '📊', q: 'What if my profile score is low?', a: 'We connect you with a human advisor to build a personalized improvement strategy. We do not leave you alone — we work with you to strengthen your case.' },
-              { icon: '✅', q: 'Do you guarantee visa approval?', a: 'No one can guarantee the embassy\'s decision. What we guarantee is preparing you with the strongest possible strategy to maximize your chances.' },
+              { icon: '✅', q: 'Do you guarantee visa approval?', a: 'No one can guarantee the embassy decision. What we guarantee is preparing you with the strongest possible strategy to maximize your chances.' },
               { icon: '🤖', q: 'How accurate is the AI evaluation?', a: 'Our tool analyzes your profile with consular criteria updated to 2026. It is a highly reliable diagnostic guide, backed by 15+ years of real experience.' },
               { icon: '💬', q: 'Can I speak with a human advisor?', a: 'Always. After your AI evaluation, you can schedule a personalized consultation with one of our experts via WhatsApp or video call.' },
               { icon: '🌍', q: 'Do you serve my country?', a: 'We serve clients in more than 25 countries including Honduras, Colombia, Mexico, Ecuador, Peru, Spain, Argentina, Chile, Guatemala and more.' },
@@ -230,9 +219,7 @@ export default function EnglishPage() {
           </div>
           <div className="mt-14 text-center border-t border-white/10 pt-10">
             <p className="text-white/60 text-sm mb-4">Have another question? Write to us directly.</p>
-            <a href={WA_URL} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" className="fixed bottom-6 right-6 z-50 flex size-14 items-center justify-center rounded-full bg-[#25D366] shadow-lg hover:scale-105 transition-transform">
-  <svg viewBox="0 0 24 24" className="size-7 fill-white" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
+            <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#C9A84C] text-[#1A3A3A] px-8 py-3 rounded-full text-sm font-bold hover:opacity-90">Talk to an advisor</a>
           </div>
         </div>
       </section>
@@ -278,20 +265,25 @@ export default function EnglishPage() {
           </a>
           <div className="mt-12 flex flex-col items-center justify-center gap-6 text-sm text-white/75 sm:flex-row sm:gap-10">
             <a href="mailto:geniusvisac@gmail.com" className="inline-flex items-center gap-2 transition-colors hover:text-[#C9A84C]"><Mail className="size-4 text-[#C9A84C]" />geniusvisac@gmail.com</a>
-            <span className="inline-flex items-center gap-2"><Clock className="size-4 text-[#C9A84C]" />Mon–Fri 8am–6pm · Sat 9am–1pm</span>
+            <span className="inline-flex items-center gap-2"><Clock className="size-4 text-[#C9A84C]" />Mon-Fri 8am-6pm · Sat 9am-1pm</span>
           </div>
         </div>
       </section>
 
       {/* FOOTER */}
       <footer className="bg-[#0D2222] py-8 px-6 text-center">
-        <a href="/" className="text-[#C9A84C] text-sm hover:opacity-80 mr-6">🇪🇸 Ver en Español</a>
-        <p className="text-white/30 text-xs mt-3">© 2026 Genius Visa Consultants · Genius VC Travel · Tegucigalpa, Honduras</p>
+        <a href="/" className="text-[#C9A84C] text-sm hover:opacity-80 mr-6">ES Ver en Espanol</a>
+        <p className="text-white/30 text-xs mt-3">2026 Genius Visa Consultants · Genius VC Travel · Tegucigalpa, Honduras</p>
         <div className="mt-2 flex justify-center gap-4 text-xs text-white/30">
           <a href="/privacidad" className="hover:text-white/60">Privacy Policy</a>
           <a href="/terminos" className="hover:text-white/60">Terms</a>
         </div>
       </footer>
+
+      {/* WHATSAPP FLOATING BUTTON */}
+      <a href={WA_URL} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" className="fixed bottom-6 right-6 z-50 flex size-14 items-center justify-center rounded-full bg-[#25D366] shadow-lg hover:scale-105 transition-transform">
+        {WA_ICON}
+      </a>
 
     </main>
   )
