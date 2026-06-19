@@ -23,6 +23,16 @@ const WA_ICON = (
   </svg>
 )
 
+const NAV_LINKS = [
+  { label: 'Home', href: '#home' },
+  { label: 'Visas', href: '#visas' },
+  { label: 'Travel', href: '#travel' },
+  { label: 'Pricing', href: '#pricing' },
+  { label: 'Guarantees', href: '#guarantees' },
+  { label: 'Free assessment', href: EVAL_URL },
+  { label: 'Contact', href: '#contact' },
+]
+
 export default function EnglishPage() {
   return (
     <main className="bg-[#1A3A3A]">
@@ -38,25 +48,20 @@ export default function EnglishPage() {
             </span>
           </a>
           <div className="hidden items-center gap-8 lg:flex">
-            {[
-              { label: 'Home', href: '#home' },
-              { label: 'Visas', href: '#visas' },
-              { label: 'Travel', href: '#travel' },
-              { label: 'Pricing', href: '#pricing' },
-              { label: 'Guarantees', href: '#guarantees' },
-              { label: 'Free assessment', href: EVAL_URL },
-              { label: 'Contact', href: '#contact' },
-            ].map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="text-sm text-white/80 transition-colors hover:text-[#C9A84C]"
-              >
-                {link.label}
-              </a>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const isExternal = link.href.startsWith('http')
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target={isExternal ? '_blank' : undefined}
+                  rel={isExternal ? 'noopener noreferrer' : undefined}
+                  className="text-sm text-white/80 transition-colors hover:text-[#C9A84C]"
+                >
+                  {link.label}
+                </a>
+              )
+            })}
           </div>
           <div className="flex items-center gap-3">
             <a href="/" className="hidden text-xs text-white/50 hover:text-white transition-colors sm:block">Es Español</a>
@@ -64,6 +69,7 @@ export default function EnglishPage() {
           </div>
         </nav>
       </header>
+
       {/* HERO */}
       <section id="home" className="relative flex min-h-screen items-center overflow-hidden bg-[#1A3A3A] pt-20">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.06]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #f8f6f1 1px, transparent 0)', backgroundSize: '22px 22px' }} />
@@ -203,7 +209,7 @@ export default function EnglishPage() {
       </section>
 
       {/* GUARANTEES */}
-<section id="guarantees" className="bg-[#1A3A3A] py-24 md:py-32">
+      <section id="guarantees" className="bg-[#1A3A3A] py-24 md:py-32">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <div className="mx-auto max-w-2xl text-center mb-16">
             <p className="text-[#C9A84C] text-sm font-semibold tracking-widest uppercase mb-4">Full transparency</p>
