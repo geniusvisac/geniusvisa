@@ -39,15 +39,24 @@ export default function EnglishPage() {
           </a>
           <div className="hidden items-center gap-8 lg:flex">
             {[
-              { label: 'Home', href: '#home' },
-              { label: 'Visas', href: '#visas' },
-              { label: 'Travel', href: '#travel' },
-              { label: 'Pricing', href: '#pricing' },
-              { label: 'Contact', href: '#contact' },
-            ].map((link) => (
-              <a key={link.href} href={link.href} className="text-sm text-white/80 transition-colors hover:text-[#C9A84C]">{link.label}</a>
-            ))}
-          </div>
+  { label: 'Home', href: '#home' },
+  { label: 'Visas', href: '#visas' },
+  { label: 'Travel', href: '#travel' },
+  { label: 'Pricing', href: '#pricing' },
+  { label: 'Guarantees', href: '#guarantees' },
+  { label: 'Free assessment', href: EVAL_URL },
+  { label: 'Contact', href: '#contact' },
+].map((link) => (
+  
+    key={link.href}
+    href={link.href}
+    target={link.href.startsWith('http') ? '_blank' : undefined}
+    rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+    className="text-sm text-white/80 transition-colors hover:text-[#C9A84C]"
+  >
+    {link.label}
+  </a>
+))}
           <div className="flex items-center gap-3">
             <a href="/" className="hidden text-xs text-white/50 hover:text-white transition-colors sm:block">Es Español</a>
             <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="rounded-full border border-[#C9A84C] px-5 py-2 text-sm font-medium text-[#C9A84C] transition-all hover:bg-[#C9A84C] hover:text-[#1A3A3A]">Evaluate my profile</a>
