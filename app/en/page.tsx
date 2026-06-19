@@ -47,7 +47,7 @@ export default function EnglishPage() {
               { label: 'Free assessment', href: EVAL_URL },
               { label: 'Contact', href: '#contact' },
             ].map((link) => (
-              
+              <a
                 key={link.href}
                 href={link.href}
                 target={link.href.startsWith('http') ? '_blank' : undefined}
