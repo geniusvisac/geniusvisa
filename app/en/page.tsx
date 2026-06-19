@@ -29,7 +29,7 @@ const NAV_LINKS = [
   { label: 'Travel', href: '#travel' },
   { label: 'Pricing', href: '#pricing' },
   { label: 'Guarantees', href: '#guarantees' },
-  { label: 'Free assessment', href: EVAL_URL },
+  { label: 'Free assessment', href: '#evaluation' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -190,7 +190,7 @@ export default function EnglishPage() {
       </section>
 
       {/* AI CTA */}
-      <section className="relative overflow-hidden bg-[#1A3A3A] py-24 md:py-32">
+      <section id="evaluation" className="relative overflow-hidden bg-[#1A3A3A] py-24 md:py-32">
         <div className="relative mx-auto max-w-3xl px-5 text-center md:px-8">
           <div className="mx-auto h-px w-16 bg-[#C9A84C]" />
           <h2 className="mt-7 font-heading text-4xl leading-tight text-white md:text-5xl font-bold">Do you have chances of getting your visa?</h2>
@@ -205,6 +205,134 @@ export default function EnglishPage() {
             </a>
           </div>
           <p className="mt-6 text-sm text-white/50">No commitment · Immediate response · 100% confidential</p>
+        </div>
+      </section>
+
+      {/* PRICING */}
+      <section id="pricing" className="bg-[#F8F6F1] py-24 md:py-32">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <div className="mx-auto max-w-2xl text-center mb-16">
+            <p className="text-[#C9A84C] text-sm font-semibold tracking-widest uppercase mb-4">Full transparency</p>
+            <h2 className="font-heading text-4xl text-[#1A3A3A] md:text-5xl font-bold">No surprises. No fine print.</h2>
+            <p className="mt-4 text-[#1A3A3A]/60 text-lg">Start for free. Scale when you&apos;re ready.</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8 items-stretch">
+            {[
+              {
+                name: 'AI Evaluation',
+                price: '$0',
+                description: 'Discover your consular risk profile in 2 minutes.',
+                badge: '100% Free',
+                badgeColor: 'bg-[#3DB89E]/20 text-[#3DB89E]',
+                features: [
+                  'AI-powered profile diagnosis',
+                  'Estimated approval percentage',
+                  'Risk factor identification',
+                  'Initial recommendations',
+                ],
+                cta: 'Evaluate my profile free',
+                href: EVAL_URL,
+                highlighted: false,
+              },
+              {
+                name: 'Premium Advisory',
+                price: 'Custom',
+                description: 'Expert support from start to finish.',
+                badge: 'Most popular',
+                badgeColor: 'bg-[#C9A84C]/20 text-[#C9A84C]',
+                features: [
+                  'Everything in the free plan',
+                  'Dedicated expert consultant',
+                  'Document review and preparation',
+                  'Consular interview preparation',
+                  'Follow-up until the decision',
+                  'Priority WhatsApp support',
+                ],
+                cta: 'Get a quote',
+                href: WA_URL,
+                highlighted: true,
+              },
+              {
+                name: 'Genius VC Travel',
+                price: 'Tailored',
+                description: 'Premium trip planning once your visa is approved.',
+                badge: 'New',
+                badgeColor: 'bg-[#1A3A3A]/10 text-[#1A3A3A]/50',
+                features: [
+                  'Personalized itinerary',
+                  'Luxury hotels and flights',
+                  'Exclusive experiences',
+                  '24/7 support during your trip',
+                ],
+                cta: 'Explore travel',
+                href: WA_URL,
+                highlighted: false,
+              },
+            ].map((plan) => (
+              <div key={plan.name} className={`rounded-2xl p-8 h-full flex flex-col ${plan.highlighted ? 'bg-[#1A3A3A] shadow-2xl ring-2 ring-[#C9A84C]' : 'bg-white shadow-md border border-[#1A3A3A]/5'}`}>
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className={`font-heading text-xl font-bold ${plan.highlighted ? 'text-white' : 'text-[#1A3A3A]'}`}>{plan.name}</h3>
+                  <span className={`text-xs font-bold px-3 py-1 rounded-full ${plan.badgeColor}`}>{plan.badge}</span>
+                </div>
+                <div className="mb-4">
+                  <span className={`font-heading text-4xl font-black ${plan.highlighted ? 'text-[#C9A84C]' : 'text-[#1A3A3A]'}`}>{plan.price}</span>
+                </div>
+                <p className={`text-sm mb-6 ${plan.highlighted ? 'text-white/70' : 'text-[#1A3A3A]/60'}`}>{plan.description}</p>
+                <ul className="space-y-3 flex-1 mb-8">
+                  {plan.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-2">
+                      <span className="text-[#C9A84C] mt-0.5 text-sm font-bold">✓</span>
+                      <span className={`text-sm ${plan.highlighted ? 'text-white/80' : 'text-[#1A3A3A]/70'}`}>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a href={plan.href} target="_blank" rel="noopener noreferrer" className={`w-full text-center py-3 rounded-full text-sm font-bold transition-all hover:opacity-90 block ${plan.highlighted ? 'bg-[#C9A84C] text-[#1A3A3A]' : 'border-2 border-[#1A3A3A] text-[#1A3A3A] hover:bg-[#1A3A3A] hover:text-white'}`}>
+                  {plan.cta} →
+                </a>
+              </div>
+            ))}
+          </div>
+          <p className="text-center text-[#1A3A3A]/60 text-sm mt-10 font-medium">
+            Advisory pricing is agreed individually based on case complexity. Contact us for a no-obligation quote.
+          </p>
+        </div>
+      </section>
+
+      {/* TRAVEL */}
+      <section id="travel" className="bg-[#F8F6F1] py-24 md:py-32">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
+          <div className="max-w-2xl">
+            <span className="text-sm font-medium tracking-wide text-[#C9A84C]">Genius VC Travel</span>
+            <h2 className="mt-3 font-heading text-4xl text-[#1A3A3A] md:text-5xl font-bold">Travel differently. Travel with Genius.</h2>
+            <p className="mt-4 leading-relaxed text-[#1A3A3A]/60">A premium travel agency for those seeking more than a destination: an experience.</p>
+          </div>
+          <div className="mt-14 grid gap-5 md:grid-cols-3">
+            {[
+              { title: 'Luxury getaways', desc: 'Resorts and private villas in the world\u2019s most exclusive destinations.', image: '/images/escapadas-lujo.webp' },
+              { title: 'Dream destinations', desc: 'Unforgettable landscapes and experiences tailored to you.', image: '/images/destinos-ensueno.webp' },
+              { title: 'Unique experiences', desc: 'Travel first class with every detail taken care of by us.', image: '/images/experiencias-unicas.webp' },
+            ].map((dest) => (
+              <article key={dest.title} className="group relative h-96 overflow-hidden rounded-2xl">
+                <img
+                  src={dest.image || '/placeholder.svg'}
+                  alt={dest.title}
+                  className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-gradient-to-t from-[#0D2222] via-[#1A3A3A]/40 to-transparent transition-opacity duration-500 group-hover:from-[#0D2222]/95"
+                />
+                <div className="absolute inset-x-0 bottom-0 p-7">
+                  <h3 className="font-heading text-2xl text-white">{dest.title}</h3>
+                  <p className="mt-2 max-w-xs text-sm leading-relaxed text-white/80">{dest.desc}</p>
+                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#C9A84C]">
+                    Explore destinations
+                    <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
