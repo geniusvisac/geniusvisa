@@ -194,7 +194,7 @@ export default function EnglishPage() {
       </section>
 
       {/* GUARANTEES */}
-      <section className="bg-[#1A3A3A] py-24 md:py-32">
+<section id="guarantees" className="bg-[#1A3A3A] py-24 md:py-32">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <div className="mx-auto max-w-2xl text-center mb-16">
             <p className="text-[#C9A84C] text-sm font-semibold tracking-widest uppercase mb-4">Full transparency</p>
