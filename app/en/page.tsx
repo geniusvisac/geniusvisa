@@ -67,9 +67,9 @@ export default function EnglishPage() {
       </header>
 
       {/* HERO */}
-      <section id="home" className="relative flex min-h-[72vh] items-center overflow-hidden bg-[#1A3A3A] md:min-h-0 pt-16">
+      <section id="home" className="relative flex min-h-[74vh] items-center overflow-hidden bg-[#1A3A3A] md:min-h-0 pt-16">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.06]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #f8f6f1 1px, transparent 0)', backgroundSize: '22px 22px' }} />
-        <div className="relative mx-auto w-full max-w-7xl px-5 pb-8 pt-16 md:px-8 md:pb-8 md:pt-16">
+        <div className="relative mx-auto w-full max-w-7xl px-5 pb-10 pt-16 md:px-8 md:pb-10 md:pt-16">
           <div className="max-w-3xl">
             <Reveal>
               <span className="inline-flex items-center gap-2 rounded-full border border-[#C9A84C]/40 px-4 py-1.5 text-xs tracking-wide text-[#C9A84C]">Genius Visa Consultants · Genius VC Travel</span>
