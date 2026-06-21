@@ -12,7 +12,7 @@ export function Hero() {
   return (
     <section
       id="inicio"
-      className="relative flex min-h-[88vh] items-center overflow-hidden bg-teal-deep md:min-h-0"
+      className="relative flex min-h-[82vh] items-center overflow-hidden bg-teal-deep md:min-h-0"
     >
       {/* Subtle world map texture overlay */}
       <div
@@ -27,7 +27,7 @@ export function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute -right-24 top-1/4 size-[28rem] rounded-full bg-teal/10 blur-3xl"
       />
-      <div className="relative mx-auto w-full max-w-7xl px-5 pb-12 pt-28 md:px-8 md:pb-16 md:pt-32">
+      <div className="relative mx-auto w-full max-w-7xl px-5 pb-8 pt-24 md:px-8 md:pb-10 md:pt-24">
         <div className="max-w-3xl">
           <Reveal>
             <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 px-4 py-1.5 text-xs tracking-wide text-gold">
@@ -35,11 +35,11 @@ export function Hero() {
             </span>
           </Reveal>
           {/* H1 sin animación para que Google lo detecte como LCP */}
-          <h1 className="mt-6 text-balance font-heading text-4xl leading-[1.05] text-offwhite md:text-6xl">
+          <h1 className="mt-5 text-balance font-heading text-4xl leading-[1.05] text-offwhite md:text-5xl lg:text-6xl">
             Tu movilidad global, nuestra misión
           </h1>
           <Reveal delay={200}>
-            <p className="mt-5 max-w-xl text-pretty text-lg leading-relaxed text-offwhite/70 md:text-xl">
+            <p className="mt-4 max-w-xl text-pretty text-lg leading-relaxed text-offwhite/70 md:text-xl">
               Más de 15 años conectando personas con el mundo. Visas, viajes y libertad.
             </p>
           </Reveal>
@@ -65,7 +65,7 @@ export function Hero() {
         </div>
         {/* Floating stats row */}
         <Reveal delay={450}>
-          <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-white/10 pt-8 md:mt-14 md:grid-cols-4">
+          <dl className="mt-7 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-white/10 pt-6 md:mt-10 md:grid-cols-4">
             {stats.map((stat) => (
               <div key={stat.label}>
                 <dt className="font-heading text-2xl text-gold md:text-4xl">{stat.value}</dt>
