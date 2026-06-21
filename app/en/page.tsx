@@ -66,20 +66,20 @@ export default function EnglishPage() {
       </header>
 
       {/* HERO */}
-      <section id="home" className="relative flex min-h-[76vh] items-center overflow-hidden bg-[#1A3A3A] md:min-h-0 pt-20">
+      <section id="home" className="relative flex min-h-[68vh] items-center overflow-hidden bg-[#1A3A3A] md:min-h-0 pt-16">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.06]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #f8f6f1 1px, transparent 0)', backgroundSize: '22px 22px' }} />
-        <div className="relative mx-auto w-full max-w-7xl px-5 pb-6 pt-20 md:px-8 md:pb-6 md:pt-20">
+        <div className="relative mx-auto w-full max-w-7xl px-5 pb-5 pt-16 md:px-8 md:pb-5 md:pt-16">
           <div className="max-w-3xl">
             <span className="inline-flex items-center gap-2 rounded-full border border-[#C9A84C]/40 px-4 py-1.5 text-xs tracking-wide text-[#C9A84C]">Genius Visa Consultants · Genius VC Travel</span>
-            <h1 className="mt-5 font-heading text-4xl leading-[1.05] text-white md:text-5xl lg:text-6xl font-bold">Your global mobility, our mission</h1>
-            <p className="mt-4 max-w-xl text-lg leading-relaxed text-white/70 md:text-xl">Over 15 years connecting people with the world. Visas, travel and freedom.</p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <h1 className="mt-4 font-heading text-3xl leading-[1.1] text-white md:text-4xl lg:text-5xl font-bold">Your global mobility, our mission</h1>
+            <p className="mt-3 max-w-xl text-lg leading-relaxed text-white/70 md:text-xl">Over 15 years connecting people with the world. Visas, travel and freedom.</p>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
               <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#C9A84C] px-7 py-3.5 text-sm font-semibold text-[#1A3A3A] transition-transform duration-300 hover:scale-[1.03]">
                 Evaluate my profile for free <ArrowRight className="size-4" />
               </a>
               <a href="#visas" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-7 py-3.5 text-sm font-medium text-white transition-colors hover:border-white/70">Our services</a>
             </div>
-            <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-white/10 pt-5 md:mt-7 md:grid-cols-4">
+            <dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 border-t border-white/10 pt-4 md:mt-6 md:grid-cols-4">
               {[
                 { value: '15+', label: 'Years of experience' },
                 { value: '25+', label: 'Countries served' },
