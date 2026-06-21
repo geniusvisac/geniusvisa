@@ -48,7 +48,7 @@ export function Navbar() {
             className="size-14 rounded-full md:size-16"
           />
           <span className="hidden flex-col leading-tight sm:flex">
-            <span className="font-sans text-base font-semibold tracking-widest uppercase text-offwhite md:text-sm">
+  <span className="font-sans text-base font-semibold tracking-widest uppercase text-offwhite md:text-sm">
   Genius Visa Consultants
 </span>
 <span className="font-sans text-xs font-light tracking-widest uppercase text-gold">
@@ -88,7 +88,7 @@ export function Navbar() {
       <div
         className={cn(
           'overflow-hidden border-t border-white/10 bg-teal-deep/98 backdrop-blur-md transition-[max-height] duration-500 lg:hidden',
-          open ? 'max-h-96' : 'max-h-0',
+          open ? 'max-h-[36rem]' : 'max-h-0',
         )}
       >
         <div className="flex flex-col gap-1 px-5 py-4">
@@ -102,6 +102,13 @@ export function Navbar() {
               {link.label}
             </a>
           ))}
+          <a
+            href="/en"
+            onClick={() => setOpen(false)}
+            className="rounded-lg px-3 py-3 text-base text-offwhite/60 transition-colors hover:bg-white/5 hover:text-offwhite"
+          >
+            🇺🇸 English
+          </a>
           <a
             href={EVAL_URL}
             target="_blank"
