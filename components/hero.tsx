@@ -45,7 +45,7 @@ export function Hero() {
           </Reveal>
           <Reveal delay={300}>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-              
+              <a
                 href={EVAL_URL}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -54,7 +54,7 @@ export function Hero() {
                 Evaluar mi perfil gratis
                 <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
               </a>
-              
+              <a
                 href="#visas"
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-offwhite/30 px-7 py-3.5 text-sm font-medium text-offwhite transition-colors hover:border-offwhite/70"
               >
