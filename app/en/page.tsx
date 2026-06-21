@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { ArrowRight, MessageCircle, Mail, Clock, Star, BookOpen, GraduationCap, Briefcase, Users, Globe, Sparkles } from 'lucide-react'
 import { WhatsappButtonEn } from '@/components/whatsapp-button-en'
+import { MobileNavEn } from '@/components/mobile-nav-en'
 import { Reveal } from '@/components/reveal'
 
 export const metadata: Metadata = {
@@ -61,7 +62,8 @@ export default function EnglishPage() {
           </div>
           <div className="flex items-center gap-3">
             <a href="/" className="hidden text-xs text-white/50 hover:text-white transition-colors sm:block">Es Español</a>
-            <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="rounded-full border border-[#C9A84C] px-5 py-2 text-sm font-medium text-[#C9A84C] transition-all hover:bg-[#C9A84C] hover:text-[#1A3A3A]">Evaluate my profile</a>
+            <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="hidden rounded-full border border-[#C9A84C] px-5 py-2 text-sm font-medium text-[#C9A84C] transition-all hover:bg-[#C9A84C] hover:text-[#1A3A3A] sm:inline-flex">Evaluate my profile</a>
+            <MobileNavEn />
           </div>
         </nav>
       </header>
