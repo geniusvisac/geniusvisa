@@ -103,6 +103,13 @@ export function Navbar() {
             </a>
           ))}
           <a
+            href="/viajes"
+            onClick={() => setOpen(false)}
+            className="rounded-lg px-3 py-3 text-base text-[#C9A84C] font-medium transition-colors hover:bg-white/5"
+          >
+            ✈️ Genius VC Travel
+          </a>
+          <a
             href="/en"
             onClick={() => setOpen(false)}
             className="rounded-lg px-3 py-3 text-base text-offwhite/60 transition-colors hover:bg-white/5 hover:text-offwhite"
