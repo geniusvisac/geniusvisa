@@ -1,6 +1,5 @@
 import { ArrowRight } from 'lucide-react'
 import { Reveal } from './reveal'
-
 const destinations = [
   {
     title: 'Escapadas de lujo',
@@ -34,7 +33,6 @@ export function TravelSection() {
             destino: una experiencia.
           </p>
         </Reveal>
-
         <div className="mt-14 grid gap-5 md:grid-cols-3">
           {destinations.map((dest, i) => (
             <Reveal key={dest.title} delay={i * 90} as="article">
@@ -55,15 +53,22 @@ export function TravelSection() {
                   <p className="mt-2 max-w-xs text-sm leading-relaxed text-offwhite/80">
                     {dest.desc}
                   </p>
-                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-gold">
-                    Explorar destinos
-                    <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
-                  </span>
                 </div>
               </div>
             </Reveal>
           ))}
         </div>
+        <Reveal>
+          <div className="mt-12 text-center">
+            <a
+              href="/viajes"
+              className="inline-flex items-center gap-2 rounded-full bg-teal-deep px-8 py-3.5 text-sm font-semibold text-offwhite transition-transform duration-300 hover:scale-[1.03]"
+            >
+              Explorar Genius VC Travel
+              <ArrowRight className="size-4" />
+            </a>
+          </div>
+        </Reveal>
       </div>
     </section>
   )
