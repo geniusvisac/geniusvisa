@@ -2,22 +2,21 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import './globals.css'
+import { SITE_URL } from '@/lib/constants'
 
 const playfair = Playfair_Display({
   variable: '--font-playfair',
   subsets: ['latin'],
   display: 'swap',
 })
-
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],
   display: 'swap',
 })
-
 export const metadata: Metadata = {
   title: 'Genius Visa Consultants | Expertos en Visas Americanas · Honduras',
-  description: 'Mas de 15 anos ayudando a obtener visas americanas B1/B2, F1, H1B y mas. Evaluacion gratuita con IA. Servicio en 25+ paises. Tegucigalpa, Honduras.',
+  description: 'Mas de 15 anos ayudando a obtener visas americanas B1/B2, F1, H1B y mas. Evaluacion gratuita con IA. Servicio en 25+ paises. Tegucigalda, Honduras.',
   keywords: 'visa americana Honduras, consultoria de visas, visa turismo, visa estudiante, visa trabajo, Tegucigalpa, Genius Visa Consultants, Genius VC Travel',
   authors: [{ name: 'Genius Visa Consultants' }],
   creator: 'Genius Visa Consultants',
@@ -26,14 +25,14 @@ export const metadata: Metadata = {
   verification: {
     google: 'qAyVuv7_SOws1gUzRbiJAgwah3jpbGI751Tjt0BrEHg',
   },
-  metadataBase: new URL('https://genius-visa-and-travel.vercel.app'),
+  metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: 'Genius Visa Consultants · Tu Movilidad Global',
     description: 'Expertos en visas americanas con 15+ anos de experiencia. Evaluacion gratuita con IA disponible ahora.',
-    url: 'https://genius-visa-and-travel.vercel.app',
+    url: SITE_URL,
     siteName: 'Genius Visa Consultants',
     locale: 'es_HN',
     type: 'website',
@@ -63,11 +62,9 @@ export const metadata: Metadata = {
     },
   },
 }
-
 export const viewport: Viewport = {
   themeColor: '#1A3A3A',
 }
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -87,7 +84,7 @@ export default function RootLayout({
               '@type': 'LocalBusiness',
               name: 'Genius Visa Consultants',
               description: 'Consultoria especializada en visas americanas con mas de 15 anos de experiencia',
-              url: 'https://genius-visa-and-travel.vercel.app',
+              url: SITE_URL,
               telephone: '+50497410936',
               email: 'geniusvisac@gmail.com',
               address: {
@@ -97,10 +94,10 @@ export default function RootLayout({
               },
               openingHours: ['Mo-Fr 08:00-18:00', 'Sa 09:00-13:00'],
               sameAs: [
-  'https://instagram.com/geniusvisac',
-  'https://www.facebook.com/share/1BfV3v4agj/?mibextid=wwXIfr',
-  'https://wa.me/50497410936',
-],
+                'https://instagram.com/geniusvisac',
+                'https://www.facebook.com/share/1BfV3v4agj/?mibextid=wwXIfr',
+                'https://wa.me/50497410936',
+              ],
             }),
           }}
         />
