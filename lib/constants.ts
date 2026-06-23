@@ -1,1 +1,1 @@
-export const SITE_URL = 'https://www.geniusvctravel.com'
+export const SITE_URL = 'https://geniusvctravel.com'
