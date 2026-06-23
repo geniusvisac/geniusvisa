@@ -32,7 +32,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Genius Visa Consultants · Tu Movilidad Global',
     description: 'Expertos en visas americanas con 15+ anos de experiencia. Evaluacion gratuita con IA disponible ahora.',
-    url: SITE_URL,
     siteName: 'Genius Visa Consultants',
     locale: 'es_HN',
     type: 'website',
