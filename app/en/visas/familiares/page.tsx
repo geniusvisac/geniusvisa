@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description: 'Reunite with your family in the United States. Expert advisory for H4, F2 and J2 family visas. Free AI evaluation. Honduras and Latin America.',
   keywords: 'family visa USA, H4 visa, F2 visa, J2 visa, family reunification USA, dependent visa',
   alternates: { canonical: `${SITE_URL}/en/visas/familiares` },
+  openGraph: { url: `${SITE_URL}/en/visas/familiares` },
 }
 
 const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
