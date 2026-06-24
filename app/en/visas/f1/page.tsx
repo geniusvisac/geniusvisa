@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description: 'Get your F1 or M1 student visa to study in the United States. Free AI evaluation. US visa experts. Honduras and Latin America.',
   keywords: 'F1 visa, M1 visa, US student visa, study in USA, student visa Honduras',
   alternates: { canonical: `${SITE_URL}/en/visas/f1` },
+  openGraph: { url: `${SITE_URL}/en/visas/f1` },
 }
 
 const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
