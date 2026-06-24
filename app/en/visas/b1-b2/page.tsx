@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description: 'Get your US B1/B2 tourist and business visa with expert help. Free AI evaluation. Over 15 years of experience. Tegucigalpa, Honduras.',
   keywords: 'B1 B2 visa, US tourist visa, business visa USA, american visa Honduras',
   alternates: { canonical: `${SITE_URL}/en/visas/b1-b2` },
+  openGraph: { url: `${SITE_URL}/en/visas/b1-b2` },
 }
 
 const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
