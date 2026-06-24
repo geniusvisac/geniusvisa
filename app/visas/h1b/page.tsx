@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description: 'Obtén tu visa de trabajo H1B, H2B o J1 para trabajar en Estados Unidos. Asesoría experta. Evaluación gratuita con IA. Honduras y Latinoamérica.',
   keywords: 'visa h1b, visa h2b, visa j1, visa trabajo estados unidos, visa profesional americana, trabajar en usa',
   alternates: { canonical: `${SITE_URL}/visas/h1b` },
+  openGraph: { url: `${SITE_URL}/visas/h1b` },
 }
 
 const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
