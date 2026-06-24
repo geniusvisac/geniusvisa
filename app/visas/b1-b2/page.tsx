@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description: 'Obtén tu visa americana B1/B2 de turismo y negocios con ayuda de expertos. Evaluación gratuita con IA. Más de 15 años de experiencia. Tegucigalpa, Honduras.',
   keywords: 'visa b1 b2, visa turismo americana, visa negocios estados unidos, visa americana Honduras',
   alternates: { canonical: `${SITE_URL}/visas/b1-b2` },
+  openGraph: { url: `${SITE_URL}/visas/b1-b2` },
 }
 
 const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
