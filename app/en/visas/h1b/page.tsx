@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description: 'Get your H1B, H2B or J1 work visa to work in the United States. Expert advisory. Free AI evaluation. Honduras and Latin America.',
   keywords: 'H1B visa, H2B visa, J1 visa, US work visa, work in USA',
   alternates: { canonical: `${SITE_URL}/en/visas/h1b` },
+  openGraph: { url: `${SITE_URL}/en/visas/h1b` },
 }
 
 const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
