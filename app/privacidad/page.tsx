@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: 'Política de Privacidad | Genius Visa Consultants',
   description: 'Política de privacidad de Genius Visa Consultants y Genius VC Travel. Tegucigalpa, Honduras.',
   alternates: { canonical: `${SITE_URL}/privacidad` },
+  openGraph: { url: `${SITE_URL}/privacidad` },
 }
 export default function Privacidad() {
   return (
