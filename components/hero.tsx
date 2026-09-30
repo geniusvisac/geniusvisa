@@ -29,16 +29,17 @@ export function Hero() {
       />
 
       <div className="relative mx-auto w-full max-w-7xl px-5 pb-6 pt-20 md:px-8 md:pb-6 md:pt-20">
-        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+
+        {/* TOP: 2 columnas — texto izquierda, imagen derecha */}
+        <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-16">
 
           {/* LEFT — text content */}
-          <div>
+          <div className="pt-2">
             <Reveal>
               <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 px-4 py-1.5 text-xs tracking-wide text-gold">
                 Genius Visa Consultants · Genius VC Travel
               </span>
             </Reveal>
-            {/* H1 sin animación para LCP */}
             <h1 className="mt-5 text-balance font-heading text-4xl leading-[1.05] text-offwhite md:text-5xl lg:text-6xl">
               Tu movilidad global, nuestra misión
             </h1>
@@ -66,21 +67,11 @@ export function Hero() {
                 </a>
               </div>
             </Reveal>
-            <Reveal delay={450}>
-              <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-white/10 pt-6 md:mt-10 md:grid-cols-4">
-                {stats.map((stat) => (
-                  <div key={stat.label}>
-                    <dt className="font-heading text-2xl text-gold md:text-3xl">{stat.value}</dt>
-                    <dd className="mt-1 text-sm text-offwhite/60">{stat.label}</dd>
-                  </div>
-                ))}
-              </dl>
-            </Reveal>
           </div>
 
-          {/* RIGHT — image */}
-          <Reveal delay={150} className="hidden lg:flex items-center justify-center">
-            <div className="relative w-full max-w-lg">
+          {/* RIGHT — image, pulled up to align with top of text */}
+          <Reveal delay={150} className="hidden lg:block">
+            <div className="relative w-full -mt-6">
               <div
                 aria-hidden="true"
                 className="absolute -inset-4 rounded-3xl bg-gold/10 blur-2xl"
@@ -95,6 +86,19 @@ export function Hero() {
           </Reveal>
 
         </div>
+
+        {/* BOTTOM: estadísticas en fila completa bajo las 2 columnas */}
+        <Reveal delay={450}>
+          <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-white/10 pt-6 md:grid-cols-4">
+            {stats.map((stat) => (
+              <div key={stat.label}>
+                <dt className="font-heading text-2xl text-gold md:text-3xl">{stat.value}</dt>
+                <dd className="mt-1 text-sm text-offwhite/60">{stat.label}</dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
+
       </div>
     </section>
   )
