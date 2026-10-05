@@ -69,9 +69,9 @@ export function Hero() {
             </Reveal>
           </div>
 
-          {/* RIGHT — image, pulled up to align with top of text */}
+          {/* RIGHT — image */}
           <Reveal delay={150} className="hidden lg:block">
-            <div className="relative w-full -mt-6">
+            <div className="relative w-full mt-2">
               <div
                 aria-hidden="true"
                 className="absolute -inset-4 rounded-3xl bg-gold/10 blur-2xl"
