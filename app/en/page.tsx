@@ -3,18 +3,20 @@ import { ArrowRight, MessageCircle, Mail, Clock, Star, BookOpen, GraduationCap, 
 import { WhatsappButtonEn } from '@/components/whatsapp-button-en'
 import { MobileNavEn } from '@/components/mobile-nav-en'
 import { Reveal } from '@/components/reveal'
+import { SITE_URL } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Genius Visa Consultants | US Visa Experts · Honduras',
   description: 'Over 15 years helping people obtain US visas B1/B2, F1, H1B and more. Free AI evaluation. Service in 25+ countries. Tegucigalpa, Honduras.',
   keywords: 'US visa consultant Honduras, american visa help, B1 B2 visa, F1 visa, H1B visa, visa consultant Latin America',
   alternates: {
-    canonical: 'https://genius-visa-and-travel.vercel.app/en',
+    canonical: `${SITE_URL}/en`,
     languages: {
-      'es': 'https://genius-visa-and-travel.vercel.app',
-      'en': 'https://genius-visa-and-travel.vercel.app/en',
+      'es': SITE_URL,
+      'en': `${SITE_URL}/en`,
     },
   },
+  openGraph: { url: `${SITE_URL}/en` },
 }
 
 const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
@@ -71,38 +73,57 @@ export default function EnglishPage() {
       {/* HERO */}
       <section id="home" className="relative flex min-h-[78vh] items-center overflow-hidden bg-[#1A3A3A] md:min-h-0 pt-16">
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.06]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #f8f6f1 1px, transparent 0)', backgroundSize: '22px 22px' }} />
+        <div aria-hidden="true" className="pointer-events-none absolute -right-24 top-1/4 size-[28rem] rounded-full bg-[#3DB89E]/10 blur-3xl" />
         <div className="relative mx-auto w-full max-w-7xl px-5 pb-12 pt-16 md:px-8 md:pb-12 md:pt-16">
-          <div className="max-w-3xl">
-            <Reveal>
-              <span className="inline-flex items-center gap-2 rounded-full border border-[#C9A84C]/40 px-4 py-1.5 text-xs tracking-wide text-[#C9A84C]">Genius Visa Consultants · Genius VC Travel</span>
-            </Reveal>
-            <h1 className="mt-4 font-heading text-3xl leading-[1.1] text-white md:text-4xl lg:text-5xl font-bold">Your global mobility, our mission</h1>
-            <Reveal delay={200}>
-              <p className="mt-3 max-w-xl text-lg leading-relaxed text-white/70 md:text-xl">Over 15 years connecting people with the world. Visas, travel and freedom.</p>
-            </Reveal>
-            <Reveal delay={300}>
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#C9A84C] px-7 py-3.5 text-sm font-semibold text-[#1A3A3A] transition-transform duration-300 hover:scale-[1.03]">
-                  Evaluate my profile for free <ArrowRight className="size-4" />
-                </a>
-                <a href="#visas" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-7 py-3.5 text-sm font-medium text-white transition-colors hover:border-white/70">Our services</a>
+          <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-16">
+
+            {/* LEFT */}
+            <div className="pt-2">
+              <Reveal>
+                <span className="inline-flex items-center gap-2 rounded-full border border-[#C9A84C]/40 px-4 py-1.5 text-xs tracking-wide text-[#C9A84C]">Genius Visa Consultants · Genius VC Travel</span>
+              </Reveal>
+              <h1 className="mt-4 font-heading text-3xl leading-[1.1] text-white md:text-4xl lg:text-5xl font-bold">Your global mobility, our mission</h1>
+              <Reveal delay={200}>
+                <p className="mt-3 max-w-xl text-lg leading-relaxed text-white/70 md:text-xl">Over 15 years connecting people with the world. Visas, travel and freedom.</p>
+              </Reveal>
+              <Reveal delay={300}>
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#C9A84C] px-7 py-3.5 text-sm font-semibold text-[#1A3A3A] transition-transform duration-300 hover:scale-[1.03]">
+                    Evaluate my profile for free <ArrowRight className="size-4" />
+                  </a>
+                  <a href="#visas" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-7 py-3.5 text-sm font-medium text-white transition-colors hover:border-white/70">Our services</a>
+                </div>
+              </Reveal>
+              <Reveal delay={450}>
+                <dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 border-t border-white/10 pt-4 md:mt-6 md:grid-cols-4">
+                  {[
+                    { value: '15+', label: 'Years of experience' },
+                    { value: '25+', label: 'Countries served' },
+                    { value: '98%', label: 'Satisfied clients' },
+                    { value: '500+', label: 'Families assisted' },
+                  ].map((stat) => (
+                    <div key={stat.label}>
+                      <dt className="font-heading text-2xl text-[#C9A84C] md:text-4xl">{stat.value}</dt>
+                      <dd className="mt-1 text-sm text-white/60">{stat.label}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </Reveal>
+            </div>
+
+            {/* RIGHT — image */}
+            <Reveal delay={150} className="hidden lg:block">
+              <div className="relative w-full mt-2">
+                <div aria-hidden="true" className="absolute -inset-4 rounded-3xl bg-[#C9A84C]/10 blur-2xl" />
+                <img
+                  src="/images/genius-vc-travel-lounge.png"
+                  alt="Genius VC Travel consultant advising a couple in a luxury meeting room"
+                  className="relative w-full rounded-2xl object-cover shadow-2xl ring-1 ring-[#C9A84C]/20"
+                  loading="eager"
+                />
               </div>
             </Reveal>
-            <Reveal delay={450}>
-              <dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 border-t border-white/10 pt-4 md:mt-6 md:grid-cols-4">
-                {[
-                  { value: '15+', label: 'Years of experience' },
-                  { value: '25+', label: 'Countries served' },
-                  { value: '98%', label: 'Satisfied clients' },
-                  { value: '500+', label: 'Families assisted' },
-                ].map((stat) => (
-                  <div key={stat.label}>
-                    <dt className="font-heading text-2xl text-[#C9A84C] md:text-4xl">{stat.value}</dt>
-                    <dd className="mt-1 text-sm text-white/60">{stat.label}</dd>
-                  </div>
-                ))}
-              </dl>
-            </Reveal>
+
           </div>
         </div>
       </section>
@@ -232,56 +253,9 @@ export default function EnglishPage() {
           </Reveal>
           <div className="grid md:grid-cols-3 gap-8 items-stretch">
             {[
-              {
-                name: 'AI Evaluation',
-                price: '$0',
-                description: 'Discover your consular risk profile in 2 minutes.',
-                badge: '100% Free',
-                badgeColor: 'bg-[#3DB89E]/20 text-[#3DB89E]',
-                features: [
-                  'AI-powered profile diagnosis',
-                  'Estimated approval percentage',
-                  'Risk factor identification',
-                  'Initial recommendations',
-                ],
-                cta: 'Evaluate my profile free',
-                href: EVAL_URL,
-                highlighted: false,
-              },
-              {
-                name: 'Premium Advisory',
-                price: 'Custom',
-                description: 'Expert support from start to finish.',
-                badge: 'Most popular',
-                badgeColor: 'bg-[#C9A84C]/20 text-[#C9A84C]',
-                features: [
-                  'Everything in the free plan',
-                  'Dedicated expert consultant',
-                  'Document review and preparation',
-                  'Consular interview preparation',
-                  'Follow-up until the decision',
-                  'Priority WhatsApp support',
-                ],
-                cta: 'Get a quote',
-                href: WA_URL,
-                highlighted: true,
-              },
-              {
-                name: 'Genius VC Travel',
-                price: 'Tailored',
-                description: 'Premium trip planning once your visa is approved.',
-                badge: 'New',
-                badgeColor: 'bg-[#1A3A3A]/10 text-[#1A3A3A]/50',
-                features: [
-                  'Personalized itinerary',
-                  'Luxury hotels and flights',
-                  'Exclusive experiences',
-                  '24/7 support during your trip',
-                ],
-                cta: 'Explore travel',
-                href: WA_URL,
-                highlighted: false,
-              },
+              { name: 'AI Evaluation', price: '$0', description: 'Discover your consular risk profile in 2 minutes.', badge: '100% Free', badgeColor: 'bg-[#3DB89E]/20 text-[#3DB89E]', features: ['AI-powered profile diagnosis','Estimated approval percentage','Risk factor identification','Initial recommendations'], cta: 'Evaluate my profile free', href: EVAL_URL, highlighted: false },
+              { name: 'Premium Advisory', price: 'Custom', description: 'Expert support from start to finish.', badge: 'Most popular', badgeColor: 'bg-[#C9A84C]/20 text-[#C9A84C]', features: ['Everything in the free plan','Dedicated expert consultant','Document review and preparation','Consular interview preparation','Follow-up until the decision','Priority WhatsApp support'], cta: 'Get a quote', href: WA_URL, highlighted: true },
+              { name: 'Genius VC Travel', price: 'Tailored', description: 'Premium trip planning once your visa is approved.', badge: 'New', badgeColor: 'bg-[#1A3A3A]/10 text-[#1A3A3A]/50', features: ['Personalized itinerary','Luxury hotels and flights','Exclusive experiences','24/7 support during your trip'], cta: 'Explore travel', href: WA_URL, highlighted: false },
             ].map((plan, i) => (
               <Reveal key={plan.name} delay={i * 100}>
                 <div className={`rounded-2xl p-8 h-full flex flex-col ${plan.highlighted ? 'bg-[#1A3A3A] shadow-2xl ring-2 ring-[#C9A84C]' : 'bg-white shadow-md border border-[#1A3A3A]/5'}`}>
@@ -289,9 +263,7 @@ export default function EnglishPage() {
                     <h3 className={`font-heading text-xl font-bold ${plan.highlighted ? 'text-white' : 'text-[#1A3A3A]'}`}>{plan.name}</h3>
                     <span className={`text-xs font-bold px-3 py-1 rounded-full ${plan.badgeColor}`}>{plan.badge}</span>
                   </div>
-                  <div className="mb-4">
-                    <span className={`font-heading text-4xl font-black ${plan.highlighted ? 'text-[#C9A84C]' : 'text-[#1A3A3A]'}`}>{plan.price}</span>
-                  </div>
+                  <div className="mb-4"><span className={`font-heading text-4xl font-black ${plan.highlighted ? 'text-[#C9A84C]' : 'text-[#1A3A3A]'}`}>{plan.price}</span></div>
                   <p className={`text-sm mb-6 ${plan.highlighted ? 'text-white/70' : 'text-[#1A3A3A]/60'}`}>{plan.description}</p>
                   <ul className="space-y-3 flex-1 mb-8">
                     {plan.features.map((feature) => (
@@ -301,18 +273,12 @@ export default function EnglishPage() {
                       </li>
                     ))}
                   </ul>
-                  <a href={plan.href} target="_blank" rel="noopener noreferrer" className={`w-full text-center py-3 rounded-full text-sm font-bold transition-all hover:opacity-90 block ${plan.highlighted ? 'bg-[#C9A84C] text-[#1A3A3A]' : 'border-2 border-[#1A3A3A] text-[#1A3A3A] hover:bg-[#1A3A3A] hover:text-white'}`}>
-                    {plan.cta} →
-                  </a>
+                  <a href={plan.href} target="_blank" rel="noopener noreferrer" className={`w-full text-center py-3 rounded-full text-sm font-bold transition-all hover:opacity-90 block ${plan.highlighted ? 'bg-[#C9A84C] text-[#1A3A3A]' : 'border-2 border-[#1A3A3A] text-[#1A3A3A] hover:bg-[#1A3A3A] hover:text-white'}`}>{plan.cta} →</a>
                 </div>
               </Reveal>
             ))}
           </div>
-          <Reveal>
-            <p className="text-center text-[#1A3A3A]/60 text-sm mt-10 font-medium">
-              Advisory pricing is agreed individually based on case complexity. Contact us for a no-obligation quote.
-            </p>
-          </Reveal>
+          <Reveal><p className="text-center text-[#1A3A3A]/60 text-sm mt-10 font-medium">Advisory pricing is agreed individually based on case complexity. Contact us for a no-obligation quote.</p></Reveal>
         </div>
       </section>
 
@@ -332,22 +298,12 @@ export default function EnglishPage() {
             ].map((dest, i) => (
               <Reveal key={dest.title} delay={i * 90} as="article">
                 <div className="group relative h-96 overflow-hidden rounded-2xl">
-                  <img
-                    src={dest.image || '/placeholder.svg'}
-                    alt={dest.title}
-                    className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-t from-[#0D2222] via-[#1A3A3A]/40 to-transparent transition-opacity duration-500 group-hover:from-[#0D2222]/95"
-                  />
+                  <img src={dest.image || '/placeholder.svg'} alt={dest.title} className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#0D2222] via-[#1A3A3A]/40 to-transparent transition-opacity duration-500 group-hover:from-[#0D2222]/95" />
                   <div className="absolute inset-x-0 bottom-0 p-7">
                     <h3 className="font-heading text-2xl text-white">{dest.title}</h3>
                     <p className="mt-2 max-w-xs text-sm leading-relaxed text-white/80">{dest.desc}</p>
-                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#C9A84C]">
-                      Explore destinations
-                      <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
-                    </span>
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#C9A84C]">Explore destinations <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" /></span>
                   </div>
                 </div>
               </Reveal>
@@ -449,7 +405,6 @@ export default function EnglishPage() {
         </div>
       </footer>
 
-      {/* WHATSAPP FLOATING BUTTON */}
       <WhatsappButtonEn />
 
     </main>
