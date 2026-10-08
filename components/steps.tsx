@@ -1,7 +1,5 @@
 import { Reveal } from './reveal'
 
-const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
-
 const steps = [
   {
     number: '01',
@@ -46,7 +44,7 @@ export function Steps() {
                 <h3 className="font-heading text-2xl font-bold text-[#1A3A3A] mb-3">{step.title}</h3>
                 <p className="text-[#1A3A3A]/75 leading-relaxed text-sm flex-1 font-medium">{step.description}</p>
                 {step.showCta && (
-                  <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 bg-[#C9A84C] text-[#1A3A3A] px-6 py-3 rounded-full text-sm font-bold hover:opacity-90 transition-opacity w-fit">
+                  <a href="/evaluacion" className="mt-6 inline-flex items-center gap-2 bg-[#C9A84C] text-[#1A3A3A] px-6 py-3 rounded-full text-sm font-bold hover:opacity-90 transition-opacity w-fit">
                     Evaluar ahora →
                   </a>
                 )}
