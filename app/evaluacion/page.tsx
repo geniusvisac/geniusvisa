@@ -238,49 +238,16 @@ export default function EvaluacionPage() {
     const confidence = Math.min(95, Math.max(55, pct - 5 + Math.floor(Math.random() * 10)))
     const level = score >= 65 ? 'high' : score >= 40 ? 'medium' : 'low'
 
-    const prompt = `Eres un experto en visas americanas con 15 años de experiencia. Analiza el siguiente perfil y genera un reporte en español.
-
-PERFIL:
-- Nombre: ${form.name}
-- Edad: ${form.age} años
-- País: ${form.country}
-- Historial migratorio: ${form.history}
-- Propósito: ${form.purpose}
-- Ocupación: ${form.occupation}
-- Tiempo en empleo: ${form.jobtime}
-- Educación: ${form.education}
-- Ingresos: ${form.income}
-- Fondos suficientes: ${form.funds}
-- Estado civil: ${form.marital}
-- Viajes previos: ${form.travel}
-- Familiares en EE.UU.: ${form.relatives}
-- Propiedad: ${form.property}
-- Duración planificada: ${form.duration}
-- Antecedentes penales: ${form.criminal}
-- Puntuación: ${score}/94 (${pct}%)
-
-Responde SOLO con JSON válido (sin markdown):
-{
-  "summary": "Párrafo de 3-4 oraciones resumiendo el caso",
-  "strengths": [{"title": "Título", "text": "Explicación 2-3 oraciones"}],
-  "risks": [{"title": "Título", "text": "Explicación 2-3 oraciones"}],
-  "recommendations": [{"title": "Título", "text": "Acción concreta 2-3 oraciones"}]
-}`
 
     try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
+      const res = await fetch('/api/evaluate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-6',
-          max_tokens: 1000,
-          messages: [{ role: 'user', content: prompt }],
-        }),
+        body: JSON.stringify({ formData: form, score, pct, lang: 'es' }),
       })
+      if (!res.ok) throw new Error('API error')
       const data = await res.json()
-      const text = data.content?.[0]?.text || ''
-      const clean = text.replace(/```json|```/g, '').trim()
-      const analysis: AnalysisResult = JSON.parse(clean)
+      const analysis: AnalysisResult = data.analysis
       setResult({ score, confidence, level, analysis })
     } catch {
       // Fallback si IA no disponible
