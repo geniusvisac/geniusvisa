@@ -1,6 +1,5 @@
 import { Reveal } from './reveal'
 
-const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
 const WA_URL = 'https://wa.me/50497410936'
 
 const plans = [
@@ -17,7 +16,8 @@ const plans = [
       'Recomendaciones iniciales',
     ],
     cta: 'Evaluar mi perfil gratis',
-    href: EVAL_URL,
+    href: '/evaluacion',
+    external: false,
     highlighted: false,
   },
   {
@@ -36,6 +36,7 @@ const plans = [
     ],
     cta: 'Consultar precio',
     href: WA_URL,
+    external: true,
     highlighted: true,
   },
   {
@@ -52,6 +53,7 @@ const plans = [
     ],
     cta: 'Explorar viajes',
     href: WA_URL,
+    external: true,
     highlighted: false,
   },
 ]
@@ -87,7 +89,11 @@ export function Pricing() {
                     </li>
                   ))}
                 </ul>
-                <a href={plan.href} target="_blank" rel="noopener noreferrer" className={`w-full text-center py-3 rounded-full text-sm font-bold transition-all hover:opacity-90 block ${plan.highlighted ? 'bg-[#C9A84C] text-[#1A3A3A]' : 'border-2 border-[#1A3A3A] text-[#1A3A3A] hover:bg-[#1A3A3A] hover:text-white'}`}>
+                <a
+                  href={plan.href}
+                  {...(plan.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  className={`w-full text-center py-3 rounded-full text-sm font-bold transition-all hover:opacity-90 block ${plan.highlighted ? 'bg-[#C9A84C] text-[#1A3A3A]' : 'border-2 border-[#1A3A3A] text-[#1A3A3A] hover:bg-[#1A3A3A] hover:text-white'}`}
+                >
                   {plan.cta} →
                 </a>
               </div>
