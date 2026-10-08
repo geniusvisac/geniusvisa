@@ -1,7 +1,7 @@
 'use client'
 import { ArrowRight } from 'lucide-react'
 import { Reveal } from './reveal'
-const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
+const EVAL_URL = '/evaluacion'
 const stats = [
   { value: '15+', label: 'Años de experiencia' },
   { value: '25+', label: 'Países atendidos' },
@@ -52,8 +52,6 @@ export function Hero() {
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <a
                   href={EVAL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="group inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-teal-deep transition-transform duration-300 hover:scale-[1.03]"
                 >
                   Evaluar mi perfil gratis
