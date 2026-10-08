@@ -123,9 +123,21 @@ Include 3 to 5 items per section. Be specific — mention concrete details like 
 
     const data = await response.json()
     const text = data.content?.[0]?.text || ''
-    const clean = text.replace(/```json|```/g, '').trim()
-    const analysis = JSON.parse(clean)
 
+    // Extract JSON robustly — handle markdown fences and leading/trailing text
+    let clean = text
+    // Remove markdown code fences
+    clean = clean.replace(/```json\s*/gi, '').replace(/```\s*/g, '')
+    // Find the first { and last } to extract just the JSON object
+    const start = clean.indexOf('{')
+    const end = clean.lastIndexOf('}')
+    if (start === -1 || end === -1) {
+      console.error('No JSON object found in response:', text)
+      return NextResponse.json({ error: 'Invalid AI response format' }, { status: 500 })
+    }
+    clean = clean.slice(start, end + 1).trim()
+
+    const analysis = JSON.parse(clean)
     return NextResponse.json({ analysis })
   } catch (error) {
     console.error('Evaluate route error:', error)
