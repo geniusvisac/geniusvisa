@@ -2,8 +2,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { Reveal } from './reveal'
 
-const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
-
 const conversation = [
   { role: 'user', text: 'Tengo 28 años, soy ingeniero en Honduras y quiero visa B1/B2.', delay: 500 },
   { role: 'ai', text: 'Analizando tu perfil consular...', delay: 1800, isTyping: true },
@@ -25,7 +23,6 @@ export function AiMockup() {
     return () => timersRef.current.forEach(clearTimeout)
   }, [])
 
-  // Solo hace scroll dentro del chat, no de la pagina
   useEffect(() => {
     if (messages.length > 0 && chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight
@@ -73,7 +70,7 @@ export function AiMockup() {
                   </li>
                 ))}
               </ul>
-              <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center gap-2 bg-[#C9A84C] text-[#1A3A3A] px-8 py-4 rounded-full text-sm font-bold hover:opacity-90 transition-opacity">
+              <a href="/evaluacion" className="mt-8 inline-flex items-center gap-2 bg-[#C9A84C] text-[#1A3A3A] px-8 py-4 rounded-full text-sm font-bold hover:opacity-90 transition-opacity">
                 Evaluar mi perfil ahora →
               </a>
             </div>
