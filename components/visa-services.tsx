@@ -9,8 +9,6 @@ import {
 } from 'lucide-react'
 import { Reveal } from './reveal'
 
-const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
-
 const services = [
   {
     icon: BookOpen,
@@ -48,6 +46,7 @@ const services = [
     href: '#contacto',
   },
 ]
+
 export function VisaServices() {
   return (
     <section id="visas" className="bg-background py-24 md:py-32">
@@ -95,9 +94,7 @@ export function VisaServices() {
           {/* Featured AI card */}
           <Reveal delay={350} as="article">
             <a
-              href={EVAL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/evaluacion"
               className="group flex h-full flex-col justify-between rounded-2xl border border-gold/50 bg-teal-deep p-7 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-teal-deep/20"
             >
               <div>
