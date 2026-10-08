@@ -1,9 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import Anthropic from '@anthropic-ai/sdk'
-
-const client = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-})
 
 export async function POST(req: NextRequest) {
   try {
@@ -34,91 +29,106 @@ PERFIL DEL SOLICITANTE:
 - Educación: ${formData.education}
 - Ingresos mensuales: ${formData.income}
 - Quién paga el viaje: ${formData.whopays}
-- Fondos suficientes (doble del costo): ${formData.funds}
+- Fondos suficientes: ${formData.funds}
 - Estado civil: ${formData.marital}
 - Viajes internacionales recientes: ${formData.travel}
 - Familiares en EE.UU.: ${formData.relatives}
 - Propiedad inmueble: ${formData.property}
-- Duración planificada en EE.UU.: ${formData.duration}
+- Duración planificada: ${formData.duration}
 - Antecedentes penales: ${formData.criminal}
 - Puntuación calculada: ${score}/94 (${pct}%)
 
-Genera un JSON con esta estructura exacta (sin markdown, sin texto adicional, solo JSON puro):
+Responde SOLO con JSON válido sin markdown ni texto adicional:
 {
-  "summary": "Párrafo de 3-4 oraciones resumiendo objetivamente el caso, mencionando los aspectos más relevantes del perfil",
+  "summary": "Párrafo de 3-4 oraciones resumiendo el caso con detalles específicos del perfil",
   "strengths": [
-    {"title": "Título corto de la fortaleza", "text": "Explicación específica de 2-3 oraciones basada en los datos del perfil"},
+    {"title": "Título corto", "text": "Explicación de 2-3 oraciones específica al perfil"},
     {"title": "...", "text": "..."}
   ],
   "risks": [
-    {"title": "Título corto del factor de riesgo", "text": "Explicación específica de 2-3 oraciones basada en los datos del perfil"},
+    {"title": "Título corto", "text": "Explicación de 2-3 oraciones específica al perfil"},
     {"title": "...", "text": "..."}
   ],
   "recommendations": [
-    {"title": "Título corto de la recomendación", "text": "Acción concreta y específica de 2-3 oraciones que el solicitante debe tomar"},
+    {"title": "Título corto", "text": "Acción concreta de 2-3 oraciones que el solicitante debe tomar"},
     {"title": "...", "text": "..."}
   ]
 }
 
-Incluye entre 3 y 5 items en cada sección. Sé muy específico al perfil dado — menciona detalles concretos como el país, ocupación, situación migratoria. No uses respuestas genéricas.`
-      : `You are a US visa expert with 15 years of experience at consulates in Latin America. Analyze the following visa application profile and generate a professional detailed report.
+Incluye entre 3 y 5 items en cada sección. Sé muy específico — menciona detalles concretos como el país, ocupación y situación migratoria del solicitante.`
+      : `You are a US visa expert with 15 years of experience. Analyze the following visa application profile and generate a detailed professional report.
 
 APPLICANT PROFILE:
 - Name: ${formData.name}
 - Age: ${formData.age} years
-- Country of origin: ${formData.country}
+- Country: ${formData.country}
 - Immigration history: ${formData.history}
-- Number of previous denials: ${formData.dcount || 'N/A'}
-- Most recent denial: ${formData.dwhen || 'N/A'}
+- Previous denials: ${formData.dcount || 'N/A'}
+- Last denial: ${formData.dwhen || 'N/A'}
 - Time outside US: ${formData.timegone || 'N/A'}
-- Previous visa category: ${formData.visacat || 'N/A'}
-- Purpose of trip: ${formData.purpose}
+- Previous visa: ${formData.visacat || 'N/A'}
+- Purpose: ${formData.purpose}
 - Occupation: ${formData.occupation}
-- Time in current job: ${formData.jobtime}
+- Time in job: ${formData.jobtime}
 - Education: ${formData.education}
-- Monthly income: ${formData.income}
-- Who pays for trip: ${formData.whopays}
-- Sufficient funds (double cost): ${formData.funds}
+- Income: ${formData.income}
+- Who pays: ${formData.whopays}
+- Sufficient funds: ${formData.funds}
 - Marital status: ${formData.marital}
-- Recent international travel: ${formData.travel}
+- Recent travel: ${formData.travel}
 - Relatives in US: ${formData.relatives}
-- Real estate property: ${formData.property}
-- Planned duration in US: ${formData.duration}
+- Property: ${formData.property}
+- Planned duration: ${formData.duration}
 - Criminal record: ${formData.criminal}
-- Calculated score: ${score}/94 (${pct}%)
+- Score: ${score}/94 (${pct}%)
 
-Generate a JSON with this exact structure (no markdown, no additional text, pure JSON only):
+Respond ONLY with valid JSON, no markdown or additional text:
 {
-  "summary": "3-4 sentence paragraph objectively summarizing the case, mentioning the most relevant profile aspects",
+  "summary": "3-4 sentence paragraph summarizing the case with specific profile details",
   "strengths": [
-    {"title": "Short strength title", "text": "Specific 2-3 sentence explanation based on profile data"},
+    {"title": "Short title", "text": "2-3 sentence explanation specific to this profile"},
     {"title": "...", "text": "..."}
   ],
   "risks": [
-    {"title": "Short risk factor title", "text": "Specific 2-3 sentence explanation based on profile data"},
+    {"title": "Short title", "text": "2-3 sentence explanation specific to this profile"},
     {"title": "...", "text": "..."}
   ],
   "recommendations": [
-    {"title": "Short recommendation title", "text": "Concrete and specific 2-3 sentence action the applicant must take"},
+    {"title": "Short title", "text": "Concrete 2-3 sentence action the applicant must take"},
     {"title": "...", "text": "..."}
   ]
 }
 
-Include between 3 and 5 items in each section. Be very specific to the given profile — mention concrete details like country, occupation, immigration situation. Do not use generic responses.`
+Include 3 to 5 items per section. Be specific — mention concrete details like country, occupation and immigration situation.`
 
-    const message = await client.messages.create({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 1500,
-      messages: [{ role: 'user', content: prompt }],
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY!,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1500,
+        messages: [{ role: 'user', content: prompt }],
+      }),
     })
 
-    const text = message.content[0].type === 'text' ? message.content[0].text : ''
+    if (!response.ok) {
+      const err = await response.text()
+      console.error('Anthropic API error:', err)
+      return NextResponse.json({ error: 'AI service error' }, { status: 500 })
+    }
+
+    const data = await response.json()
+    const text = data.content?.[0]?.text || ''
     const clean = text.replace(/```json|```/g, '').trim()
     const analysis = JSON.parse(clean)
 
     return NextResponse.json({ analysis })
   } catch (error) {
-    console.error('Evaluate API error:', error)
+    console.error('Evaluate route error:', error)
     return NextResponse.json(
       { error: 'Error generating evaluation. Please try again.' },
       { status: 500 }
