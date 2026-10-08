@@ -9,97 +9,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
-    const isEs = lang === 'es'
+    const prompt = `Eres un experto en visas americanas. Analiza este perfil y responde ÚNICAMENTE con un objeto JSON válido, sin texto antes ni después, sin comillas de código.
 
-    const prompt = isEs
-      ? `Eres un experto en visas americanas con 15 años de experiencia en consulados de Honduras y Latinoamérica. Analiza el siguiente perfil de solicitud de visa y genera un reporte profesional detallado.
+PERFIL:
+Nombre: ${formData.name}, País: ${formData.country}, Edad: ${formData.age}, Historial: ${formData.history}, Propósito: ${formData.purpose}, Ocupación: ${formData.occupation}, Ingresos: ${formData.income}, Educación: ${formData.education}, Estado civil: ${formData.marital}, Viajes previos: ${formData.travel}, Familiares en EEUU: ${formData.relatives}, Propiedad: ${formData.property}, Duración: ${formData.duration}, Antecedentes: ${formData.criminal}, Fondos: ${formData.funds}, Puntuación: ${score}/94
 
-PERFIL DEL SOLICITANTE:
-- Nombre: ${formData.name}
-- Edad: ${formData.age} años
-- País de origen: ${formData.country}
-- Historial migratorio: ${formData.history}
-- Número de rechazos previos: ${formData.dcount || 'N/A'}
-- Último rechazo: ${formData.dwhen || 'N/A'}
-- Tiempo fuera de EE.UU.: ${formData.timegone || 'N/A'}
-- Categoría visa anterior: ${formData.visacat || 'N/A'}
-- Propósito del viaje: ${formData.purpose}
-- Ocupación: ${formData.occupation}
-- Tiempo en empleo: ${formData.jobtime}
-- Educación: ${formData.education}
-- Ingresos mensuales: ${formData.income}
-- Quién paga el viaje: ${formData.whopays}
-- Fondos suficientes: ${formData.funds}
-- Estado civil: ${formData.marital}
-- Viajes internacionales recientes: ${formData.travel}
-- Familiares en EE.UU.: ${formData.relatives}
-- Propiedad inmueble: ${formData.property}
-- Duración planificada: ${formData.duration}
-- Antecedentes penales: ${formData.criminal}
-- Puntuación calculada: ${score}/94 (${pct}%)
-
-Responde SOLO con JSON válido sin markdown ni texto adicional:
-{
-  "summary": "Párrafo de 3-4 oraciones resumiendo el caso con detalles específicos del perfil",
-  "strengths": [
-    {"title": "Título corto", "text": "Explicación de 2-3 oraciones específica al perfil"},
-    {"title": "...", "text": "..."}
-  ],
-  "risks": [
-    {"title": "Título corto", "text": "Explicación de 2-3 oraciones específica al perfil"},
-    {"title": "...", "text": "..."}
-  ],
-  "recommendations": [
-    {"title": "Título corto", "text": "Acción concreta de 2-3 oraciones que el solicitante debe tomar"},
-    {"title": "...", "text": "..."}
-  ]
-}
-
-Incluye entre 3 y 5 items en cada sección. Sé muy específico — menciona detalles concretos como el país, ocupación y situación migratoria del solicitante.`
-      : `You are a US visa expert with 15 years of experience. Analyze the following visa application profile and generate a detailed professional report.
-
-APPLICANT PROFILE:
-- Name: ${formData.name}
-- Age: ${formData.age} years
-- Country: ${formData.country}
-- Immigration history: ${formData.history}
-- Previous denials: ${formData.dcount || 'N/A'}
-- Last denial: ${formData.dwhen || 'N/A'}
-- Time outside US: ${formData.timegone || 'N/A'}
-- Previous visa: ${formData.visacat || 'N/A'}
-- Purpose: ${formData.purpose}
-- Occupation: ${formData.occupation}
-- Time in job: ${formData.jobtime}
-- Education: ${formData.education}
-- Income: ${formData.income}
-- Who pays: ${formData.whopays}
-- Sufficient funds: ${formData.funds}
-- Marital status: ${formData.marital}
-- Recent travel: ${formData.travel}
-- Relatives in US: ${formData.relatives}
-- Property: ${formData.property}
-- Planned duration: ${formData.duration}
-- Criminal record: ${formData.criminal}
-- Score: ${score}/94 (${pct}%)
-
-Respond ONLY with valid JSON, no markdown or additional text:
-{
-  "summary": "3-4 sentence paragraph summarizing the case with specific profile details",
-  "strengths": [
-    {"title": "Short title", "text": "2-3 sentence explanation specific to this profile"},
-    {"title": "...", "text": "..."}
-  ],
-  "risks": [
-    {"title": "Short title", "text": "2-3 sentence explanation specific to this profile"},
-    {"title": "...", "text": "..."}
-  ],
-  "recommendations": [
-    {"title": "Short title", "text": "Concrete 2-3 sentence action the applicant must take"},
-    {"title": "...", "text": "..."}
-  ]
-}
-
-Include 3 to 5 items per section. Be specific — mention concrete details like country, occupation and immigration situation.`
+Responde SOLO esto (reemplaza los valores entre comillas):
+{"summary":"resumen de 3 oraciones específico al perfil","strengths":[{"title":"fortaleza 1","text":"explicación"},{"title":"fortaleza 2","text":"explicación"},{"title":"fortaleza 3","text":"explicación"}],"risks":[{"title":"riesgo 1","text":"explicación"},{"title":"riesgo 2","text":"explicación"},{"title":"riesgo 3","text":"explicación"}],"recommendations":[{"title":"recomendación 1","text":"acción concreta"},{"title":"recomendación 2","text":"acción concreta"},{"title":"recomendación 3","text":"acción concreta"}]}`
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -109,7 +25,7 @@ Include 3 to 5 items per section. Be specific — mention concrete details like 
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
+        model: 'claude-haiku-4-5',
         max_tokens: 1500,
         messages: [{ role: 'user', content: prompt }],
       }),
@@ -117,33 +33,30 @@ Include 3 to 5 items per section. Be specific — mention concrete details like 
 
     if (!response.ok) {
       const err = await response.text()
-      console.error('Anthropic API error:', err)
-      return NextResponse.json({ error: 'AI service error' }, { status: 500 })
+      console.error('Anthropic error:', err)
+      return NextResponse.json({ error: 'AI service error', detail: err }, { status: 500 })
     }
 
     const data = await response.json()
     const text = data.content?.[0]?.text || ''
 
-    // Extract JSON robustly — handle markdown fences and leading/trailing text
-    let clean = text
-    // Remove markdown code fences
-    clean = clean.replace(/```json\s*/gi, '').replace(/```\s*/g, '')
-    // Find the first { and last } to extract just the JSON object
-    const start = clean.indexOf('{')
-    const end = clean.lastIndexOf('}')
-    if (start === -1 || end === -1) {
-      console.error('No JSON object found in response:', text)
-      return NextResponse.json({ error: 'Invalid AI response format' }, { status: 500 })
-    }
-    clean = clean.slice(start, end + 1).trim()
+    // Extract JSON - find first { and last }
+    const start = text.indexOf('{')
+    const end = text.lastIndexOf('}')
 
-    const analysis = JSON.parse(clean)
+    if (start === -1 || end === -1) {
+      console.error('No JSON in response. Raw text:', text)
+      return NextResponse.json({ error: 'No JSON found', raw: text }, { status: 500 })
+    }
+
+    const jsonStr = text.slice(start, end + 1)
+    const analysis = JSON.parse(jsonStr)
+
     return NextResponse.json({ analysis })
+
   } catch (error) {
-    console.error('Evaluate route error:', error)
-    return NextResponse.json(
-      { error: 'Error generating evaluation. Please try again.' },
-      { status: 500 }
-    )
+    const msg = error instanceof Error ? error.message : String(error)
+    console.error('Route error:', msg)
+    return NextResponse.json({ error: msg }, { status: 500 })
   }
 }
