@@ -14,8 +14,6 @@ const links = [
   { label: 'Contacto', href: '#contacto' },
 ]
 
-const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
-
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
@@ -48,12 +46,12 @@ export function Navbar() {
             className="size-14 rounded-full md:size-16"
           />
           <span className="hidden flex-col leading-tight sm:flex">
-  <span className="font-sans text-base font-semibold tracking-widest uppercase text-offwhite md:text-sm">
-  Genius Visa Consultants
-</span>
-<span className="font-sans text-xs font-light tracking-widest uppercase text-gold">
-  & Genius VC Travel
-</span>
+            <span className="font-sans text-base font-semibold tracking-widest uppercase text-offwhite md:text-sm">
+              Genius Visa Consultants
+            </span>
+            <span className="font-sans text-xs font-light tracking-widest uppercase text-gold">
+              & Genius VC Travel
+            </span>
           </span>
         </a>
 
@@ -71,7 +69,9 @@ export function Navbar() {
 
         <div className="flex items-center gap-3">
           <a href="/en" className="hidden text-xs text-white/50 hover:text-white transition-colors sm:block mr-2">🇺🇸 English</a>
-          <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="hidden rounded-full border border-gold px-5 py-2 text-sm font-medium text-gold transition-all hover:bg-gold hover:text-teal-deep sm:inline-flex">Evalúa tu perfil</a>
+          <a href="/evaluacion" className="hidden rounded-full border border-gold px-5 py-2 text-sm font-medium text-gold transition-all hover:bg-gold hover:text-teal-deep sm:inline-flex">
+            Evalúa tu perfil
+          </a>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -117,9 +117,8 @@ export function Navbar() {
             🇺🇸 English
           </a>
           <a
-            href={EVAL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/evaluacion"
+            onClick={() => setOpen(false)}
             className="mt-2 rounded-full bg-gold px-5 py-3 text-center text-sm font-semibold text-teal-deep"
           >
             Evalúa tu perfil
