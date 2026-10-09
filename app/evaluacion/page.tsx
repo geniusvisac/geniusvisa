@@ -157,6 +157,26 @@ export default function EvaluacionPage() {
 
   const downloadPDF = () => {
     if (!result) return
+    // Save to sessionStorage and open /reporte in new tab
+    try {
+      sessionStorage.setItem('genius_report', JSON.stringify({
+        score: result.score,
+        confidence: result.confidence,
+        level: result.level,
+        analysis: result.analysis,
+        form: {
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          age: form.age,
+          country: form.country,
+          purpose: form.purpose,
+        }
+      }))
+      window.open('/reporte', '_blank')
+      return
+    } catch {}
+    // Fallback if sessionStorage fails
     const lc = result.level==='high'?'#3DB89E':result.level==='medium'?'#C9A84C':'#E05252'
     const ll = result.level==='high'?'Probable Aprobación':result.level==='medium'?'Aprobación Posible':'Alto Riesgo de Rechazo'
     const date = new Date().toLocaleDateString('es-HN',{year:'numeric',month:'long',day:'numeric'})
@@ -212,16 +232,15 @@ export default function EvaluacionPage() {
     </div>
     <div class="footer"><span>Reporte de PreCalificación — ${form.name}</span><span>+504 9741-0936 | geniusvisac@gmail.com | @geniusvisac | geniusvctravel.com</span></div>
     </body></html>`
-    // Download as HTML file that opens in browser for printing
-    const blob = new Blob([html], {type: 'text/html;charset=utf-8'})
-    const blobUrl = URL.createObjectURL(blob)
+    // Fallback: open as data URL
+    const encoded = 'data:text/html;charset=utf-8,' + encodeURIComponent(html)
     const a = document.createElement('a')
-    a.href = blobUrl
-    a.download = `Evaluacion_${form.name.replace(/\s+/g,'_')}.html`
+    a.href = encoded
+    a.target = '_blank'
+    a.rel = 'noopener'
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
-    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000)
   }
 
   const restart = () => { setForm(INITIAL); setStep(1); setResult(null); setError('') }
