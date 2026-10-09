@@ -212,8 +212,16 @@ export default function EvaluacionPage() {
     </div>
     <div class="footer"><span>Reporte de PreCalificación — ${form.name}</span><span>+504 9741-0936 | geniusvisac@gmail.com | @geniusvisac | geniusvctravel.com</span></div>
     </body></html>`
-    const w = window.open('','_blank')
-    if (w) { w.document.write(html); w.document.close(); setTimeout(()=>w.print(),500) }
+    // Download as HTML file that opens in browser for printing
+    const blob = new Blob([html], {type: 'text/html;charset=utf-8'})
+    const blobUrl = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = blobUrl
+    a.download = `Evaluacion_${form.name.replace(/\s+/g,'_')}.html`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000)
   }
 
   const restart = () => { setForm(INITIAL); setStep(1); setResult(null); setError('') }
