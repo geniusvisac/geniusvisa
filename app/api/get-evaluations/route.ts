@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
       'Content-Type': 'application/json',
     }
 
-    const keysRes = await fetch(`${url}/zrange/evaluaciones_index/0/-1/rev`, { headers })
+    const keysRes = await fetch(`${url}/zrange/evaluaciones_idx/0/-1/rev`, { headers })
     const keysData = await keysRes.json()
     const keys: string[] = keysData.result || []
 
