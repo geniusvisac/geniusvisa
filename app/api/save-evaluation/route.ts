@@ -13,36 +13,28 @@ export async function POST(req: NextRequest) {
     }
 
     const docId = `eval_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`
-    const data = JSON.stringify({ name, email, phone, age, country, history, purpose, occupation, score, level, confidence, analysis, timestamp })
+    const data = { name, email, phone, age, country, history, purpose, occupation, score, level, confidence, analysis, timestamp }
     const ts = Date.now()
+    const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
 
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    }
-
-    // Use pipeline to execute both commands atomically
-    const pipeline = [
-      ['SET', docId, data],
-      ['ZADD', 'evaluaciones_idx', ts, docId],
-    ]
-
-    const res = await fetch(`${url}/pipeline`, {
+    // SET using GET-style URL (most compatible Upstash format)
+    const setRes = await fetch(`${url}/set/${docId}`, {
       method: 'POST',
       headers,
-      body: JSON.stringify(pipeline),
+      body: JSON.stringify(data),
     })
+    const setData = await setRes.json()
+    console.log('SET result:', JSON.stringify(setData))
 
-    if (!res.ok) {
-      const err = await res.text()
-      console.error('Upstash pipeline error:', err)
-      return NextResponse.json({ ok: false, error: err })
-    }
+    // ZADD using URL path format
+    const zaddRes = await fetch(`${url}/zadd/evaluaciones_idx/${ts}/${docId}`, {
+      method: 'POST',
+      headers,
+    })
+    const zaddData = await zaddRes.json()
+    console.log('ZADD result:', JSON.stringify(zaddData))
 
-    const result = await res.json()
-    console.log('Upstash pipeline result:', JSON.stringify(result))
-
-    return NextResponse.json({ ok: true, id: docId })
+    return NextResponse.json({ ok: true, id: docId, set: setData, zadd: zaddData })
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error)
     console.error('Save evaluation error:', msg)
