@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false, error: 'Redis not configured' }, { status: 200 })
     }
 
-    const docId = `eval:${Date.now()}:${Math.random().toString(36).slice(2, 7)}`
+    const docId = `eval_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`
     const data = {
       name, email, phone, age, country, history,
       purpose, occupation, score, level, confidence,
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Add to sorted set for easy retrieval by date
-    await fetch(`${url}/zadd/evaluaciones_index`, {
+    await fetch(`${url}/zadd/evaluaciones_idx`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
