@@ -29,11 +29,6 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: SITE_URL,
-    languages: {
-      'es-HN': SITE_URL,
-      'en': `${SITE_URL}/en`,
-      'x-default': SITE_URL,
-    },
   },
   openGraph: {
     title: 'Genius Visa Consultants · Tu Movilidad Global',
@@ -84,11 +79,6 @@ export default function RootLayout({
       className={`${playfair.variable} ${inter.variable} bg-background`}
     >
       <head>
-        {/* Hreflang */}
-        <link rel="alternate" hrefLang="es-HN" href={SITE_URL} />
-        <link rel="alternate" hrefLang="en" href={`${SITE_URL}/en`} />
-        <link rel="alternate" hrefLang="x-default" href={SITE_URL} />
-
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
