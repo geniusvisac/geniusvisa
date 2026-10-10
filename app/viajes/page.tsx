@@ -6,7 +6,7 @@ import { SITE_URL } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Genius VC Travel | Viajes de Lujo a tu Medida · Honduras',
-  description: 'Agencia de viajes premium en Tegucigalpa. Escapadas de lujo, lunas de miel y experiencias VIP diseñadas a tu medida, con la confianza de Genius Visa Consultants.',
+  description: 'Agencia de viajes premium en Tegucigalpa. Escapadas de lujo, lunas de miel y experiencias VIP diseñadas a tu medida. Genius VC Travel, Honduras.',
   keywords: 'Genius VC Travel, agencia de viajes de lujo Honduras, viajes premium, luna de miel, escapadas de lujo, Tegucigalpa',
   alternates: { canonical: `${SITE_URL}/viajes` },
   openGraph: {
