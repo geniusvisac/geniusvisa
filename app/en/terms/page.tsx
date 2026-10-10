@@ -1,10 +1,27 @@
 import { Metadata } from 'next'
 import { SITE_URL } from '@/lib/constants'
+
 export const metadata: Metadata = {
   title: 'Terms and Conditions | Genius Visa Consultants',
-  description: 'Terms and conditions of use for Genius Visa Consultants and Genius VC Travel. Tegucigalpa, Honduras.',
-  alternates: { canonical: `${SITE_URL}/en/terms` },
+  description: 'Terms and conditions of use for Genius Visa Consultants and Genius VC Travel services. Tegucigalpa, Honduras.',
+  alternates: {
+    canonical: `${SITE_URL}/en/terms`,
+    languages: {
+      'en': `${SITE_URL}/en/terms`,
+      'es-HN': `${SITE_URL}/terminos`,
+      'x-default': `${SITE_URL}/en/terms`,
+    },
+  },
+  openGraph: {
+    title: 'Terms and Conditions | Genius Visa Consultants',
+    description: 'Terms and conditions of use for Genius Visa Consultants and Genius VC Travel services. Tegucigalpa, Honduras.',
+    url: `${SITE_URL}/en/terms`,
+    siteName: 'Genius Visa Consultants',
+    locale: 'en_US',
+    type: 'website',
+  },
 }
+
 export default function Terms() {
   return (
     <main className="bg-[#1A3A3A] min-h-screen py-24 px-6">
@@ -16,7 +33,7 @@ export default function Terms() {
           { title: "1. Purpose", body: "These terms govern the use of the website and the services offered by Genius Visa Consultants and Genius VC Travel." },
           { title: "2. Nature of the service", body: "Genius Visa Consultants is an immigration consulting firm. We are not immigration attorneys nor legal representatives before any government entity. Our services are guidance, preparation, and support oriented." },
           { title: "3. No guarantee of approval", body: "No contracted service guarantees visa approval. The final decision rests exclusively with the United States consular authorities." },
-          { title: "4. AI-based assessment", body: "The profile assessment tool (ISAVISA) generates indicative results based on statistical data. It does not constitute legal advice and does not guarantee any outcome." },
+          { title: "4. AI-based assessment", body: "The profile assessment tool generates indicative results based on statistical data. It does not constitute legal advice and does not guarantee any outcome." },
           { title: "5. Payments and refunds", body: "Consulting fees are agreed upon individually. Once the process has begun, no refunds will be issued except for causes attributable to Genius." },
           { title: "6. Intellectual property", body: "All content on this site — text, images, brand, the mascot El Viajero Genius — is the property of Genius Visa Consultants. Reproduction without written authorization is prohibited." },
           { title: "7. Governing law", body: "These terms are governed by the laws of the Republic of Honduras." },
