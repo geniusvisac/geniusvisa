@@ -30,6 +30,14 @@ export const metadata: Metadata = {
   },
   openGraph: {
     url: SITE_URL,
+    images: [
+      {
+        url: `${SITE_URL}/images/viajero-genius-v2.png`,
+        width: 1200,
+        height: 630,
+        alt: 'Genius Visa Consultants - Tu Movilidad Global',
+      },
+    ],
   },
 }
 
