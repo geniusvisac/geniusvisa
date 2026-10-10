@@ -2,110 +2,47 @@ import { Metadata } from 'next'
 import { ArrowRight, MessageCircle, Mail, Clock, Star, Plane, Heart, Users, Sparkles, ShieldCheck, Headset, MapPin } from 'lucide-react'
 import { Reveal } from '@/components/reveal'
 import { WhatsappButton } from '@/components/whatsapp-button'
+import { SITE_URL } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Genius VC Travel | Viajes de Lujo a tu Medida · Honduras',
   description: 'Agencia de viajes premium en Tegucigalpa. Escapadas de lujo, lunas de miel y experiencias VIP diseñadas a tu medida, con la confianza de Genius Visa Consultants.',
   keywords: 'Genius VC Travel, agencia de viajes de lujo Honduras, viajes premium, luna de miel, escapadas de lujo, Tegucigalpa',
-  alternates: {
-    canonical: 'https://genius-visa-and-travel.vercel.app/viajes',
-  },
+  alternates: { canonical: `${SITE_URL}/viajes` },
+  openGraph: { url: `${SITE_URL}/viajes` },
 }
 
-const WA_TRAVEL_URL = 'https://wa.me/50497410936?text=Hola%20Genius%20VC%20Travel%2C%20me%20interesa%20planear%20un%20viaje.'
+const COTIZADOR_URL = '/cotizador'
+const WA_URL = 'https://wa.me/50497410936'
 
 const CATEGORIES = [
-  {
-    icon: Sparkles,
-    title: 'Escapadas de lujo',
-    desc: 'Resorts y villas privadas en los destinos más exclusivos del mundo, seleccionados uno por uno.',
-  },
-  {
-    icon: Heart,
-    title: 'Luna de miel',
-    desc: 'El inicio de una nueva vida merece un escenario perfecto. Diseñamos cada detalle para que solo disfruten.',
-  },
-  {
-    icon: Users,
-    title: 'Viajes en familia',
-    desc: 'Itinerarios pensados para todas las edades, sin renunciar a la comodidad ni al buen gusto.',
-  },
-  {
-    icon: Plane,
-    title: 'Experiencias VIP',
-    desc: 'Acceso prioritario, traslados privados y atención personalizada de principio a fin.',
-  },
+  { icon: Sparkles, title: 'Escapadas de lujo', desc: 'Resorts y villas privadas en los destinos más exclusivos del mundo, seleccionados uno por uno.' },
+  { icon: Heart, title: 'Luna de miel', desc: 'El inicio de una nueva vida merece un escenario perfecto. Diseñamos cada detalle para que solo disfruten.' },
+  { icon: Users, title: 'Viajes en familia', desc: 'Itinerarios pensados para todas las edades, sin renunciar a la comodidad ni al buen gusto.' },
+  { icon: Plane, title: 'Experiencias VIP', desc: 'Acceso prioritario, traslados privados y atención personalizada de principio a fin.' },
 ]
 
 const STEPS = [
-  {
-    num: '01',
-    title: 'Conversamos contigo',
-    desc: 'Entendemos tu visión: destino soñado, presupuesto, ocasión especial y el estilo de viaje que buscas.',
-  },
-  {
-    num: '02',
-    title: 'Diseñamos tu itinerario',
-    desc: 'Curamos cada hotel, traslado y experiencia, con opciones claras y sin sorpresas en el presupuesto.',
-  },
-  {
-    num: '03',
-    title: 'Viajas sin preocupaciones',
-    desc: 'Acompañamiento 24/7 durante tu viaje. Nosotros resolvemos, tú solo disfrutas.',
-  },
+  { num: '01', title: 'Conversamos contigo', desc: 'Entendemos tu visión: destino soñado, presupuesto, ocasión especial y el estilo de viaje que buscas.' },
+  { num: '02', title: 'Diseñamos tu itinerario', desc: 'Curamos cada hotel, traslado y experiencia, con opciones claras y sin sorpresas en el presupuesto.' },
+  { num: '03', title: 'Viajas sin preocupaciones', desc: 'Acompañamiento 24/7 durante tu viaje. Nosotros resolvemos, tú solo disfrutas.' },
 ]
 
 const GALLERY = [
-  {
-    title: 'Villas sobre el agua, Maldivas',
-    desc: 'Atardeceres privados frente al océano Índico.',
-    image: 'https://images.pexels.com/photos/30037393/pexels-photo-30037393.jpeg?auto=compress&cs=tinysrgb&w=1200',
-  },
-  {
-    title: 'Bungalows de autor',
-    desc: 'Arquitectura tropical de lujo, pensada para la calma.',
-    image: 'https://images.pexels.com/photos/28843966/pexels-photo-28843966.jpeg?auto=compress&cs=tinysrgb&w=1200',
-  },
-  {
-    title: 'Atardeceres inolvidables',
-    desc: 'El cierre perfecto para cada día de tu escapada.',
-    image: 'https://images.pexels.com/photos/28843927/pexels-photo-28843927.jpeg?auto=compress&cs=tinysrgb&w=1200',
-  },
+  { title: 'Villas sobre el agua, Maldivas', desc: 'Atardeceres privados frente al océano Índico.', image: 'https://images.pexels.com/photos/30037393/pexels-photo-30037393.jpeg?auto=compress&cs=tinysrgb&w=1200' },
+  { title: 'Bungalows de autor', desc: 'Arquitectura tropical de lujo, pensada para la calma.', image: 'https://images.pexels.com/photos/28843966/pexels-photo-28843966.jpeg?auto=compress&cs=tinysrgb&w=1200' },
+  { title: 'Atardeceres inolvidables', desc: 'El cierre perfecto para cada día de tu escapada.', image: 'https://images.pexels.com/photos/28843927/pexels-photo-28843927.jpeg?auto=compress&cs=tinysrgb&w=1200' },
 ]
 
 const DIFFERENTIATORS = [
-  {
-    icon: ShieldCheck,
-    title: 'Respaldo de 15+ años',
-    desc: 'La misma confianza de Genius Visa Consultants, ahora aplicada a tus viajes.',
-  },
-  {
-    icon: Headset,
-    title: 'Atención 24/7',
-    desc: 'Un asesor real, disponible durante todo tu viaje, no un chatbot.',
-  },
-  {
-    icon: MapPin,
-    title: 'Curaduría personal',
-    desc: 'Cada destino y hotel es verificado antes de recomendártelo.',
-  },
+  { icon: ShieldCheck, title: 'Respaldo de 15+ años', desc: 'La misma confianza de Genius Visa Consultants, ahora aplicada a tus viajes.' },
+  { icon: Headset, title: 'Atención 24/7', desc: 'Un asesor real, disponible durante todo tu viaje, no un chatbot.' },
+  { icon: MapPin, title: 'Curaduría personal', desc: 'Cada destino y hotel es verificado antes de recomendártelo.' },
 ]
 
 const TESTIMONIALS = [
-  {
-    name: 'Carla Mendoza',
-    flag: '🇭🇳',
-    country: 'Honduras',
-    initials: 'CM',
-    quote: 'Nuestra luna de miel fue exactamente como la imaginamos. Genius VC Travel se encargó de absolutamente todo.',
-  },
-  {
-    name: 'Roberto Aguilar',
-    flag: '🇭🇳',
-    country: 'Honduras',
-    initials: 'RA',
-    quote: 'El nivel de detalle y atención fue impecable. Sentí que viajaba con un equipo personal, no una agencia más.',
-  },
+  { name: 'Carla Mendoza', flag: '🇭🇳', country: 'Honduras', initials: 'CM', quote: 'Nuestra luna de miel fue exactamente como la imaginamos. Genius VC Travel se encargó de absolutamente todo.' },
+  { name: 'Roberto Aguilar', flag: '🇭🇳', country: 'Honduras', initials: 'RA', quote: 'El nivel de detalle y atención fue impecable. Sentí que viajaba con un equipo personal, no una agencia más.' },
 ]
 
 export default function ViajesPage() {
@@ -136,7 +73,7 @@ export default function ViajesPage() {
           </div>
           <div className="flex items-center gap-3">
             <a href="/" className="hidden text-xs text-white/50 hover:text-white transition-colors sm:block">Genius Visa Consultants</a>
-            <a href={WA_TRAVEL_URL} target="_blank" rel="noopener noreferrer" className="rounded-full border border-[#C9A84C] px-5 py-2 text-sm font-medium text-[#C9A84C] transition-all hover:bg-[#C9A84C] hover:text-[#1A3A3A]">Planear mi viaje</a>
+            <a href={COTIZADOR_URL} className="rounded-full border border-[#C9A84C] px-5 py-2 text-sm font-medium text-[#C9A84C] transition-all hover:bg-[#C9A84C] hover:text-[#1A3A3A]">Planear mi viaje</a>
           </div>
         </nav>
       </header>
@@ -144,11 +81,7 @@ export default function ViajesPage() {
       {/* HERO */}
       <section id="hero" className="relative flex min-h-[88vh] items-center overflow-hidden bg-[#1A3A3A] pt-20 md:min-h-screen">
         <div className="absolute inset-0">
-          <img
-            src="https://images.pexels.com/photos/30037393/pexels-photo-30037393.jpeg?auto=compress&cs=tinysrgb&w=1920"
-            alt="Villas de lujo sobre el agua al atardecer"
-            className="size-full object-cover"
-          />
+          <img src="https://images.pexels.com/photos/30037393/pexels-photo-30037393.jpeg?auto=compress&cs=tinysrgb&w=1920" alt="Villas de lujo sobre el agua al atardecer" className="size-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0D2222] via-[#1A3A3A]/70 to-[#1A3A3A]/30" />
         </div>
         <div className="relative mx-auto w-full max-w-7xl px-5 pb-20 pt-16 md:px-8">
@@ -162,7 +95,7 @@ export default function ViajesPage() {
             </Reveal>
             <Reveal delay={300}>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <a href={WA_TRAVEL_URL} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#C9A84C] px-7 py-3.5 text-sm font-semibold text-[#1A3A3A] transition-transform duration-300 hover:scale-[1.03]">
+                <a href={COTIZADOR_URL} className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#C9A84C] px-7 py-3.5 text-sm font-semibold text-[#1A3A3A] transition-transform duration-300 hover:scale-[1.03]">
                   Planear mi viaje <ArrowRight className="size-4" />
                 </a>
                 <a href="#categorias" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/40 px-7 py-3.5 text-sm font-medium text-white transition-colors hover:border-white/80">Ver experiencias</a>
@@ -191,6 +124,13 @@ export default function ViajesPage() {
               </Reveal>
             ))}
           </div>
+          <Reveal>
+            <div className="mt-12 text-center">
+              <a href={COTIZADOR_URL} className="inline-flex items-center gap-2 rounded-full bg-[#C9A84C] px-8 py-3.5 text-sm font-semibold text-[#1A3A3A] transition-transform duration-300 hover:scale-[1.03]">
+                Cotizar mi viaje <ArrowRight className="size-4" />
+              </a>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -213,10 +153,17 @@ export default function ViajesPage() {
               </Reveal>
             ))}
           </div>
+          <Reveal>
+            <div className="mt-12 text-center">
+              <a href={COTIZADOR_URL} className="inline-flex items-center gap-2 rounded-full border border-[#C9A84C] px-8 py-3.5 text-sm font-semibold text-[#C9A84C] transition-all hover:bg-[#C9A84C] hover:text-[#1A3A3A]">
+                Empezar ahora <ArrowRight className="size-4" />
+              </a>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* GALLERY / DESTINATIONS */}
+      {/* GALLERY */}
       <section id="destinos" className="bg-[#F8F6F1] py-24 md:py-32">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <Reveal className="max-w-2xl">
@@ -228,15 +175,8 @@ export default function ViajesPage() {
             {GALLERY.map((dest, i) => (
               <Reveal key={dest.title} delay={i * 90} as="article">
                 <div className="group relative h-96 overflow-hidden rounded-2xl">
-                  <img
-                    src={dest.image}
-                    alt={dest.title}
-                    className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-t from-[#0D2222] via-[#1A3A3A]/40 to-transparent transition-opacity duration-500 group-hover:from-[#0D2222]/95"
-                  />
+                  <img src={dest.image} alt={dest.title} className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#0D2222] via-[#1A3A3A]/40 to-transparent transition-opacity duration-500 group-hover:from-[#0D2222]/95" />
                   <div className="absolute inset-x-0 bottom-0 p-7">
                     <h3 className="font-heading text-2xl text-white">{dest.title}</h3>
                     <p className="mt-2 max-w-xs text-sm leading-relaxed text-white/80">{dest.desc}</p>
@@ -245,26 +185,15 @@ export default function ViajesPage() {
               </Reveal>
             ))}
           </div>
-          <Reveal>
-            <p className="mt-8 text-center text-sm text-[#1A3A3A]/50">
-              Fotos de referencia. Cada itinerario se diseña según el destino que elijas.
-            </p>
-          </Reveal>
+          <Reveal><p className="mt-8 text-center text-sm text-[#1A3A3A]/50">Fotos de referencia. Cada itinerario se diseña según el destino que elijas.</p></Reveal>
         </div>
       </section>
 
-      {/* MASCOT / WHY US */}
+      {/* WHY US */}
       <section id="nosotros" className="overflow-hidden bg-[#0D2222]">
         <div className="mx-auto grid max-w-7xl items-center gap-8 px-5 py-16 md:grid-cols-2 md:gap-12 md:px-8 md:py-24">
           <div className="flex justify-center md:justify-start">
-            <img
-              src="/images/viajero-genius-v2.webp"
-              alt="El Viajero Genius, figura misteriosa con sombrero dorado y abrigo blanco"
-              width={588}
-              height={880}
-              loading="lazy"
-              className="w-full max-w-sm rounded-2xl object-contain shadow-2xl ring-1 ring-[#C9A84C]/20"
-            />
+            <img src="/images/viajero-genius-v2.webp" alt="El Viajero Genius" width={588} height={880} loading="lazy" className="w-full max-w-sm rounded-2xl object-contain shadow-2xl ring-1 ring-[#C9A84C]/20" />
           </div>
           <div>
             <Reveal>
@@ -320,10 +249,14 @@ export default function ViajesPage() {
         <Reveal className="mx-auto max-w-3xl px-5 text-center md:px-8">
           <h2 className="font-heading text-4xl text-white md:text-5xl font-bold">¿Listo para tu próximo viaje?</h2>
           <p className="mx-auto mt-4 max-w-md leading-relaxed text-white/70">Cuéntanos qué tienes en mente. Diseñamos tu itinerario sin compromiso.</p>
-          <a href={WA_TRAVEL_URL} target="_blank" rel="noopener noreferrer" className="group mt-9 inline-flex items-center justify-center gap-2.5 rounded-full bg-[#C9A84C] px-9 py-4 text-base font-semibold text-[#1A3A3A] transition-transform duration-300 hover:scale-[1.03]">
-            <MessageCircle className="size-5" />
-            Escribir por WhatsApp
-          </a>
+          <div className="mt-9 flex flex-col sm:flex-row gap-4 justify-center">
+            <a href={COTIZADOR_URL} className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-[#C9A84C] px-9 py-4 text-base font-semibold text-[#1A3A3A] transition-transform duration-300 hover:scale-[1.03]">
+              Cotizar mi viaje <ArrowRight className="size-5" />
+            </a>
+            <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2.5 rounded-full border border-white/30 px-9 py-4 text-base font-medium text-white transition-colors hover:border-white/70">
+              <MessageCircle className="size-5" /> WhatsApp
+            </a>
+          </div>
           <div className="mt-12 flex flex-col items-center justify-center gap-6 text-sm text-white/75 sm:flex-row sm:gap-10">
             <a href="mailto:geniusvisac@gmail.com" className="inline-flex items-center gap-2 transition-colors hover:text-[#C9A84C]"><Mail className="size-4 text-[#C9A84C]" />geniusvisac@gmail.com</a>
             <span className="inline-flex items-center gap-2"><Clock className="size-4 text-[#C9A84C]" />Lun-Vie 8am-6pm · Sáb 9am-1pm</span>
@@ -342,7 +275,6 @@ export default function ViajesPage() {
       </footer>
 
       <WhatsappButton />
-
     </main>
   )
 }
