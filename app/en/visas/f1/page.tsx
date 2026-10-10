@@ -20,6 +20,14 @@ export const metadata: Metadata = {
     siteName: 'Genius Visa Consultants',
     locale: 'en_US',
     type: 'website',
+    images: [
+      {
+        url: `${SITE_URL}/images/viajero-genius-v2.png`,
+        width: 1200,
+        height: 630,
+        alt: 'Genius Visa Consultants - Tu Movilidad Global',
+      },
+    ],
   },
 }
 
