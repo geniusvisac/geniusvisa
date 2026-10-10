@@ -9,7 +9,22 @@ export const metadata: Metadata = {
   description: 'Agencia de viajes premium en Tegucigalpa. Escapadas de lujo, lunas de miel y experiencias VIP diseñadas a tu medida, con la confianza de Genius Visa Consultants.',
   keywords: 'Genius VC Travel, agencia de viajes de lujo Honduras, viajes premium, luna de miel, escapadas de lujo, Tegucigalpa',
   alternates: { canonical: `${SITE_URL}/viajes` },
-  openGraph: { url: `${SITE_URL}/viajes` },
+  openGraph: {
+    title: 'Genius VC Travel | Viajes de Lujo a tu Medida · Honduras',
+    description: 'Agencia de viajes premium en Tegucigalpa. Escapadas de lujo, lunas de miel y experiencias VIP diseñadas a tu medida.',
+    url: `${SITE_URL}/viajes`,
+    siteName: 'Genius Visa Consultants',
+    locale: 'es_HN',
+    type: 'website',
+    images: [
+      {
+        url: `${SITE_URL}/images/viajero-genius-v2.png`,
+        width: 1200,
+        height: 630,
+        alt: 'Genius VC Travel - Viajes de Lujo',
+      },
+    ],
+  },
 }
 
 const COTIZADOR_URL = '/cotizador'
