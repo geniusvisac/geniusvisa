@@ -1,12 +1,27 @@
-// ===== app/privacidad/page.tsx =====
 import { Metadata } from 'next'
 import { SITE_URL } from '@/lib/constants'
+
 export const metadata: Metadata = {
   title: 'Política de Privacidad | Genius Visa Consultants',
-  description: 'Política de privacidad de Genius Visa Consultants y Genius VC Travel. Tegucigalpa, Honduras.',
-  alternates: { canonical: `${SITE_URL}/privacidad` },
-  openGraph: { url: `${SITE_URL}/privacidad` },
+  description: 'Política de privacidad de Genius Visa Consultants y Genius VC Travel. Cómo manejamos tus datos personales. Tegucigalpa, Honduras.',
+  alternates: {
+    canonical: `${SITE_URL}/privacidad`,
+    languages: {
+      'es-HN': `${SITE_URL}/privacidad`,
+      'en': `${SITE_URL}/en/privacy`,
+      'x-default': `${SITE_URL}/privacidad`,
+    },
+  },
+  openGraph: {
+    title: 'Política de Privacidad | Genius Visa Consultants',
+    description: 'Política de privacidad de Genius Visa Consultants y Genius VC Travel. Tegucigalpa, Honduras.',
+    url: `${SITE_URL}/privacidad`,
+    siteName: 'Genius Visa Consultants',
+    locale: 'es_HN',
+    type: 'website',
+  },
 }
+
 export default function Privacidad() {
   return (
     <main className="bg-[#1A3A3A] min-h-screen py-24 px-6">
@@ -17,7 +32,7 @@ export default function Privacidad() {
         {[
           { title: "1. Responsable del tratamiento", body: "Genius Visa Consultants, con domicilio en Tegucigalpa, Honduras. Contacto: geniusvisac@gmail.com · +504 9741-0936." },
           { title: "2. Datos que recopilamos", body: "Nombre completo, nacionalidad, fecha de nacimiento, correo electrónico, número de teléfono/WhatsApp, información migratoria relevante para la evaluación de perfil, y datos de navegación." },
-          { title: "3. Finalidad del tratamiento", body: "Prestación del servicio de consultoría migratoria, evaluación de perfil a través de herramienta de IA (ISAVISA), comunicación comercial y seguimiento de casos." },
+          { title: "3. Finalidad del tratamiento", body: "Prestación del servicio de consultoría migratoria, evaluación de perfil a través de herramienta de IA, comunicación comercial y seguimiento de casos." },
           { title: "4. Base legal", body: "El tratamiento se basa en el consentimiento del titular y en la ejecución del contrato de servicios." },
           { title: "5. Conservación de datos", body: "Los datos se conservan durante la relación contractual y hasta 5 años después de su finalización, conforme a la legislación hondureña vigente." },
           { title: "6. Derechos del titular", body: "Puedes ejercer tus derechos de acceso, rectificación, cancelación y oposición escribiendo a geniusvisac@gmail.com." },
@@ -30,8 +45,9 @@ export default function Privacidad() {
             <p className="text-white/70 leading-relaxed text-sm">{item.body}</p>
           </div>
         ))}
-        <div className="mt-16 text-center">
+        <div className="mt-16 text-center flex justify-center gap-4 flex-wrap">
           <a href="/" className="inline-block border border-[#C9A84C] text-[#C9A84C] px-8 py-3 rounded-full text-sm hover:bg-[#C9A84C] hover:text-[#1A3A3A] transition-colors">Volver al inicio</a>
+          <a href="/en/privacy" className="inline-block border border-white/20 text-white/50 px-8 py-3 rounded-full text-sm hover:border-white/50 transition-colors">🇺🇸 English</a>
         </div>
       </div>
     </main>
