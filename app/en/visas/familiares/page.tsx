@@ -89,7 +89,7 @@ export default function VisaFamiliaresEN() {
           <h2 className="font-heading text-3xl text-[#1A3A3A] font-bold mb-8">The Genius process</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-            { num: '01', title: 'Case evaluation', desc: 'We review the primary holder's visa and determine which dependent category applies to each family member.' },
+            { num: "01", title: "Case evaluation", desc: "We review the primary visa holder status and determine which dependent category applies to each family member." },
             { num: '02', title: 'Document preparation', desc: 'We gather and organize all required family documentation for each applicant.' },
             { num: '03', title: 'Coordinated interviews', desc: 'We coordinate consular interviews and prepare each family member for the process.' },
           ].map((step) => (
