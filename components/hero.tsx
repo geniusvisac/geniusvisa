@@ -70,14 +70,10 @@ export function Hero() {
           {/* RIGHT — image */}
           <Reveal delay={150} className="hidden lg:block">
             <div className="relative w-full mt-2">
-              <div
-                aria-hidden="true"
-                className="absolute -inset-4 rounded-3xl bg-gold/10 blur-2xl"
-              />
               <img
                 src="/images/genius-vc-travel-lounge.png"
                 alt="Consultor Genius VC Travel asesorando a una pareja en sala de reuniones de lujo"
-                className="relative w-full rounded-2xl object-cover shadow-2xl ring-1 ring-gold/20"
+                className="w-full rounded-2xl object-cover shadow-xl"
                 loading="eager"
               />
             </div>
