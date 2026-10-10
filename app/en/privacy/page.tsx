@@ -1,10 +1,27 @@
 import { Metadata } from 'next'
 import { SITE_URL } from '@/lib/constants'
+
 export const metadata: Metadata = {
   title: 'Privacy Policy | Genius Visa Consultants',
-  description: 'Privacy policy of Genius Visa Consultants and Genius VC Travel. Tegucigalpa, Honduras.',
-  alternates: { canonical: `${SITE_URL}/en/privacy` },
+  description: 'Privacy policy of Genius Visa Consultants and Genius VC Travel. Learn how we handle your personal data. Tegucigalpa, Honduras.',
+  alternates: {
+    canonical: `${SITE_URL}/en/privacy`,
+    languages: {
+      'en': `${SITE_URL}/en/privacy`,
+      'es-HN': `${SITE_URL}/privacidad`,
+      'x-default': `${SITE_URL}/en/privacy`,
+    },
+  },
+  openGraph: {
+    title: 'Privacy Policy | Genius Visa Consultants',
+    description: 'Privacy policy of Genius Visa Consultants and Genius VC Travel. Tegucigalpa, Honduras.',
+    url: `${SITE_URL}/en/privacy`,
+    siteName: 'Genius Visa Consultants',
+    locale: 'en_US',
+    type: 'website',
+  },
 }
+
 export default function Privacy() {
   return (
     <main className="bg-[#1A3A3A] min-h-screen py-24 px-6">
@@ -15,7 +32,7 @@ export default function Privacy() {
         {[
           { title: "1. Data controller", body: "Genius Visa Consultants, domiciled in Tegucigalpa, Honduras. Contact: geniusvisac@gmail.com · +504 9741-0936." },
           { title: "2. Data we collect", body: "Full name, nationality, date of birth, email address, phone/WhatsApp number, immigration-related information relevant to profile assessment, and browsing data." },
-          { title: "3. Purpose of processing", body: "Provision of immigration consulting services, profile assessment through an AI-based tool (ISAVISA), commercial communication, and case follow-up." },
+          { title: "3. Purpose of processing", body: "Provision of immigration consulting services, profile assessment through an AI-based tool, commercial communication, and case follow-up." },
           { title: "4. Legal basis", body: "Processing is based on the data subject's consent and on the performance of the service contract." },
           { title: "5. Data retention", body: "Data is retained for the duration of the contractual relationship and up to 5 years after its termination, in accordance with applicable Honduran law." },
           { title: "6. Your rights", body: "You may exercise your rights of access, rectification, cancellation, and objection by writing to geniusvisac@gmail.com." },
