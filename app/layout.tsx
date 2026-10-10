@@ -14,10 +14,11 @@ const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
 })
+
 export const metadata: Metadata = {
   title: 'Genius Visa Consultants | Expertos en Visas Americanas · Honduras',
-  description: 'Mas de 15 anos ayudando a obtener visas americanas B1/B2, F1, H1B y mas. Evaluacion gratuita con IA. Servicio en 25+ paises. Tegucigalda, Honduras.',
-  keywords: 'visa americana Honduras, consultoria de visas, visa turismo, visa estudiante, visa trabajo, Tegucigalpa, Genius Visa Consultants, Genius VC Travel',
+  description: 'Más de 15 años ayudando a obtener visas americanas B1/B2, F1, H1B y más. Evaluación gratuita con IA. Servicio en 25+ países. Tegucigalpa, Honduras.',
+  keywords: 'visa americana Honduras, consultoría de visas, visa turismo, visa estudiante, visa trabajo, Tegucigalpa, Genius Visa Consultants, Genius VC Travel',
   authors: [{ name: 'Genius Visa Consultants' }],
   creator: 'Genius Visa Consultants',
   publisher: 'Genius Visa Consultants',
@@ -27,18 +28,23 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL(SITE_URL),
   alternates: {
-    canonical: '/',
+    canonical: SITE_URL,
+    languages: {
+      'es-HN': SITE_URL,
+      'en': `${SITE_URL}/en`,
+      'x-default': SITE_URL,
+    },
   },
   openGraph: {
     title: 'Genius Visa Consultants · Tu Movilidad Global',
-    description: 'Expertos en visas americanas con 15+ anos de experiencia. Evaluacion gratuita con IA disponible ahora.',
-    url: '/',
+    description: 'Más de 15 años ayudando a obtener visas americanas. Evaluación gratuita con IA disponible ahora. Servicio en 25+ países desde Honduras.',
+    url: SITE_URL,
     siteName: 'Genius Visa Consultants',
     locale: 'es_HN',
     type: 'website',
     images: [
       {
-        url: '/images/viajero-genius-v2.png',
+        url: `${SITE_URL}/images/viajero-genius-v2.png`,
         width: 1200,
         height: 630,
         alt: 'Genius Visa Consultants - Tu Movilidad Global',
@@ -47,9 +53,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Genius Visa Consultants',
-    description: 'Expertos en visas americanas. Evaluacion gratuita con IA.',
-    images: ['/images/viajero-genius-v2.webp'],
+    title: 'Genius Visa Consultants | Expertos en Visas Americanas',
+    description: 'Más de 15 años ayudando a obtener visas americanas. Evaluación gratuita con IA.',
+    images: [`${SITE_URL}/images/viajero-genius-v2.webp`],
   },
   robots: {
     index: true,
@@ -62,9 +68,11 @@ export const metadata: Metadata = {
     },
   },
 }
+
 export const viewport: Viewport = {
   themeColor: '#1A3A3A',
 }
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -76,6 +84,11 @@ export default function RootLayout({
       className={`${playfair.variable} ${inter.variable} bg-background`}
     >
       <head>
+        {/* Hreflang */}
+        <link rel="alternate" hrefLang="es-HN" href={SITE_URL} />
+        <link rel="alternate" hrefLang="en" href={`${SITE_URL}/en`} />
+        <link rel="alternate" hrefLang="x-default" href={SITE_URL} />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -83,7 +96,7 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'LocalBusiness',
               name: 'Genius Visa Consultants',
-              description: 'Consultoria especializada en visas americanas con mas de 15 anos de experiencia',
+              description: 'Consultoría especializada en visas americanas con más de 15 años de experiencia',
               url: SITE_URL,
               telephone: '+50497410936',
               email: 'geniusvisac@gmail.com',
