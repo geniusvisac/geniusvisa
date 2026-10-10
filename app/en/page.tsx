@@ -12,14 +12,22 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${SITE_URL}/en`,
     languages: {
-      'es': SITE_URL,
+      'es-HN': SITE_URL,
       'en': `${SITE_URL}/en`,
+      'x-default': SITE_URL,
     },
   },
-  openGraph: { url: `${SITE_URL}/en` },
+  openGraph: {
+    url: `${SITE_URL}/en`,
+    title: 'Genius Visa Consultants | US Visa Experts · Honduras',
+    description: 'Over 15 years helping people obtain US visas. Free AI evaluation available now.',
+    siteName: 'Genius Visa Consultants',
+    locale: 'en_US',
+    type: 'website',
+  },
 }
 
-const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
+const EVAL_URL = '/evaluacion'
 const WA_URL = 'https://wa.me/50497410936'
 
 const NAV_LINKS = [
@@ -47,24 +55,13 @@ export default function EnglishPage() {
             </span>
           </a>
           <div className="hidden items-center gap-8 lg:flex">
-            {NAV_LINKS.map((link) => {
-              const isExternal = link.href.startsWith('http')
-              return (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  target={isExternal ? '_blank' : undefined}
-                  rel={isExternal ? 'noopener noreferrer' : undefined}
-                  className="text-sm text-white/80 transition-colors hover:text-[#C9A84C]"
-                >
-                  {link.label}
-                </a>
-              )
-            })}
+            {NAV_LINKS.map((link) => (
+              <a key={link.href} href={link.href} className="text-sm text-white/80 transition-colors hover:text-[#C9A84C]">{link.label}</a>
+            ))}
           </div>
           <div className="flex items-center gap-3">
             <a href="/" className="hidden text-xs text-white/50 hover:text-white transition-colors sm:block">Es Español</a>
-            <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="hidden rounded-full border border-[#C9A84C] px-5 py-2 text-sm font-medium text-[#C9A84C] transition-all hover:bg-[#C9A84C] hover:text-[#1A3A3A] sm:inline-flex">Evaluate my profile</a>
+            <a href={EVAL_URL} className="hidden rounded-full border border-[#C9A84C] px-5 py-2 text-sm font-medium text-[#C9A84C] transition-all hover:bg-[#C9A84C] hover:text-[#1A3A3A] sm:inline-flex">Evaluate my profile</a>
             <MobileNavEn />
           </div>
         </nav>
@@ -88,7 +85,7 @@ export default function EnglishPage() {
               </Reveal>
               <Reveal delay={300}>
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#C9A84C] px-7 py-3.5 text-sm font-semibold text-[#1A3A3A] transition-transform duration-300 hover:scale-[1.03]">
+                  <a href={EVAL_URL} className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#C9A84C] px-7 py-3.5 text-sm font-semibold text-[#1A3A3A] transition-transform duration-300 hover:scale-[1.03]">
                     Evaluate my profile for free <ArrowRight className="size-4" />
                   </a>
                   <a href="#visas" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-7 py-3.5 text-sm font-medium text-white transition-colors hover:border-white/70">Our services</a>
@@ -111,14 +108,13 @@ export default function EnglishPage() {
               </Reveal>
             </div>
 
-            {/* RIGHT — image */}
+            {/* RIGHT — image (sin doble recuadro) */}
             <Reveal delay={150} className="hidden lg:block">
               <div className="relative w-full mt-2">
-                <div aria-hidden="true" className="absolute -inset-4 rounded-3xl bg-[#C9A84C]/10 blur-2xl" />
                 <img
                   src="/images/genius-vc-travel-lounge.png"
                   alt="Genius VC Travel consultant advising a couple in a luxury meeting room"
-                  className="relative w-full rounded-2xl object-cover shadow-2xl ring-1 ring-[#C9A84C]/20"
+                  className="w-full rounded-2xl object-cover shadow-xl"
                   loading="eager"
                 />
               </div>
@@ -181,7 +177,7 @@ export default function EnglishPage() {
               </Reveal>
             ))}
             <Reveal delay={450}>
-              <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="group flex h-full flex-col justify-between rounded-2xl border border-[#C9A84C]/50 bg-[#1A3A3A] p-7 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl">
+              <a href={EVAL_URL} className="group flex h-full flex-col justify-between rounded-2xl border border-[#C9A84C]/50 bg-[#1A3A3A] p-7 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl">
                 <div>
                   <span className="inline-flex size-12 items-center justify-center rounded-xl bg-[#C9A84C] text-[#1A3A3A]"><Sparkles className="size-6" /></span>
                   <h3 className="mt-5 font-heading text-xl text-white">Free AI Evaluation</h3>
@@ -214,7 +210,7 @@ export default function EnglishPage() {
                   <span className="inline-block text-xs font-bold text-[#C9A84C] bg-[#C9A84C]/15 px-3 py-1 rounded-full mb-4 w-fit uppercase tracking-wider">{step.sub}</span>
                   <h3 className="font-heading text-2xl font-bold text-[#1A3A3A] mb-3">{step.title}</h3>
                   <p className="text-[#1A3A3A]/75 leading-relaxed text-sm flex-1 font-medium">{step.desc}</p>
-                  {step.cta && <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 bg-[#C9A84C] text-[#1A3A3A] px-6 py-3 rounded-full text-sm font-bold hover:opacity-90 w-fit">Evaluate now</a>}
+                  {step.cta && <a href={EVAL_URL} className="mt-6 inline-flex items-center gap-2 bg-[#C9A84C] text-[#1A3A3A] px-6 py-3 rounded-full text-sm font-bold hover:opacity-90 w-fit">Evaluate now</a>}
                 </div>
               </Reveal>
             ))}
@@ -234,7 +230,7 @@ export default function EnglishPage() {
               <span className="text-xs font-semibold text-[#C9A84C] tracking-wide">Algorithm updated with June 2026 consular criteria</span>
             </div>
             <div className="mt-8">
-              <a href={EVAL_URL} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#C9A84C] px-9 py-4 text-base font-semibold text-[#1A3A3A] transition-transform duration-300 hover:scale-[1.03]">
+              <a href={EVAL_URL} className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#C9A84C] px-9 py-4 text-base font-semibold text-[#1A3A3A] transition-transform duration-300 hover:scale-[1.03]">
                 Start free evaluation <ArrowRight className="size-5" />
               </a>
             </div>
@@ -253,9 +249,9 @@ export default function EnglishPage() {
           </Reveal>
           <div className="grid md:grid-cols-3 gap-8 items-stretch">
             {[
-              { name: 'AI Evaluation', price: '$0', description: 'Discover your consular risk profile in 2 minutes.', badge: '100% Free', badgeColor: 'bg-[#3DB89E]/20 text-[#3DB89E]', features: ['AI-powered profile diagnosis','Estimated approval percentage','Risk factor identification','Initial recommendations'], cta: 'Evaluate my profile free', href: EVAL_URL, highlighted: false },
-              { name: 'Premium Advisory', price: 'Custom', description: 'Expert support from start to finish.', badge: 'Most popular', badgeColor: 'bg-[#C9A84C]/20 text-[#C9A84C]', features: ['Everything in the free plan','Dedicated expert consultant','Document review and preparation','Consular interview preparation','Follow-up until the decision','Priority WhatsApp support'], cta: 'Get a quote', href: WA_URL, highlighted: true },
-              { name: 'Genius VC Travel', price: 'Tailored', description: 'Premium trip planning once your visa is approved.', badge: 'New', badgeColor: 'bg-[#1A3A3A]/10 text-[#1A3A3A]/50', features: ['Personalized itinerary','Luxury hotels and flights','Exclusive experiences','24/7 support during your trip'], cta: 'Explore travel', href: WA_URL, highlighted: false },
+              { name: 'AI Evaluation', price: '$0', description: 'Discover your consular risk profile in 2 minutes.', badge: '100% Free', badgeColor: 'bg-[#3DB89E]/20 text-[#3DB89E]', features: ['AI-powered profile diagnosis','Estimated approval percentage','Risk factor identification','Initial recommendations'], cta: 'Evaluate my profile free', href: EVAL_URL, external: false, highlighted: false },
+              { name: 'Premium Advisory', price: 'Custom', description: 'Expert support from start to finish.', badge: 'Most popular', badgeColor: 'bg-[#C9A84C]/20 text-[#C9A84C]', features: ['Everything in the free plan','Dedicated expert consultant','Document review and preparation','Consular interview preparation','Follow-up until the decision','Priority WhatsApp support'], cta: 'Get a quote', href: WA_URL, external: true, highlighted: true },
+              { name: 'Genius VC Travel', price: 'Tailored', description: 'Premium trip planning once your visa is approved.', badge: 'New', badgeColor: 'bg-[#1A3A3A]/10 text-[#1A3A3A]/50', features: ['Personalized itinerary','Luxury hotels and flights','Exclusive experiences','24/7 support during your trip'], cta: 'Explore travel', href: WA_URL, external: true, highlighted: false },
             ].map((plan, i) => (
               <Reveal key={plan.name} delay={i * 100}>
                 <div className={`rounded-2xl p-8 h-full flex flex-col ${plan.highlighted ? 'bg-[#1A3A3A] shadow-2xl ring-2 ring-[#C9A84C]' : 'bg-white shadow-md border border-[#1A3A3A]/5'}`}>
@@ -273,7 +269,7 @@ export default function EnglishPage() {
                       </li>
                     ))}
                   </ul>
-                  <a href={plan.href} target="_blank" rel="noopener noreferrer" className={`w-full text-center py-3 rounded-full text-sm font-bold transition-all hover:opacity-90 block ${plan.highlighted ? 'bg-[#C9A84C] text-[#1A3A3A]' : 'border-2 border-[#1A3A3A] text-[#1A3A3A] hover:bg-[#1A3A3A] hover:text-white'}`}>{plan.cta} →</a>
+                  <a href={plan.href} {...(plan.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} className={`w-full text-center py-3 rounded-full text-sm font-bold transition-all hover:opacity-90 block ${plan.highlighted ? 'bg-[#C9A84C] text-[#1A3A3A]' : 'border-2 border-[#1A3A3A] text-[#1A3A3A] hover:bg-[#1A3A3A] hover:text-white'}`}>{plan.cta} →</a>
                 </div>
               </Reveal>
             ))}
@@ -397,11 +393,11 @@ export default function EnglishPage() {
 
       {/* FOOTER */}
       <footer className="bg-[#0D2222] py-8 px-6 text-center">
-        <a href="/" className="text-[#C9A84C] text-sm hover:opacity-80 mr-6">ES Ver en Espanol</a>
+        <a href="/" className="text-[#C9A84C] text-sm hover:opacity-80 mr-6">ES Ver en Español</a>
         <p className="text-white/30 text-xs mt-3">2026 Genius Visa Consultants · Genius VC Travel · Tegucigalpa, Honduras</p>
         <div className="mt-2 flex justify-center gap-4 text-xs text-white/30">
-          <a href="/privacidad" className="hover:text-white/60">Privacy Policy</a>
-          <a href="/terminos" className="hover:text-white/60">Terms</a>
+          <a href="/en/privacy" className="hover:text-white/60">Privacy Policy</a>
+          <a href="/en/terms" className="hover:text-white/60">Terms</a>
         </div>
       </footer>
 
