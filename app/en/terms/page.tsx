@@ -9,7 +9,6 @@ export const metadata: Metadata = {
     languages: {
       'en': `${SITE_URL}/en/terms`,
       'es-HN': `${SITE_URL}/terminos`,
-      'x-default': `${SITE_URL}/terminos`,
     },
   },
   openGraph: {
