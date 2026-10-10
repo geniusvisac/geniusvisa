@@ -3,7 +3,7 @@ import { SITE_URL } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Términos y Condiciones | Genius Visa Consultants',
-  description: 'Términos y condiciones de uso de Genius Visa Consultants y Genius VC Travel. Tegucigalpa, Honduras.',
+  description: 'Términos y condiciones de uso de los servicios de Genius Visa Consultants y Genius VC Travel. Sin garantía de aprobación de visa. Tegucigalpa, Honduras.',
   alternates: {
     canonical: `${SITE_URL}/terminos`,
     languages: {
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Términos y Condiciones | Genius Visa Consultants',
-    description: 'Términos y condiciones de uso de Genius Visa Consultants y Genius VC Travel. Tegucigalpa, Honduras.',
+    description: 'Términos y condiciones de uso de los servicios de Genius Visa Consultants y Genius VC Travel. Sin garantía de aprobación de visa.',
     url: `${SITE_URL}/terminos`,
     siteName: 'Genius Visa Consultants',
     locale: 'es_HN',
