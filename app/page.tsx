@@ -29,7 +29,12 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
+    title: 'Genius Visa Consultants · Tu Movilidad Global',
+    description: 'Más de 15 años ayudando a obtener visas americanas. Evaluación gratuita con IA disponible ahora. Servicio en 25+ países desde Honduras.',
     url: SITE_URL,
+    siteName: 'Genius Visa Consultants',
+    locale: 'es_HN',
+    type: 'website',
     images: [
       {
         url: `${SITE_URL}/images/viajero-genius-v2.png`,
