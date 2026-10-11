@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import './globals.css'
 import { SITE_URL } from '@/lib/constants'
+import { headers } from 'next/headers'
 
 const playfair = Playfair_Display({
   variable: '--font-playfair',
@@ -68,14 +69,15 @@ export const viewport: Viewport = {
   themeColor: '#1A3A3A',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const lang = (await headers()).get('x-site-lang') === 'en' ? 'en' : 'es'
   return (
     <html
-      lang="es"
+      lang={lang}
       className={`${playfair.variable} ${inter.variable} bg-background`}
     >
       <head>
