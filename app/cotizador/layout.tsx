@@ -3,7 +3,7 @@ import { SITE_URL } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Cotizador de Viajes Premium | Genius VC Travel · Honduras',
-  description: 'Cotiza tu próximo viaje con Genius VC Travel. Boletos aéreos, paquetes de lujo, hoteles y experiencias únicas. Servicio personalizado desde Tegucigalpa, Honduras.',
+  description: 'Cotiza tu próximo viaje con Genius VC Travel. Boletos aéreos, paquetes de lujo y experiencias únicas. Servicio personalizado desde Tegucigalpa, Honduras.',
   alternates: {
     canonical: `${SITE_URL}/cotizador`,
     languages: {
