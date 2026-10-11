@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     languages: {
       'en': `${SITE_URL}/en/privacy`,
       'es-HN': `${SITE_URL}/privacidad`,
+      'x-default': `${SITE_URL}/privacidad`,
     },
   },
   openGraph: {
