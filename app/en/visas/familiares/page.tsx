@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     languages: {
       'en': `${SITE_URL}/en/visas/familiares`,
       'es-HN': `${SITE_URL}/visas/familiares`,
+      'x-default': `${SITE_URL}/visas/familiares`,
     },
   },
   openGraph: {
