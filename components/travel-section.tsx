@@ -59,12 +59,19 @@ export function TravelSection() {
           ))}
         </div>
         <Reveal>
-          <div className="mt-12 text-center">
+          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="/viajes"
               className="inline-flex items-center gap-2 rounded-full bg-teal-deep px-8 py-3.5 text-sm font-semibold text-offwhite transition-transform duration-300 hover:scale-[1.03]"
             >
               Explorar Genius VC Travel
+              <ArrowRight className="size-4" />
+            </a>
+            <a
+              href="/cotizador"
+              className="inline-flex items-center gap-2 rounded-full border border-teal-deep px-8 py-3.5 text-sm font-semibold text-teal-deep transition-transform duration-300 hover:scale-[1.03]"
+            >
+              Cotizar mi viaje
               <ArrowRight className="size-4" />
             </a>
           </div>
