@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     languages: {
       'en': `${SITE_URL}/en/visas/h1b`,
       'es-HN': `${SITE_URL}/visas/h1b`,
+      'x-default': `${SITE_URL}/visas/h1b`,
     },
   },
   openGraph: {
