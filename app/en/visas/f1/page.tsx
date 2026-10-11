@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     languages: {
       'en': `${SITE_URL}/en/visas/f1`,
       'es-HN': `${SITE_URL}/visas/f1`,
+      'x-default': `${SITE_URL}/visas/f1`,
     },
   },
   openGraph: {
