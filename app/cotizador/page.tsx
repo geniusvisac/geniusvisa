@@ -14,7 +14,7 @@ export default function CotizadorPage() {
   const [dateOut, setDateOut] = useState('')
   const [dateRet, setDateRet] = useState('')
   const [flexible, setFlexible] = useState('no')
-  const [travelers, setTravelers] = useState<Traveler[]>([{ age: 'adult', cabin: 'economy' }])
+  const [travelers, setTravelers] = useState<Traveler[]>([{ age: '', cabin: 'economy' }])
   const [luggage, setLuggage] = useState(false)
   const [luggageCount, setLuggageCount] = useState('1')
   const [budget, setBudget] = useState('')
@@ -23,6 +23,7 @@ export default function CotizadorPage() {
   const [contactPhone, setContactPhone] = useState('')
   const [dateError, setDateError] = useState('')
   const [today, setToday] = useState('')
+  const [showAgeErrors, setShowAgeErrors] = useState(false)
 
   useEffect(() => { setToday(new Date().toISOString().split('T')[0]) }, [])
 
@@ -32,7 +33,20 @@ export default function CotizadorPage() {
   }
   const L = labels[lang]
 
-  const addTraveler = () => { if (travelers.length < 12) setTravelers([...travelers, { age: 'adult', cabin: 'economy' }]) }
+  const addTraveler = () => { if (travelers.length < 12) setTravelers([...travelers, { age: '', cabin: 'economy' }]) }
+  const ageCategory = (age: string): 'infant' | 'child' | 'youth' | 'adult' => {
+    const n = Number(age)
+    if (n <= 1) return 'infant'
+    if (n <= 11) return 'child'
+    if (n <= 17) return 'youth'
+    return 'adult'
+  }
+  const categoryShort = (age: string) => L[ageCategory(age)].split(' (')[0]
+  const ageText = (age: string) => age === '0'
+    ? (lang === 'es' ? 'menor de 1 año' : 'under 1 year old')
+    : (lang === 'es' ? `${age} año${age === '1' ? '' : 's'}` : `${age} year${age === '1' ? '' : 's'} old`)
+  const isValidAge = (age: string) => age !== '' && Number(age) >= 0 && Number(age) <= 110
+
   const removeTraveler = (i: number) => { if (travelers.length > 1) setTravelers(travelers.filter((_,idx) => idx !== i)) }
   const updateTraveler = (i: number, field: keyof Traveler, val: string) => {
     const updated = [...travelers]; updated[i] = { ...updated[i], [field]: val }; setTravelers(updated)
@@ -53,12 +67,16 @@ export default function CotizadorPage() {
       alert(lang === 'es' ? 'Por favor completa los campos obligatorios.' : 'Please complete all required fields.'); return
     }
     if (!validateDates(dateOut, dateRet)) return
+    if (travelers.some(tr => !isValidAge(tr.age))) {
+      setShowAgeErrors(true)
+      alert(lang === 'es' ? 'Por favor indica la edad de cada viajero.' : 'Please enter the age of each traveler.'); return
+    }
     const typeLabel = travelType === 'air' ? L.air : L.pkg
     const flexLabel: Record<string,string> = { no: L.flexNo, few: L.flexFew, week: L.flexWeek }
     const budgetLabel: Record<string,string> = { lt500: L.lt500, '500-1000': L.b500, '1000-2500': L.b1000, '2500-5000': L.b2500, '5000+': L.b5000 }
     const travelersDetail = travelers.map((tr, i) => {
       const cabin = travelType === 'air' ? ` - ${L[tr.cabin as keyof typeof L]}` : ''
-      return `   ${i+1}. ${L[tr.age as keyof typeof L]}${cabin}`
+      return `   ${i+1}. ${ageText(tr.age)} (${categoryShort(tr.age)})${cabin}`
     }).join('\n')
     const msg = lang === 'es'
       ? `Hola Genius VC Travel, me gustaria cotizar un viaje:\n\nTIPO: ${typeLabel}\nORIGEN: ${origin}\nDESTINO: ${dest}\n\nFECHA DE SALIDA: ${formatDate(dateOut)}\nFECHA DE REGRESO: ${formatDate(dateRet)}\nFLEXIBILIDAD: ${flexLabel[flexible] || flexible}\n\nVIAJEROS (${travelers.length}):\n${travelersDetail}${travelType === 'air' && luggage ? `\nMALETAS: ${luggageCount}` : ''}${budget ? `\nPRESUPUESTO: ${budgetLabel[budget] || budget}` : ''}${notes ? `\nPREFERENCIAS: ${notes}` : ''}\n\nCONTACTO: ${contactName}\nTELEFONO: ${contactPhone}`
@@ -124,12 +142,10 @@ export default function CotizadorPage() {
               {travelers.map((tr, i) => (
                 <div key={i} className='flex items-center gap-2 bg-white/4 border border-white/8 rounded-xl p-3'>
                   <span className='text-xs font-bold text-[#C9A84C] w-6'>{i+1}</span>
-                  <select value={tr.age} onChange={e=>updateTraveler(i,'age',e.target.value)} className='flex-1 bg-white/8 border border-white/10 rounded-lg px-3 py-2 text-xs text-white [&>option]:bg-[#1A3A3A] outline-none'>
-                    <option value='adult'>{L.adult}</option>
-                    <option value='youth'>{L.youth}</option>
-                    <option value='child'>{L.child}</option>
-                    <option value='infant'>{L.infant}</option>
-                  </select>
+                  <div className='flex-1 flex items-center gap-2 min-w-0'>
+                    <input type='text' inputMode='numeric' maxLength={3} value={tr.age} onChange={e=>updateTraveler(i,'age',e.target.value.replace(/\D/g,''))} placeholder={lang==='es'?'Edad':'Age'} aria-label={lang==='es'?`Edad del viajero ${i+1}`:`Age of traveler ${i+1}`} className={`w-16 bg-white/8 border rounded-lg px-3 py-2 text-xs text-white outline-none placeholder:text-white/30 focus:border-[#C9A84C] ${showAgeErrors && !isValidAge(tr.age) ? 'border-red-400' : 'border-white/10'}`} />
+                    <span className='text-xs text-white/50 truncate'>{tr.age === '' ? (lang==='es'?'años':'years') : categoryShort(tr.age)}</span>
+                  </div>
                   {travelType==='air' && <select value={tr.cabin} onChange={e=>updateTraveler(i,'cabin',e.target.value)} className='flex-1 bg-white/8 border border-white/10 rounded-lg px-3 py-2 text-xs text-white [&>option]:bg-[#1A3A3A] outline-none'>
                     <option value='economy'>{L.economy}</option>
                     <option value='premium'>{L.premium}</option>
@@ -140,6 +156,7 @@ export default function CotizadorPage() {
                 </div>
               ))}
             </div>
+            <p className='text-xs text-white/40 mt-2'>{lang==='es'?'Edad que tendrá cada pasajero el día del viaje. Para bebés menores de 1 año escribe 0.':'Age each passenger will be on the travel date. For babies under 1 year, enter 0.'}</p>
           </div>
 
           {travelType==='air' && (
