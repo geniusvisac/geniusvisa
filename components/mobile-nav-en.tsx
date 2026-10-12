@@ -12,7 +12,7 @@ const NAV_LINKS = [
   { label: 'Contact', href: '#contact' },
 ]
 
-const EVAL_URL = 'https://app.isavisa.com/consulta/genius-visa-consultant'
+const EVAL_URL = '/en/evaluation'
 
 export function MobileNavEn() {
   const [open, setOpen] = useState(false)
@@ -54,8 +54,7 @@ export function MobileNavEn() {
           </a>
           <a
             href={EVAL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            onClick={() => setOpen(false)}
             className="mt-2 rounded-full bg-[#C9A84C] px-5 py-3 text-center text-sm font-semibold text-[#1A3A3A]"
           >
             Evaluate my profile
