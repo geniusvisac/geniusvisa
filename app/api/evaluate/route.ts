@@ -14,6 +14,8 @@ export async function POST(req: NextRequest) {
 PERFIL:
 Nombre: ${formData.name}, País: ${formData.country}, Edad: ${formData.age}, Historial: ${formData.history}, Propósito: ${formData.purpose}, Ocupación: ${formData.occupation}, Ingresos: ${formData.income}, Educación: ${formData.education}, Estado civil: ${formData.marital}, Viajes previos: ${formData.travel}, Familiares en EEUU: ${formData.relatives}, Propiedad: ${formData.property}, Duración: ${formData.duration}, Antecedentes: ${formData.criminal}, Fondos: ${formData.funds}, Puntuación: ${score}/94
 
+${lang === 'en' ? 'IDIOMA: escribe TODOS los textos del JSON (summary, title y text) en INGLÉS (English). Las claves del JSON no cambian.' : 'IDIOMA: escribe todos los textos en español.'}
+
 Responde SOLO esto (reemplaza los valores entre comillas):
 {"summary":"resumen de 3 oraciones específico al perfil","strengths":[{"title":"fortaleza 1","text":"explicación"},{"title":"fortaleza 2","text":"explicación"},{"title":"fortaleza 3","text":"explicación"}],"risks":[{"title":"riesgo 1","text":"explicación"},{"title":"riesgo 2","text":"explicación"},{"title":"riesgo 3","text":"explicación"}],"recommendations":[{"title":"recomendación 1","text":"acción concreta"},{"title":"recomendación 2","text":"acción concreta"},{"title":"recomendación 3","text":"acción concreta"}]}`
 

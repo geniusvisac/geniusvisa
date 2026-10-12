@@ -15,13 +15,17 @@ export default function ReportePage() {
 
   if (!data) return (
     <main className="min-h-screen bg-white flex items-center justify-center">
-      <p className="text-gray-400 text-sm">No hay datos de reporte. Genera una evaluación primero.</p>
+      <p className="text-gray-400 text-sm text-center">No hay datos de reporte. Genera una evaluación primero.<br />No report data. Please complete an assessment first.</p>
     </main>
   )
 
+  const en = data.lang === 'en'
+  const R = en
+    ? { levels: {high:'Likely Approval',medium:'Possible Approval',low:'High Risk of Denial'} as Record<string,string>, title:'Pre-Qualification Report', print:'Print / Save PDF', close:'Close', applicant:'Applicant', completeness:'Profile completeness', note:'Note: Maximum score is 94 points. Indicative result; the final decision rests with the consular officer at the interview.', name:'Name', country:'Country', phone:'Phone', age:'Age', years:'years old', purpose:'Purpose', summary:'Summary', strengths:'Strengths', risks:'Risk Factors', recs:'Recommendations', locale:'en-US' }
+    : { levels: {high:'Probable Aprobación',medium:'Aprobación Posible',low:'Alto Riesgo de Rechazo'} as Record<string,string>, title:'Reporte de PreCalificación', print:'Imprimir / Guardar PDF', close:'Cerrar', applicant:'Solicitante', completeness:'Perfil completado', note:'Nota: La puntuación máxima es de 94 puntos. Resultado orientativo; la decisión final depende de la discreción del oficial consular en la entrevista.', name:'Nombre', country:'País', phone:'Teléfono', age:'Edad', years:'años', purpose:'Propósito', summary:'Resumen', strengths:'Fortalezas', risks:'Factores de Riesgo', recs:'Recomendaciones', locale:'es-HN' }
   const lc = data.level==='high'?'#3DB89E':data.level==='medium'?'#C9A84C':'#E05252'
-  const ll = data.level==='high'?'Probable Aprobación':data.level==='medium'?'Aprobación Posible':'Alto Riesgo de Rechazo'
-  const date = new Date().toLocaleDateString('es-HN',{year:'numeric',month:'long',day:'numeric'})
+  const ll = R.levels[data.level] || R.levels.low
+  const date = new Date().toLocaleDateString(R.locale,{year:'numeric',month:'long',day:'numeric'})
 
   const Section = ({title, color, items}: {title:string;color:string;items:{title:string;text:string}[]}) => (
     <div className="mb-6">
@@ -53,11 +57,11 @@ export default function ReportePage() {
       <div className="no-print fixed top-4 right-4 flex gap-2 z-50">
         <button onClick={() => window.print()}
           className="bg-[#C9A84C] text-[#1A3A3A] px-5 py-2.5 rounded-full text-sm font-bold shadow-lg hover:opacity-90">
-          🖨️ Imprimir / Guardar PDF
+          🖨️ {R.print}
         </button>
         <button onClick={() => window.close()}
           className="bg-gray-200 text-gray-600 px-4 py-2.5 rounded-full text-sm font-medium hover:bg-gray-300">
-          × Cerrar
+          × {R.close}
         </button>
       </div>
 
@@ -66,12 +70,12 @@ export default function ReportePage() {
         <div className="flex items-center gap-4 mb-2 pb-4" style={{borderBottom:'3px solid #1A3A3A'}}>
           <img src={LOGO_SRC} alt="Genius" className="w-14 h-14 rounded-full object-cover flex-shrink-0" />
           <div className="flex-1">
-            <h1 className="text-xl font-black uppercase tracking-wide text-[#1A3A3A]">Reporte de PreCalificación</h1>
+            <h1 className="text-xl font-black uppercase tracking-wide text-[#1A3A3A]">{R.title}</h1>
             <p className="text-xs text-[#C9A84C] uppercase tracking-widest font-semibold">Genius Visa Consultants</p>
           </div>
           <div className="text-right">
             <p className="text-sm font-bold text-[#C9A84C]">{date}</p>
-            <p className="text-xs text-gray-500">Solicitante: {data.form?.name}</p>
+            <p className="text-xs text-gray-500">{R.applicant}: {data.form?.name}</p>
           </div>
         </div>
 
@@ -93,7 +97,7 @@ export default function ReportePage() {
           </div>
           <div className="flex-1">
             <p className="text-xl font-bold text-gray-800 mb-1">{ll}</p>
-            <p className="text-sm text-gray-500 mb-2">Confianza: {data.confidence}%</p>
+            <p className="text-sm text-gray-500 mb-2">{R.completeness}: {data.confidence}%</p>
             <div className="h-2 rounded-full bg-gray-200 overflow-hidden">
               <div className="h-full rounded-full" style={{width:`${data.confidence}%`, background:lc}}></div>
             </div>
@@ -102,15 +106,15 @@ export default function ReportePage() {
 
         {/* Note */}
         <p className="text-xs text-gray-400 italic mb-6">
-          Nota: La puntuación máxima es de 94 puntos. La decisión final depende de la discreción del oficial consular en la entrevista.
+          {R.note}
         </p>
 
         {/* Info grid */}
         <div className="grid grid-cols-3 gap-3 p-4 rounded-xl mb-6 text-sm" style={{background:'#f8f8f8'}}>
           {[
-            ['Nombre', data.form?.name],['País', data.form?.country],
-            ['Email', data.form?.email],['Teléfono', data.form?.phone],
-            ['Edad', data.form?.age ? data.form.age+' años' : '—'],['Propósito', data.form?.purpose],
+            [R.name, data.form?.name],[R.country, data.form?.country],
+            ['Email', data.form?.email],[R.phone, data.form?.phone],
+            [R.age, data.form?.age ? data.form.age+' '+R.years : '—'],[R.purpose, data.form?.purpose],
           ].map(([k,v]) => (
             <div key={k}><span className="text-gray-400 text-xs">{k}: </span><strong className="text-gray-700">{v||'—'}</strong></div>
           ))}
@@ -121,7 +125,7 @@ export default function ReportePage() {
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-3 pb-2" style={{borderBottom:'2px solid #1A3A3A'}}>
               <div className="w-1 h-4 rounded-full bg-[#1A3A3A]"></div>
-              <h3 className="text-xs font-bold uppercase tracking-widest text-[#1A3A3A]">Resumen</h3>
+              <h3 className="text-xs font-bold uppercase tracking-widest text-[#1A3A3A]">{R.summary}</h3>
             </div>
             <div className="p-4 rounded-lg bg-gray-50 text-sm text-gray-600 leading-relaxed">
               {data.analysis.summary}
@@ -129,13 +133,13 @@ export default function ReportePage() {
           </div>
         )}
 
-        {data.analysis?.strengths?.length > 0 && <Section title="Fortalezas" color="#3DB89E" items={data.analysis.strengths} />}
-        {data.analysis?.risks?.length > 0 && <Section title="Factores de Riesgo" color="#E05252" items={data.analysis.risks} />}
-        {data.analysis?.recommendations?.length > 0 && <Section title="Recomendaciones" color="#C9A84C" items={data.analysis.recommendations} />}
+        {data.analysis?.strengths?.length > 0 && <Section title={R.strengths} color="#3DB89E" items={data.analysis.strengths} />}
+        {data.analysis?.risks?.length > 0 && <Section title={R.risks} color="#E05252" items={data.analysis.risks} />}
+        {data.analysis?.recommendations?.length > 0 && <Section title={R.recs} color="#C9A84C" items={data.analysis.recommendations} />}
 
         {/* Footer */}
         <div className="mt-8 pt-4 flex justify-between text-xs text-gray-400" style={{borderTop:'1px solid #eee'}}>
-          <span>Reporte de PreCalificación — {data.form?.name}</span>
+          <span>{R.title} — {data.form?.name}</span>
           <span>+504 9741-0936 | geniusvisac@gmail.com | geniusvctravel.com</span>
         </div>
       </div>

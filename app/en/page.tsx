@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   },
 }
 
-const EVAL_URL = '/evaluacion'
+const EVAL_URL = '/en/evaluation'
 const WA_URL = 'https://wa.me/50497410936'
 
 const NAV_LINKS = [

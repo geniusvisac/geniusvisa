@@ -8,6 +8,7 @@ export const metadata: Metadata = {
     canonical: `${SITE_URL}/evaluacion`,
     languages: {
       'es-HN': `${SITE_URL}/evaluacion`,
+      'en': `${SITE_URL}/en/evaluation`,
       'x-default': `${SITE_URL}/evaluacion`,
     },
   },
