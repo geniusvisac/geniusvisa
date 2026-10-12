@@ -91,7 +91,7 @@ export default function CotizadorPage() {
         <div className='grid grid-cols-2 gap-3 mb-8'>
           {(['air','package'] as TravelType[]).map(type => (
             <button key={type} onClick={() => setTravelType(type)} className={`rounded-2xl border-2 p-5 text-center transition-all ${travelType===type?'border-[#C9A84C] bg-[#C9A84C]/10':'border-white/10 bg-white/5 hover:border-white/20'}`}>
-              <div className='text-3xl mb-2'>{type==='air'?'✈️':'🌴'}</div>
+              <img src={type==='air'?'/images/cotizador-aereo.webp':'/images/cotizador-paquete.webp'} alt={type==='air'?L.air:L.pkg} width={720} height={405} className={`w-full aspect-video object-cover rounded-xl mb-3 transition-opacity ${travelType===type?'opacity-100':'opacity-70'}`} />
               <div className={`text-sm font-bold ${travelType===type?'text-[#C9A84C]':'text-white'}`}>{type==='air'?L.air:L.pkg}</div>
             </button>
           ))}
