@@ -1,7 +1,7 @@
 'use client'
 import { useState, useCallback, useEffect } from 'react'
-import { ArrowRight, ArrowLeft, MessageCircle, RotateCcw, ShieldCheck, TriangleAlert, Lightbulb, Clock, Lock, FileText, Check, Sparkles, BadgeCheck, Download, LoaderCircle, MessagesSquare, BookOpen, Info, ListChecks } from 'lucide-react'
-import { OPTS, COUNTRIES, FACTORS, FACTOR_ORDER, CAP_TEXT, calcAssessment, refsForFactor, guideForPurpose, type Lang, type FactorKey, type FactorResult, type Assessment } from '@/lib/visa-model'
+import { ArrowRight, ArrowLeft, MessageCircle, RotateCcw, ShieldCheck, TriangleAlert, Lightbulb, Clock, Lock, FileText, Check, Sparkles, BadgeCheck, Download, LoaderCircle, MessagesSquare, Info, ListChecks } from 'lucide-react'
+import { OPTS, COUNTRIES, FACTORS, FACTOR_ORDER, CAP_TEXT, calcAssessment, type Lang, type FactorKey, type FactorResult, type Assessment } from '@/lib/visa-model'
 
 const LOGO_SRC = 'data:image/png;base64,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'
 
@@ -47,7 +47,7 @@ const T = {
     wGetTitle: 'Al finalizar recibirás',
     wGet: ['Tu puntaje de 0 a 100, desglosado en 6 factores', 'Tus fortalezas y factores de riesgo', 'Recomendaciones y consejos para la entrevista', 'Reporte descargable en PDF'],
     wCta: 'Comenzar evaluación',
-    wNote: 'Resultado orientativo basado en los factores del 9 FAM, la guía oficial de los oficiales consulares; no es un cálculo oficial. Ninguna evaluación garantiza la aprobación: la decisión final es del oficial consular.',
+    wNote: 'Resultado orientativo basado en los factores que los oficiales consulares consideran; no es un cálculo oficial. Ninguna evaluación garantiza la aprobación: la decisión final es del oficial consular.',
     steps: ['Información personal', 'Perfil', 'Arraigos'], stepOf: (s: number) => `Paso ${s} de 3`,
     s1Title: 'Información Personal', s1Sub: 'Estos campos son obligatorios para la evaluación',
     s2Title: 'Perfil del Solicitante', s2Sub: 'Estas preguntas mejoran la precisión de la evaluación',
@@ -72,12 +72,11 @@ const T = {
     completeness: 'Perfil completado', completenessHint: 'Mientras más preguntas responda, más precisa es la evaluación.',
     note: 'Nota: Resultado orientativo sobre 100 puntos; la decisión final depende de la discreción del oficial consular.',
     breakdownTitle: 'Desglose por factor', howTitle: 'Cómo se calcula este puntaje',
-    howText: 'Seis factores suman 100 puntos. Los factores se basan en los criterios que el Manual de Asuntos Exteriores del Departamento de Estado (9 FAM) indica a los oficiales consulares. El 9 FAM no define una fórmula con puntos: los pesos son de Genius y el resultado es orientativo, no una probabilidad de aprobación.',
+    howText: 'Seis factores suman 100 puntos. Los factores se basan en los criterios que los oficiales consulares consideran al evaluar una visa. No existe una fórmula oficial con puntos: los pesos son de Genius y el resultado es orientativo, no una probabilidad de aprobación.',
     capLabel: 'Limitador aplicado', capBefore: (n: number) => `Puntaje antes del límite: ${n}.`,
-    scopeStudy: 'Visas de estudio: el 9 FAM reconoce que los estudiantes suelen tener vínculos limitados con su país, y el modelo lo considera. Confirma con un asesor la categoría exacta de tu caso.',
+    scopeStudy: 'Visas de estudio: se reconoce que los estudiantes suelen tener vínculos limitados con su país, y el modelo lo considera. Confirma con un asesor la categoría exacta de tu caso.',
     scopeWork: 'Visas de trabajo: cada categoría (H-1B, L-1, etc.) tiene requisitos propios y algunas no exigen los mismos arraigos. Este puntaje es una referencia general; confirma con un asesor la categoría exacta.',
-    interviewTitle: 'Preparación para la entrevista', refsLabel: 'Ver en el 9 FAM:',
-    guideTitle: 'Guía oficial consultada (9 FAM)', guideNote: 'El enlace abre el capítulo completo en el sitio del Departamento de Estado; busca la sección indicada. El manual se actualiza con frecuencia.',
+    interviewTitle: 'Preparación para la entrevista',
     fbFactorStrong: (d: string) => `Este factor suma a tu perfil. ${d}`,
     fbFactorWeak: (d: string) => `Este factor resta fuerza a tu perfil. ${d} Conviene reforzarlo con documentación.`,
     summary: 'Resumen', strengths: 'Fortalezas', risks: 'Factores de Riesgo', recs: 'Recomendaciones',
@@ -98,7 +97,7 @@ const T = {
     wGetTitle: 'When you finish you will receive',
     wGet: ['Your score from 0 to 100, broken down into 6 factors', 'Your strengths and risk factors', 'Recommendations and interview tips', 'A downloadable PDF report'],
     wCta: 'Start assessment',
-    wNote: 'Indicative result based on the factors in the 9 FAM, the official guidance for consular officers; it is not an official calculation. No assessment guarantees approval: the final decision rests with the consular officer.',
+    wNote: 'Indicative result based on the factors consular officers consider; it is not an official calculation. No assessment guarantees approval: the final decision rests with the consular officer.',
     steps: ['Personal information', 'Profile', 'Ties'], stepOf: (s: number) => `Step ${s} of 3`,
     s1Title: 'Personal Information', s1Sub: 'These fields are required for the assessment',
     s2Title: 'Applicant Profile', s2Sub: 'These questions improve the accuracy of the assessment',
@@ -123,12 +122,11 @@ const T = {
     completeness: 'Profile completeness', completenessHint: 'The more questions you answer, the more accurate the assessment.',
     note: 'Note: Indicative result out of 100 points; the final decision rests with the consular officer.',
     breakdownTitle: 'Breakdown by factor', howTitle: 'How this score is calculated',
-    howText: 'Six factors add up to 100 points. The factors are based on the criteria the Department of State Foreign Affairs Manual (9 FAM) gives consular officers. The 9 FAM does not define a points formula: the weights are Genius’s own and the result is indicative, not a probability of approval.',
+    howText: 'Six factors add up to 100 points. The factors are based on the criteria consular officers consider when assessing a visa. There is no official points formula: the weights are Genius’s own and the result is indicative, not a probability of approval.',
     capLabel: 'Limit applied', capBefore: (n: number) => `Score before the limit: ${n}.`,
-    scopeStudy: 'Student visas: the 9 FAM recognizes that students usually have limited ties to their home country, and the model takes this into account. Confirm the exact category of your case with an advisor.',
+    scopeStudy: 'Student visas: students are recognized as usually having limited ties to their home country, and the model takes this into account. Confirm the exact category of your case with an advisor.',
     scopeWork: 'Work visas: each category (H-1B, L-1, etc.) has its own requirements and some do not require the same ties. This score is a general reference; confirm the exact category with an advisor.',
-    interviewTitle: 'Interview preparation', refsLabel: 'See in the 9 FAM:',
-    guideTitle: 'Official guidance consulted (9 FAM)', guideNote: 'The link opens the full chapter on the Department of State website; look for the section shown. The manual is updated frequently.',
+    interviewTitle: 'Interview preparation',
     fbFactorStrong: (d: string) => `This factor adds to your profile. ${d}`,
     fbFactorWeak: (d: string) => `This factor weakens your profile. ${d} It is worth reinforcing with documentation.`,
     summary: 'Summary', strengths: 'Strengths', risks: 'Risk Factors', recs: 'Recommendations',
@@ -209,21 +207,7 @@ function ScoreRing({ score, max, color }: { score: number; max: number; color: s
   )
 }
 
-function RefChips({ factor, purpose, history, label }: { factor?: FactorKey; purpose: string; history: string; label: string }) {
-  const refs = factor ? refsForFactor(factor, purpose, history) : []
-  if (!refs.length) return null
-  return (
-    <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1.5 text-xs text-white/40">
-      <span>{label}</span>
-      {refs.map(r => (
-        <a key={r.code} href={r.url} target="_blank" rel="noopener noreferrer" title={r.title}
-          className="rounded-md border border-white/15 px-2 py-0.5 text-white/60 transition-colors hover:border-[#C9A84C]/50 hover:text-[#C9A84C]">{r.code}</a>
-      ))}
-    </p>
-  )
-}
-
-function Section({ icon: Icon, color, title, items, purpose, history, refsLabel }: { icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>; color: string; title: string; items: AnalysisItem[]; purpose: string; history: string; refsLabel: string }) {
+function Section({ icon: Icon, color, title, items }: { icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>; color: string; title: string; items: AnalysisItem[] }) {
   if (!items.length) return null
   return (
     <div className="mb-7">
@@ -235,7 +219,6 @@ function Section({ icon: Icon, color, title, items, purpose, history, refsLabel 
         <div key={i} className="mb-3 rounded-xl border border-white/8 bg-white/4 p-5" style={{ borderLeft: `3px solid ${color}` }}>
           <p className="mb-2 text-sm font-bold text-white/90">{i + 1}. {it.title}</p>
           <p className="text-sm leading-relaxed text-white/65">{it.text}</p>
-          <RefChips factor={it.factor} purpose={purpose} history={history} label={refsLabel} />
         </div>
       ))}
     </div>
@@ -366,7 +349,6 @@ export function VisaEvaluator({ initialLang = 'es' }: { initialLang?: Lang }) {
         breakdown: result.breakdown.map(b => ({ label: FACTORS[b.key][lang].label, points: b.points, max: b.max })),
         capText: result.cap ? CAP_TEXT[result.cap.reason][lang](result.cap.limit) + ' ' + t.capBefore(result.rawScore) : '',
         howText: t.howText,
-        guide: guideForPurpose(result.purpose, result.history),
         form: { name: form.name, email: form.email, phone: form.phone, age: form.age, country: countryLabel(form.country), purpose: purposeLabel(form.purpose) },
       }))
       window.open('/reporte', '_blank')
@@ -456,7 +438,6 @@ export function VisaEvaluator({ initialLang = 'es' }: { initialLang?: Lang }) {
     const lc = result.level==='high'?'#3DB89E':result.level==='medium'?'#C9A84C':'#E05252'
     const ll = t.levels[result.level]
     const scope = result.purpose === 'study' ? t.scopeStudy : result.purpose === 'work' ? t.scopeWork : ''
-    const secProps = { purpose: result.purpose, history: result.history, refsLabel: t.refsLabel }
     return (
       <main className="min-h-screen bg-[#1A3A3A]">
         {header}
@@ -501,20 +482,10 @@ export function VisaEvaluator({ initialLang = 'es' }: { initialLang?: Lang }) {
             </div>
             <div className="rounded-xl bg-white/4 border border-white/8 p-5 text-sm text-white/70 leading-relaxed">{result.analysis.summary}</div>
           </div>
-          <Section icon={ShieldCheck} color="#3DB89E" title={t.strengths} items={result.analysis.strengths} {...secProps} />
-          <Section icon={TriangleAlert} color="#E05252" title={t.risks} items={result.analysis.risks} {...secProps} />
-          <Section icon={Lightbulb} color="#C9A84C" title={t.recs} items={result.analysis.recommendations} {...secProps} />
-          <Section icon={MessagesSquare} color="#8FB8B0" title={t.interviewTitle} items={result.analysis.interview || []} {...secProps} />
-
-          <div className="mb-7 rounded-xl border border-white/8 bg-white/[0.03] p-5">
-            <div className="mb-3 flex items-center gap-2"><BookOpen className="size-4 text-[#C9A84C]" /><h2 className="text-sm font-bold text-white/85">{t.guideTitle}</h2></div>
-            <ul className="space-y-1.5">
-              {guideForPurpose(result.purpose, result.history).map(g => (
-                <li key={g.code} className="text-xs text-white/55"><a href={g.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-white/75 underline-offset-2 hover:text-[#C9A84C] hover:underline">{g.code}</a> — {g.title}</li>
-              ))}
-            </ul>
-            <p className="mt-3 text-xs leading-relaxed text-white/35">{t.guideNote}</p>
-          </div>
+          <Section icon={ShieldCheck} color="#3DB89E" title={t.strengths} items={result.analysis.strengths} />
+          <Section icon={TriangleAlert} color="#E05252" title={t.risks} items={result.analysis.risks} />
+          <Section icon={Lightbulb} color="#C9A84C" title={t.recs} items={result.analysis.recommendations} />
+          <Section icon={MessagesSquare} color="#8FB8B0" title={t.interviewTitle} items={result.analysis.interview || []} />
 
           <div className="flex flex-col sm:flex-row gap-3 mt-2">
             <a href={`https://wa.me/50497410936?text=${encodeURIComponent(t.waMsg(result.score))}`} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 text-sm font-bold text-white hover:opacity-90"><MessageCircle className="size-4" />{t.wa}</a>

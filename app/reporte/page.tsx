@@ -21,8 +21,8 @@ export default function ReportePage() {
 
   const en = data.lang === 'en'
   const R = en
-    ? { levels: {high:'Likely Approval',medium:'Possible Approval',low:'High Risk of Denial'} as Record<string,string>, title:'Pre-Qualification Report', print:'Print / Save PDF', close:'Close', applicant:'Applicant', completeness:'Profile completeness', note:'Note: Indicative result out of 100 points; the final decision rests with the consular officer at the interview.', name:'Name', country:'Country', phone:'Phone', age:'Age', years:'years old', purpose:'Purpose', summary:'Summary', strengths:'Strengths', risks:'Risk Factors', recs:'Recommendations', breakdown:'Breakdown by factor', interview:'Interview preparation', guide:'Official guidance consulted (9 FAM)', guideNote:'References to the Department of State guidance for consular officers (fam.state.gov). This report is indicative, is not legal advice, and the final decision rests with the consular officer.', locale:'en-US' }
-    : { levels: {high:'Probable Aprobación',medium:'Aprobación Posible',low:'Alto Riesgo de Rechazo'} as Record<string,string>, title:'Reporte de PreCalificación', print:'Imprimir / Guardar PDF', close:'Cerrar', applicant:'Solicitante', completeness:'Perfil completado', note:'Nota: Resultado orientativo sobre 100 puntos; la decisión final depende de la discreción del oficial consular en la entrevista.', name:'Nombre', country:'País', phone:'Teléfono', age:'Edad', years:'años', purpose:'Propósito', summary:'Resumen', strengths:'Fortalezas', risks:'Factores de Riesgo', recs:'Recomendaciones', breakdown:'Desglose por factor', interview:'Preparación para la entrevista', guide:'Guía oficial consultada (9 FAM)', guideNote:'Referencias a la guía del Departamento de Estado para los oficiales consulares (fam.state.gov). Este reporte es orientativo, no constituye asesoría legal y la decisión final la toma el oficial consular.', locale:'es-HN' }
+    ? { levels: {high:'Likely Approval',medium:'Possible Approval',low:'High Risk of Denial'} as Record<string,string>, title:'Pre-Qualification Report', print:'Print / Save PDF', close:'Close', applicant:'Applicant', completeness:'Profile completeness', note:'Note: Indicative result out of 100 points; it is not legal advice and the final decision rests with the consular officer at the interview.', name:'Name', country:'Country', phone:'Phone', age:'Age', years:'years old', purpose:'Purpose', summary:'Summary', strengths:'Strengths', risks:'Risk Factors', recs:'Recommendations', breakdown:'Breakdown by factor', interview:'Interview preparation', locale:'en-US' }
+    : { levels: {high:'Probable Aprobación',medium:'Aprobación Posible',low:'Alto Riesgo de Rechazo'} as Record<string,string>, title:'Reporte de PreCalificación', print:'Imprimir / Guardar PDF', close:'Cerrar', applicant:'Solicitante', completeness:'Perfil completado', note:'Nota: Resultado orientativo sobre 100 puntos; no constituye asesoría legal y la decisión final depende de la discreción del oficial consular en la entrevista.', name:'Nombre', country:'País', phone:'Teléfono', age:'Edad', years:'años', purpose:'Propósito', summary:'Resumen', strengths:'Fortalezas', risks:'Factores de Riesgo', recs:'Recomendaciones', breakdown:'Desglose por factor', interview:'Preparación para la entrevista', locale:'es-HN' }
   const lc = data.level==='high'?'#3DB89E':data.level==='medium'?'#C9A84C':'#E05252'
   const ll = R.levels[data.level] || R.levels.low
   const date = new Date().toLocaleDateString(R.locale,{year:'numeric',month:'long',day:'numeric'})
@@ -163,18 +163,6 @@ export default function ReportePage() {
         {data.analysis?.recommendations?.length > 0 && <Section title={R.recs} color="#C9A84C" items={data.analysis.recommendations} />}
         {data.analysis?.interview?.length > 0 && <Section title={R.interview} color="#8FB8B0" items={data.analysis.interview} />}
 
-        {Array.isArray(data.guide) && data.guide.length > 0 && (
-          <div className="mb-6">
-            <div className="flex items-center gap-2 mb-3 pb-2" style={{borderBottom:'2px solid #1A3A3A'}}>
-              <div className="w-1 h-4 rounded-full bg-[#1A3A3A]"></div>
-              <h3 className="text-xs font-bold uppercase tracking-widest text-[#1A3A3A]">{R.guide}</h3>
-            </div>
-            <ul className="text-xs text-gray-600 space-y-1">
-              {data.guide.map((g: any) => <li key={g.code}><strong>{g.code}</strong> — {g.title}</li>)}
-            </ul>
-            <p className="text-xs text-gray-400 mt-2 leading-relaxed">{R.guideNote}</p>
-          </div>
-        )}
 
         {/* Footer */}
         <div className="mt-8 pt-4 flex justify-between text-xs text-gray-400" style={{borderTop:'1px solid #eee'}}>

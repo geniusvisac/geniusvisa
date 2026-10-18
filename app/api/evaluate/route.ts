@@ -53,6 +53,8 @@ function profileText(i: AssessmentInput, country: string): string {
 }
 
 interface Item { title: string; text: string; factor?: FactorKey }
+// Defensa adicional: un riesgo no puede apoyarse en detalles o documentos que el cuestionario nunca pregunta
+const MISSING_DETAIL = /\b(no\s+(se\s+|est[aá]n?\s+)?(detall|especific|document|precis|aclar)|sin\s+(detalle|especific|document)|falta\s+de\s+(detalle|informaci|document|especific)|not\s+(specified|detailed|documented|provided|clear)|no\s+details?|lack\s+of\s+(detail|information|documentation|specif)|unspecified|undocumented)/i
 const isFactor = (v: unknown): v is FactorKey => typeof v === 'string' && (FACTOR_ORDER as string[]).includes(v)
 
 function cleanItems(v: unknown, max: number): Item[] {
@@ -109,6 +111,8 @@ REGLAS:
 - Fortalezas: factores con buen puntaje. Riesgos: factores con puntaje bajo o antecedentes que el oficial podría cuestionar.
 - Recomendaciones: acciones concretas y realistas (por ejemplo, qué documentos reunir).
 - Consejos de entrevista: honestos y prácticos. Nunca sugieras ocultar ni alterar información.
+- El cuestionario SOLO pregunta lo que aparece en el perfil. NO pregunta: la naturaleza, el valor ni la ubicación de la propiedad; el nombre o tipo de empresa; el salario exacto; el itinerario, las fechas ni el destino del viaje; con quién viaja; ni detalles de los familiares en EE. UU. NUNCA presentes como riesgo la falta de esos detalles ni de documentación, porque nunca se pidieron.
+- Un riesgo solo puede basarse en una respuesta declarada que sea desfavorable o en un factor con puntaje bajo del desglose. Si la persona declaró algo favorable (por ejemplo, que tiene propiedad), preséntalo como fortaleza tal como lo declaró. Reunir documentos de respaldo va en Recomendaciones, nunca como riesgo.
 - Máximo 3 ítems por lista. Cada texto: 1 o 2 oraciones. El resumen: 3 oraciones.
 - ${lang === 'en' ? 'IDIOMA: escribe TODOS los textos (summary, title y text) en INGLÉS (English). Las claves del JSON no cambian.' : 'IDIOMA: escribe todos los textos en español.'}
 
@@ -143,7 +147,7 @@ Responde SOLO con este formato:
     const analysis = {
       summary: typeof raw.summary === 'string' ? raw.summary.trim().slice(0, 900) : '',
       strengths: cleanItems(raw.strengths, 4),
-      risks: cleanItems(raw.risks, 4),
+      risks: cleanItems(raw.risks, 8).filter(r => !MISSING_DETAIL.test(`${r.title} ${r.text}`)).slice(0, 4),
       recommendations: cleanItems(raw.recommendations, 4),
       interview: cleanItems(raw.interview, 4),
     }

@@ -8,6 +8,8 @@
 // temporal y actividades ilícitas durante la visita.
 //
 // QUÉ NO ES: el 9 FAM NO define una fórmula con puntos; la decisión es del oficial.
+// USO DE LAS CITAS: refsForFactor/guideForPurpose son SOLO para consulta interna del
+// asesor (panel). No se muestran al cliente ni en el PDF.
 // Los pesos son de Genius y el resultado es orientativo, NO una probabilidad.
 //
 // VERIFICACIÓN DE REFERENCIAS (18-oct-2026): los títulos de sección y las URL de
