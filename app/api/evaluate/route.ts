@@ -1,64 +1,158 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { calcAssessment, parseAssessmentInput, FACTORS, FACTOR_ORDER, CAP_TEXT, OPTS, type AssessmentInput, type FactorKey } from '@/lib/visa-model'
+import { redisConfig } from '@/lib/panel-auth'
+
+export const dynamic = 'force-dynamic'
+export const maxDuration = 60 // el análisis con IA puede tardar más de 10 s
+
+const MAX_PER_HOUR = 30
+const NO_STORE = { 'Cache-Control': 'no-store' }
+
+// Límite por conexión para proteger tu crédito de Anthropic. Si Redis falla, no se bloquea a nadie.
+async function rateLimited(req: NextRequest): Promise<boolean> {
+  const cfg = redisConfig()
+  if (!cfg) return false
+  const ip = (req.headers.get('x-forwarded-for') || '').split(',')[0].trim() || 'desconocida'
+  const key = encodeURIComponent(`eval_rl:${ip}`)
+  try {
+    const r = await fetch(`${cfg.url}/incr/${key}`, { headers: cfg.headers, cache: 'no-store' })
+    const n = Number((await r.json()).result)
+    await fetch(`${cfg.url}/expire/${key}/3600`, { headers: cfg.headers, cache: 'no-store' })
+    return n > MAX_PER_HOUR
+  } catch { return false }
+}
+
+const label = (group: string, v: string): string => OPTS[group]?.find(o => o.v === v)?.es || 'No respondió'
+
+function profileText(i: AssessmentInput, country: string): string {
+  const lines = [
+    `País de origen: ${country || 'No indicado'}`,
+    `Edad: ${i.age}`,
+    `Propósito del viaje: ${label('purpose', i.purpose)}`,
+    `Duración planificada en EE. UU.: ${label('duration', i.duration)}`,
+    `Historial migratorio con EE. UU.: ${label('history', i.history)}`,
+  ]
+  if (i.history === 'denied') lines.push(`  · Veces rechazada: ${label('dcount', i.dcount)}; último rechazo: ${label('dwhen', i.dwhen)}`)
+  if (i.history === 'deported' || i.history === 'withdrew') {
+    if (i.history === 'deported') lines.push(`  · Tipo de remoción: ${label('deportform', i.deportform)}`)
+    lines.push(`  · Tiempo desde que salió de EE. UU.: ${label('timegone', i.timegone)}; protección migratoria: ${label('protection', i.protection)}; problemas legales en EE. UU.: ${label('uslegal', i.uslegal)}`)
+  }
+  if (i.history === 'hasvisa') lines.push(`  · Visa anterior: ${label('visacat', i.visacat)}; vencimiento: ${label('visaexp', i.visaexp)}`)
+  lines.push(
+    `Ocupación: ${label('occupation', i.occupation)}; tiempo en el empleo: ${label('jobtime', i.jobtime)}`,
+    `Educación: ${label('education', i.education)}`,
+    `Ingresos mensuales (USD): ${label('income', i.income)}`,
+    `Quién paga el viaje: ${label('whopays', i.whopays)}; fondos para el doble del costo: ${label('yesno', i.funds)}`,
+    `Estado civil: ${label('marital', i.marital)}`,
+    `Viajes al exterior en los últimos 3 años: ${label('yesno', i.travel)}`,
+    `Familiares en EE. UU.: ${label('relatives', i.relatives)}`,
+    `Propiedad: ${label('yesno', i.property)}`,
+    `Procesos penales o judiciales: ${label('criminal', i.criminal)}`,
+  )
+  return lines.join('\n')
+}
+
+interface Item { title: string; text: string; factor?: FactorKey }
+const isFactor = (v: unknown): v is FactorKey => typeof v === 'string' && (FACTOR_ORDER as string[]).includes(v)
+
+function cleanItems(v: unknown, max: number): Item[] {
+  if (!Array.isArray(v)) return []
+  const out: Item[] = []
+  for (const x of v) {
+    if (!x || typeof x !== 'object') continue
+    const o = x as Record<string, unknown>
+    if (typeof o.title !== 'string' || typeof o.text !== 'string' || !o.title.trim() || !o.text.trim()) continue
+    out.push({ title: o.title.trim().slice(0, 140), text: o.text.trim().slice(0, 700), ...(isFactor(o.factor) ? { factor: o.factor } : {}) })
+    if (out.length >= max) break
+  }
+  return out
+}
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
-    const { formData, score, pct, lang = 'es' } = body
+    let body: unknown
+    try { body = await req.json() } catch { return NextResponse.json({ error: 'Solicitud no válida' }, { status: 400, headers: NO_STORE }) }
+    const b = (body && typeof body === 'object' ? body : {}) as Record<string, unknown>
+    const lang = b.lang === 'en' ? 'en' : 'es'
 
-    if (!formData || score === undefined) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    const parsed = parseAssessmentInput(b.formData)
+    if (!parsed.ok) return NextResponse.json({ error: parsed.error }, { status: 400, headers: NO_STORE })
+    const { input, country } = parsed.value
+
+    if (await rateLimited(req)) return NextResponse.json({ error: 'Demasiadas solicitudes' }, { status: 429, headers: NO_STORE })
+    if (!process.env.ANTHROPIC_API_KEY) {
+      console.error('Falta ANTHROPIC_API_KEY')
+      return NextResponse.json({ error: 'Servicio no disponible' }, { status: 500, headers: NO_STORE })
     }
 
-    const prompt = `Eres un experto en visas americanas. Analiza este perfil y responde ÚNICAMENTE con un objeto JSON válido, sin texto antes ni después, sin comillas de código.
+    // El puntaje se calcula aquí con el mismo modelo; no se confía en lo que envíe el navegador
+    const a = calcAssessment(input)
+    const breakdown = a.breakdown.map(x => `- ${FACTORS[x.key].es.label} (clave: ${x.key}): ${x.points}/${x.max}`).join('\n')
+    const capLine = a.cap ? `\nLIMITADOR APLICADO: ${CAP_TEXT[a.cap.reason].es(a.cap.limit)} (puntaje antes del límite: ${a.rawScore}).` : ''
 
-PERFIL:
-Nombre: ${formData.name}, País: ${formData.country}, Edad: ${formData.age}, Historial: ${formData.history}, Propósito: ${formData.purpose}, Ocupación: ${formData.occupation}, Ingresos: ${formData.income}, Educación: ${formData.education}, Estado civil: ${formData.marital}, Viajes previos: ${formData.travel}, Familiares en EEUU: ${formData.relatives}, Propiedad: ${formData.property}, Duración: ${formData.duration}, Antecedentes: ${formData.criminal}, Fondos: ${formData.funds}, Puntuación: ${score}/94
+    const prompt = `Eres un asesor experto en visas de no inmigrante de EE. UU. Analizas el perfil con base en los factores que el Departamento de Estado indica a los oficiales consulares en su manual (9 FAM): la presunción de intención inmigrante (INA 214(b)), la residencia en el exterior y los arraigos, la estadía temporal, las actividades no permitidas durante la visita y el historial de solicitudes y rechazos.
 
-${lang === 'en' ? 'IDIOMA: escribe TODOS los textos del JSON (summary, title y text) en INGLÉS (English). Las claves del JSON no cambian.' : 'IDIOMA: escribe todos los textos en español.'}
+Responde ÚNICAMENTE con un objeto JSON válido, sin texto antes ni después y sin comillas de código.
 
-Responde SOLO esto (reemplaza los valores entre comillas):
-{"summary":"resumen de 3 oraciones específico al perfil","strengths":[{"title":"fortaleza 1","text":"explicación"},{"title":"fortaleza 2","text":"explicación"},{"title":"fortaleza 3","text":"explicación"}],"risks":[{"title":"riesgo 1","text":"explicación"},{"title":"riesgo 2","text":"explicación"},{"title":"riesgo 3","text":"explicación"}],"recommendations":[{"title":"recomendación 1","text":"acción concreta"},{"title":"recomendación 2","text":"acción concreta"},{"title":"recomendación 3","text":"acción concreta"}]}`
+PERFIL (datos declarados por la persona):
+${profileText(input, country)}
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY!,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5',
-        max_tokens: 1500,
-        messages: [{ role: 'user', content: prompt }],
-      }),
-    })
+PUNTAJE DEL MODELO: ${a.score}/100
+DESGLOSE POR FACTOR:
+${breakdown}${capLine}
+
+REGLAS:
+- Basa cada punto SOLO en las respuestas del perfil y en el desglose. No inventes datos ni hechos que no estén arriba.
+- No prometas ni predigas la aprobación y no des porcentajes de probabilidad.
+- NO cites números de sección del 9 FAM ni de leyes: el sistema agrega las referencias oficiales por su cuenta.
+- Cada ítem lleva "factor": una de estas claves exactas: purpose, work, family, funding, history, travel (el factor al que pertenece el punto).
+- Fortalezas: factores con buen puntaje. Riesgos: factores con puntaje bajo o antecedentes que el oficial podría cuestionar.
+- Recomendaciones: acciones concretas y realistas (por ejemplo, qué documentos reunir).
+- Consejos de entrevista: honestos y prácticos. Nunca sugieras ocultar ni alterar información.
+- Máximo 3 ítems por lista. Cada texto: 1 o 2 oraciones. El resumen: 3 oraciones.
+- ${lang === 'en' ? 'IDIOMA: escribe TODOS los textos (summary, title y text) en INGLÉS (English). Las claves del JSON no cambian.' : 'IDIOMA: escribe todos los textos en español.'}
+
+Responde SOLO con este formato:
+{"summary":"...","strengths":[{"factor":"work","title":"...","text":"..."}],"risks":[{"factor":"family","title":"...","text":"..."}],"recommendations":[{"factor":"funding","title":"...","text":"..."}],"interview":[{"factor":"purpose","title":"...","text":"..."}]}`
+
+    const ctrl = new AbortController()
+    const timer = setTimeout(() => ctrl.abort(), 50_000)
+    let response: Response
+    try {
+      response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        signal: ctrl.signal,
+        headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
+        body: JSON.stringify({ model: 'claude-haiku-4-5', max_tokens: 2000, temperature: 0.4, messages: [{ role: 'user', content: prompt }] }),
+      })
+    } finally { clearTimeout(timer) }
 
     if (!response.ok) {
-      const err = await response.text()
-      console.error('Anthropic error:', err)
-      return NextResponse.json({ error: 'AI service error', detail: err }, { status: 500 })
+      console.error('Anthropic error:', response.status, await response.text())
+      return NextResponse.json({ error: 'Servicio de IA no disponible' }, { status: 502, headers: NO_STORE })
     }
 
     const data = await response.json()
-    const text = data.content?.[0]?.text || ''
+    const text: string = data.content?.[0]?.text || ''
+    const start = text.indexOf('{'), end = text.lastIndexOf('}')
+    if (start === -1 || end === -1) { console.error('Respuesta sin JSON:', text.slice(0, 300)); return NextResponse.json({ error: 'Respuesta no válida' }, { status: 502, headers: NO_STORE }) }
 
-    // Extract JSON - find first { and last }
-    const start = text.indexOf('{')
-    const end = text.lastIndexOf('}')
+    let raw: Record<string, unknown>
+    try { raw = JSON.parse(text.slice(start, end + 1)) } catch { console.error('JSON inválido:', text.slice(0, 300)); return NextResponse.json({ error: 'Respuesta no válida' }, { status: 502, headers: NO_STORE }) }
 
-    if (start === -1 || end === -1) {
-      console.error('No JSON in response. Raw text:', text)
-      return NextResponse.json({ error: 'No JSON found', raw: text }, { status: 500 })
+    const analysis = {
+      summary: typeof raw.summary === 'string' ? raw.summary.trim().slice(0, 900) : '',
+      strengths: cleanItems(raw.strengths, 4),
+      risks: cleanItems(raw.risks, 4),
+      recommendations: cleanItems(raw.recommendations, 4),
+      interview: cleanItems(raw.interview, 4),
     }
-
-    const jsonStr = text.slice(start, end + 1)
-    const analysis = JSON.parse(jsonStr)
-
-    return NextResponse.json({ analysis })
-
+    if (!analysis.summary || (!analysis.strengths.length && !analysis.risks.length)) {
+      return NextResponse.json({ error: 'Respuesta incompleta' }, { status: 502, headers: NO_STORE })
+    }
+    return NextResponse.json({ analysis }, { headers: NO_STORE })
   } catch (error) {
-    const msg = error instanceof Error ? error.message : String(error)
-    console.error('Route error:', msg)
-    return NextResponse.json({ error: msg }, { status: 500 })
+    console.error('Route error:', error instanceof Error ? error.message : String(error))
+    return NextResponse.json({ error: 'Error interno' }, { status: 500, headers: NO_STORE })
   }
 }
