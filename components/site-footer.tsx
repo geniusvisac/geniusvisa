@@ -12,11 +12,11 @@ const columns = [
     ],
   },
   {
-    title: "Paises",
+    title: "Países",
     links: [
       { label: "Honduras", href: "#" },
       { label: "Colombia", href: "#" },
-      { label: "Mexico", href: "#" },
+      { label: "México", href: "#" },
       { label: "Ecuador", href: "#" },
       { label: "España", href: "#" },
     ],
