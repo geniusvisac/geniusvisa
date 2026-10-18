@@ -112,41 +112,63 @@ export interface Assessment {
 const pick = (t: Record<string, number>, k: string): number => t[k] ?? 0
 const clamp = (n: number, max: number): number => Math.max(0, Math.min(max, n))
 
+// ── Puntos por respuesta: UNA sola fuente para el puntaje y para las etiquetas de la IA ──
+interface Ctx { study: boolean; workPurpose: boolean }
+interface FieldDef { max: number; pts: (v: string, c: Ctx) => number }
+const T = (table: Record<string, number>, max: number): FieldDef => ({ max, pts: v => pick(table, v) })
+const FIELD_POINTS: Record<string, FieldDef> = {
+  purpose: T({ tourism: 8, family: 8, business: 7, medical: 6, study: 5, work: 4 }, 8),
+  // En estudio y trabajo se espera una estadía larga: la duración es neutral
+  duration: { max: 6, pts: (v, c) => (c.study || c.workPurpose) ? 4 : pick({ lt1w: 5, '1-2w': 6, '2-4w': 5, '1-3m': 3, '3-6m': 2, '6m+': 0 }, v) },
+  // El 9 FAM reconoce que los estudiantes tienen vínculos limitados (402.5-5(E)(1))
+  occupation: { max: 10, pts: (v, c) => (c.study && v === 'student') ? 8 : pick({ business: 10, public: 9, employee: 9, retired: 9, freelance: 7, student: 5, unemployed: 1 }, v) },
+  jobtime: T({ '5+y': 7, '3-5y': 6, '1-3y': 4, '6m-1y': 2, lt6m: 1 }, 7),
+  income: T({ '5000+': 6, '2500-5000': 5, '1000-2500': 4, '500-1000': 2, lt500: 1 }, 6),
+  education: T({ postgrad: 5, university: 4, technical: 3, secondary: 2, primary: 1 }, 5),
+  marital: { max: 7, pts: (v, c) => pick({ married: 7, divorced: 4, widowed: 4, single: c.study ? 4 : 2 }, v) },
+  property: { max: 8, pts: (v, c) => v === 'yes' ? 8 : (v === 'no' && c.study ? 3 : 0) },
+  // Familiares en EE. UU.: son un lazo que puede jalar a quedarse. NO tenerlos es lo más favorable.
+  relatives: T({ none: 8, distant: 6, close: 3, spouse: 0 }, 8),
+  funds: { max: 6, pts: v => v === 'yes' ? 6 : 0 },
+  whopays: T({ self: 4, company: 4, family: 3, sponsor: 2 }, 4),
+  travel: { max: 6, pts: v => v === 'yes' ? 6 : 0 },
+  criminal: T({ no: 5, minor: 1, serious: 0 }, 5),
+}
+const ctxOf = (purpose: string): Ctx => ({ study: purpose === 'study', workPurpose: purpose === 'work' })
+
+export type Tone = 'favorable' | 'intermedio' | 'desfavorable' | 'neutral'
+/** Etiqueta de una respuesta según el propio modelo (la IA debe respetarla; evita que invierta el sentido). */
+export function answerTone(field: string, value: string, purpose = ''): Tone | null {
+  if (!value) return null
+  if (field === 'history') return value === 'hasvisa' ? 'favorable' : value === 'first' ? 'neutral' : 'desfavorable'
+  const c = ctxOf(purpose)
+  if (field === 'duration' && (c.study || c.workPurpose)) return 'neutral'
+  // Estudiantes: no tener propiedad, ser solteros o declararse estudiantes es lo esperado (402.5-5(E)(1)); no es una debilidad
+  if (c.study && ((field === 'property' && value === 'no') || (field === 'occupation' && value === 'student') || (field === 'marital' && value === 'single'))) return 'neutral'
+  const d = FIELD_POINTS[field]
+  if (!d) return null
+  const r = d.pts(value, c) / d.max
+  return r >= 0.85 ? 'favorable' : r <= 0.4 ? 'desfavorable' : 'intermedio'
+}
+
 export function calcAssessment(f: AssessmentInput): Assessment {
-  const study = f.purpose === 'study'
-  const workPurpose = f.purpose === 'work'
+  const c = ctxOf(f.purpose)
+  const study = c.study
+  const pt = (field: string, v: string): number => FIELD_POINTS[field].pts(v, c)
   const age = parseInt(f.age, 10)
 
   // 1 · Propósito y duración (14)
-  const purpose = clamp(
-    pick({ tourism: 8, family: 8, business: 7, medical: 6, study: 5, work: 4 }, f.purpose) +
-    // En estudio y trabajo se espera una estadía larga: la duración es neutral
-    ((study || workPurpose) ? 4 : pick({ lt1w: 5, '1-2w': 6, '2-4w': 5, '1-3m': 3, '3-6m': 2, '6m+': 0 }, f.duration)),
-    14)
+  const purpose = clamp(pt('purpose', f.purpose) + pt('duration', f.duration), 14)
 
   // 2 · Arraigo laboral y económico (28)
-  const occupationPts = (study && f.occupation === 'student')
-    ? 8 // el 9 FAM reconoce que los estudiantes tienen vínculos limitados (402.5-5(E)(1))
-    : pick({ business: 10, public: 9, employee: 9, retired: 9, freelance: 7, student: 5, unemployed: 1 }, f.occupation)
-  const work = clamp(
-    occupationPts +
-    pick({ '5+y': 7, '3-5y': 6, '1-3y': 4, '6m-1y': 2, lt6m: 1 }, f.jobtime) +
-    pick({ '5000+': 6, '2500-5000': 5, '1000-2500': 4, '500-1000': 2, lt500: 1 }, f.income) +
-    pick({ postgrad: 5, university: 4, technical: 3, secondary: 2, primary: 1 }, f.education),
-    28)
+  const work = clamp(pt('occupation', f.occupation) + pt('jobtime', f.jobtime) + pt('income', f.income) + pt('education', f.education), 28)
 
   // 3 · Arraigo familiar y patrimonial (25)
-  const maritalPts = pick({ married: 7, divorced: 4, widowed: 4, single: study ? 4 : 2 }, f.marital)
-  const propertyPts = f.property === 'yes' ? 8 : (f.property === 'no' && study ? 3 : 0)
   const agePts = Number.isNaN(age) ? 0 : (study ? 2 : (age >= 30 && age <= 55 ? 2 : (age >= 25 ? 1 : 0)))
-  const family = clamp(
-    maritalPts + propertyPts + agePts + pick({ none: 8, distant: 6, close: 3, spouse: 0 }, f.relatives),
-    25)
+  const family = clamp(pt('marital', f.marital) + pt('property', f.property) + agePts + pt('relatives', f.relatives), 25)
 
   // 4 · Financiamiento del viaje (10)
-  const funding = clamp(
-    (f.funds === 'yes' ? 6 : 0) + pick({ self: 4, company: 4, family: 3, sponsor: 2 }, f.whopays),
-    10)
+  const funding = clamp(pt('funds', f.funds) + pt('whopays', f.whopays), 10)
 
   // 5 · Historial migratorio y legal (17 de base; los antecedentes graves RESTAN dentro de este factor)
   let hist = 0
@@ -156,7 +178,7 @@ export function calcAssessment(f: AssessmentInput): Assessment {
   else if (f.history === 'withdrew') hist = 5 + (f.timegone === '5-10' || f.timegone === '10+' ? 2 : 0)
   else if (f.history === 'deported') hist = 1 + pick({ '3-5': 1, '5-10': 2, '10+': 3 }, f.timegone)
   if (f.history === 'withdrew' || f.history === 'deported') hist -= pick({ minor: 1, serious: 2 }, f.uslegal)
-  const baseHistory = clamp(clamp(hist, 12) + pick({ no: 5, minor: 1, serious: 0 }, f.criminal), 17)
+  const baseHistory = clamp(clamp(hist, 12) + pt('criminal', f.criminal), 17)
   // Descuentos por antecedentes: se restan aquí y pueden dejar este factor por debajo de cero
   let deduction = 0
   if (f.history === 'deported') deduction += 50 // remoción o deportación
@@ -165,7 +187,7 @@ export function calcAssessment(f: AssessmentInput): Assessment {
   if (f.history === 'denied' && (f.dwhen === 'lt1' || f.dwhen === '1-2')) deduction += 12 // rechazo de menos de 2 años
 
   // 6 · Historial de viajes (6)
-  const travel = f.travel === 'yes' ? 6 : 0
+  const travel = pt('travel', f.travel)
 
   // El total nunca baja de 0: el descuento solo puede restar lo que hay en los demás factores
   const others = purpose + work + family + funding + travel

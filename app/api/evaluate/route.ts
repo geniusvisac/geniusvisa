@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { calcAssessment, parseAssessmentInput, FACTORS, FACTOR_ORDER, OPTS, type AssessmentInput, type FactorKey } from '@/lib/visa-model'
+import { calcAssessment, parseAssessmentInput, answerTone, FACTORS, FACTOR_ORDER, OPTS, type AssessmentInput, type FactorKey } from '@/lib/visa-model'
 import { redisConfig } from '@/lib/panel-auth'
 
 export const dynamic = 'force-dynamic'
@@ -24,13 +24,19 @@ async function rateLimited(req: NextRequest): Promise<boolean> {
 
 const label = (group: string, v: string): string => OPTS[group]?.find(o => o.v === v)?.es || 'No respondió'
 
+// Cada respuesta lleva la etiqueta que le da el propio modelo, para que la IA no pueda invertir su sentido
 function profileText(i: AssessmentInput, country: string): string {
+  const row = (text: string, field: string, group: string): string => {
+    const v = (i as unknown as Record<string, string>)[field]
+    const tone = answerTone(field, v, i.purpose)
+    return `${text}: ${label(group, v)}${tone ? ` [${tone}]` : ''}`
+  }
   const lines = [
     `País de origen: ${country || 'No indicado'}`,
     `Edad: ${i.age}`,
-    `Propósito del viaje: ${label('purpose', i.purpose)}`,
-    `Duración planificada en EE. UU.: ${label('duration', i.duration)}`,
-    `Historial migratorio con EE. UU.: ${label('history', i.history)}`,
+    row('Propósito del viaje', 'purpose', 'purpose'),
+    row('Duración planificada en EE. UU.', 'duration', 'duration'),
+    row('Historial migratorio con EE. UU.', 'history', 'history'),
   ]
   if (i.history === 'denied') lines.push(`  · Veces rechazada: ${label('dcount', i.dcount)}; último rechazo: ${label('dwhen', i.dwhen)}`)
   if (i.history === 'deported' || i.history === 'withdrew') {
@@ -39,15 +45,17 @@ function profileText(i: AssessmentInput, country: string): string {
   }
   if (i.history === 'hasvisa') lines.push(`  · Visa anterior: ${label('visacat', i.visacat)}; vencimiento: ${label('visaexp', i.visaexp)}`)
   lines.push(
-    `Ocupación: ${label('occupation', i.occupation)}; tiempo en el empleo: ${label('jobtime', i.jobtime)}`,
-    `Educación: ${label('education', i.education)}`,
-    `Ingresos mensuales (USD): ${label('income', i.income)}`,
-    `Quién paga el viaje: ${label('whopays', i.whopays)}; fondos para el doble del costo: ${label('yesno', i.funds)}`,
-    `Estado civil: ${label('marital', i.marital)}`,
-    `Viajes al exterior en los últimos 3 años: ${label('yesno', i.travel)}`,
-    `Familiares en EE. UU.: ${label('relatives', i.relatives)}`,
-    `Propiedad: ${label('yesno', i.property)}`,
-    `Procesos penales o judiciales: ${label('criminal', i.criminal)}`,
+    row('Ocupación', 'occupation', 'occupation'),
+    row('Tiempo en el empleo', 'jobtime', 'jobtime'),
+    row('Educación', 'education', 'education'),
+    row('Ingresos mensuales (USD)', 'income', 'income'),
+    row('Quién paga el viaje', 'whopays', 'whopays'),
+    row('Fondos para el doble del costo del viaje', 'funds', 'yesno'),
+    row('Estado civil', 'marital', 'marital'),
+    row('Viajes al exterior en los últimos 3 años', 'travel', 'yesno'),
+    row('Familiares en EE. UU.', 'relatives', 'relatives'),
+    row('Propiedad', 'property', 'yesno'),
+    row('Procesos penales o judiciales', 'criminal', 'criminal'),
   )
   return lines.join('\n')
 }
@@ -55,6 +63,8 @@ function profileText(i: AssessmentInput, country: string): string {
 interface Item { title: string; text: string; factor?: FactorKey }
 // Defensa adicional: un riesgo no puede apoyarse en detalles o documentos que el cuestionario nunca pregunta
 const MISSING_DETAIL = /\b(no\s+(se\s+|est[aá]n?\s+)?(detall|especific|document|precis|aclar)|sin\s+(detalle|especific|document)|falta\s+de\s+(detalle|informaci|document|especific)|not\s+(specified|detailed|documented|provided|clear)|no\s+details?|lack\s+of\s+(detail|information|documentation|specif)|unspecified|undocumented)/i
+// Defensa adicional: no tener familiares en EE. UU. nunca es un riesgo (es lo contrario: los familiares allá jalan a quedarse)
+const NO_US_RELATIVES = /(no\s+(tiene|tienen|cuenta\s+con|posee|have|has)\s+(close\s+)?(familiares?|parientes|relatives|family)\s+(cercanos\s+|members\s+)?(en|in|dentro\s+de)\s+(ee|estados|e\.?u|the\s+u)|sin\s+(familiares?|parientes)\s+(cercanos\s+)?en\s+(ee|estados)|(ausencia|falta)\s+de\s+(arraigo\s+familiar|familiares?|v[ií]nculos?\s+familiares?)\s+en\s+(ee|estados)|(absence|lack)\s+of\s+(family|relatives)\s+(ties\s+)?in\s+the\s+u|without\s+(family|relatives)\s+in\s+the\s+u)/i
 const isFactor = (v: unknown): v is FactorKey => typeof v === 'string' && (FACTOR_ORDER as string[]).includes(v)
 
 function cleanItems(v: unknown, max: number): Item[] {
@@ -110,6 +120,8 @@ REGLAS:
 - Fortalezas: factores con buen puntaje. Riesgos: factores con puntaje bajo o antecedentes que el oficial podría cuestionar.
 - Recomendaciones: acciones concretas y realistas (por ejemplo, qué documentos reunir).
 - Consejos de entrevista: honestos y prácticos. Nunca sugieras ocultar ni alterar información.
+- Cada dato del perfil lleva una etiqueta calculada por el modelo: [favorable], [intermedio], [desfavorable] o [neutral]. RESPÉTALA. Un riesgo solo puede basarse en un dato [desfavorable] (o [intermedio] si su factor tiene puntaje bajo en el desglose). Un dato [favorable] o [neutral] NUNCA es un riesgo ni una debilidad.
+- La AUSENCIA de algo negativo es favorable: no tener familiares en EE. UU., no tener rechazos, no tener antecedentes. Los familiares en EE. UU. pesan EN CONTRA de la persona, porque son un lazo que la puede jalar a quedarse; no tenerlos NUNCA es un riesgo ni una debilidad (si acaso, preséntalo como fortaleza).
 - El cuestionario SOLO pregunta lo que aparece en el perfil. NO pregunta: la naturaleza, el valor ni la ubicación de la propiedad; el nombre o tipo de empresa; el salario exacto; el itinerario, las fechas ni el destino del viaje; con quién viaja; ni detalles de los familiares en EE. UU. NUNCA presentes como riesgo la falta de esos detalles ni de documentación, porque nunca se pidieron.
 - Un riesgo solo puede basarse en una respuesta declarada que sea desfavorable o en un factor con puntaje bajo del desglose. Si la persona declaró algo favorable (por ejemplo, que tiene propiedad), preséntalo como fortaleza tal como lo declaró. Reunir documentos de respaldo va en Recomendaciones, nunca como riesgo.
 - NO menciones puntos ni cálculos internos del puntaje. Explica los riesgos en términos del perfil (por ejemplo, «el rechazo reciente» o «el antecedente de deportación»), sin hablar de puntajes.
@@ -147,7 +159,7 @@ Responde SOLO con este formato:
     const analysis = {
       summary: typeof raw.summary === 'string' ? raw.summary.trim().slice(0, 900) : '',
       strengths: cleanItems(raw.strengths, 4),
-      risks: cleanItems(raw.risks, 8).filter(r => !MISSING_DETAIL.test(`${r.title} ${r.text}`)).slice(0, 4),
+      risks: cleanItems(raw.risks, 8).filter(r => !MISSING_DETAIL.test(`${r.title} ${r.text}`) && !NO_US_RELATIVES.test(`${r.title} ${r.text}`)).slice(0, 4),
       recommendations: cleanItems(raw.recommendations, 4),
       interview: cleanItems(raw.interview, 4),
     }
