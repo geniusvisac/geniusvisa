@@ -23,7 +23,8 @@ interface AItem { title: string; text: string; factor?: string }
 interface Evaluacion {
   id: string; name: string; email: string; phone: string; age: string
   country: string; history: string; purpose: string; occupation: string
-  score: number; scoreMax?: number; breakdown?: { key: string; points: number; max: number }[]
+  score: number; scoreMax?: number
+  breakdown?: { key: string; points: number; max: number }[]
   level: string; confidence: number; timestamp: string
   analysis?: { summary: string; strengths: AItem[]; risks: AItem[]; recommendations: AItem[]; interview?: AItem[] }
 }
@@ -337,7 +338,7 @@ export default function PanelPage() {
                     <div className="bg-white/4 rounded-xl p-3 mb-2 space-y-1.5 text-xs">
                       {selected.breakdown.filter(b=>FACTORS[b.key as FactorKey]).map(b=>{
                         const ratio=b.points/b.max; const c=ratio>=0.7?'#3DB89E':ratio>=0.5?'#C9A84C':'#E05252'
-                        return <div key={b.key} className="flex justify-between gap-3"><span className="text-white/65">{FACTORS[b.key as FactorKey].es.label}</span><strong style={{color:c}}>{b.points}/{b.max}</strong></div>
+                        return <div key={b.key} className="flex justify-between gap-3"><span className="text-white/65">{FACTORS[b.key as FactorKey].es.label}</span><strong style={{color:c}}>{b.points < 0 ? `−${Math.abs(b.points)}` : `${b.points}/${b.max}`}</strong></div>
                       })}
                     </div>
                   </> : null}

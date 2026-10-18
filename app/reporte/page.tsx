@@ -117,15 +117,14 @@ export default function ReportePage() {
               <div className="w-1 h-4 rounded-full bg-[#1A3A3A]"></div>
               <h3 className="text-xs font-bold uppercase tracking-widest text-[#1A3A3A]">{R.breakdown}</h3>
             </div>
-            {data.capText && <p className="text-xs mb-3 p-3 rounded-lg" style={{background:'#E0525212', color:'#A83232'}}>{data.capText}</p>}
             <div className="space-y-3">
               {data.breakdown.map((b: any) => {
                 const ratio = b.points / b.max
                 const c = ratio >= 0.7 ? '#3DB89E' : ratio >= 0.5 ? '#C9A84C' : '#E05252'
                 return (
                   <div key={b.label}>
-                    <div className="flex justify-between text-sm mb-1"><span className="font-semibold text-gray-700">{b.label}</span><span className="font-bold" style={{color:c}}>{b.points}<span className="text-gray-400 font-normal"> / {b.max}</span></span></div>
-                    <div className="h-2 rounded-full bg-gray-200 overflow-hidden"><div className="h-full rounded-full" style={{width:`${Math.round(ratio*100)}%`, background:c}}></div></div>
+                    <div className="flex justify-between text-sm mb-1"><span className="font-semibold text-gray-700">{b.label}</span><span className="font-bold" style={{color:c}}>{b.points < 0 ? '−' + Math.abs(b.points) : b.points}{b.points >= 0 && <span className="text-gray-400 font-normal"> / {b.max}</span>}</span></div>
+                    <div className="h-2 rounded-full bg-gray-200 overflow-hidden"><div className="h-full rounded-full" style={{width:`${Math.max(0, Math.round(ratio*100))}%`, background:c}}></div></div>
                   </div>
                 )
               })}

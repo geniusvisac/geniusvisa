@@ -102,27 +102,11 @@ export const FACTORS: Record<FactorKey, FactorDef> = {
 }
 
 export interface FactorResult { key: FactorKey; points: number; max: number }
-export type CapReason = 'removal' | 'serious_record' | 'repeated_refusals' | 'recent_refusal'
 export interface Assessment {
-  score: number; max: number; rawScore: number
+  score: number; max: number
   level: 'high' | 'medium' | 'low'
+  /** Los puntos de los 6 factores SIEMPRE suman exactamente `score`. Historial puede ser negativo. */
   breakdown: FactorResult[]
-  cap: { reason: CapReason; limit: number } | null
-}
-
-export const CAP_TEXT: Record<CapReason, { es: (n: number) => string; en: (n: number) => string }> = {
-  removal: {
-    es: n => `Antecedente de remoción o deportación: el puntaje máximo se limita a ${n}.`,
-    en: n => `Prior removal or deportation: the maximum score is limited to ${n}.` },
-  serious_record: {
-    es: n => `Antecedente penal o judicial grave: el puntaje máximo se limita a ${n}.`,
-    en: n => `Serious criminal or legal record: the maximum score is limited to ${n}.` },
-  repeated_refusals: {
-    es: n => `Tres o más rechazos previos: el puntaje máximo se limita a ${n}.`,
-    en: n => `Three or more previous refusals: the maximum score is limited to ${n}.` },
-  recent_refusal: {
-    es: n => `Rechazo reciente (menos de 2 años): el puntaje máximo se limita a ${n}.`,
-    en: n => `Recent refusal (less than 2 years ago): the maximum score is limited to ${n}.` },
 }
 
 const pick = (t: Record<string, number>, k: string): number => t[k] ?? 0
@@ -164,7 +148,7 @@ export function calcAssessment(f: AssessmentInput): Assessment {
     (f.funds === 'yes' ? 6 : 0) + pick({ self: 4, company: 4, family: 3, sponsor: 2 }, f.whopays),
     10)
 
-  // 5 · Historial migratorio y legal (17)
+  // 5 · Historial migratorio y legal (17 de base; los antecedentes graves RESTAN dentro de este factor)
   let hist = 0
   if (f.history === 'hasvisa') hist = pick({ current: 12, lt1: 11, '1-3': 10, '3-5': 9, '5+': 8 }, f.visaexp) || 10
   else if (f.history === 'first') hist = 8
@@ -172,29 +156,29 @@ export function calcAssessment(f: AssessmentInput): Assessment {
   else if (f.history === 'withdrew') hist = 5 + (f.timegone === '5-10' || f.timegone === '10+' ? 2 : 0)
   else if (f.history === 'deported') hist = 1 + pick({ '3-5': 1, '5-10': 2, '10+': 3 }, f.timegone)
   if (f.history === 'withdrew' || f.history === 'deported') hist -= pick({ minor: 1, serious: 2 }, f.uslegal)
-  const history = clamp(clamp(hist, 12) + pick({ no: 5, minor: 1, serious: 0 }, f.criminal), 17)
+  const baseHistory = clamp(clamp(hist, 12) + pick({ no: 5, minor: 1, serious: 0 }, f.criminal), 17)
+  // Descuentos por antecedentes: se restan aquí y pueden dejar este factor por debajo de cero
+  let deduction = 0
+  if (f.history === 'deported') deduction += 50 // remoción o deportación
+  if (f.criminal === 'serious') deduction += 50 // antecedente penal o judicial grave
+  if (f.history === 'denied' && (f.dcount === '3' || f.dcount === '4+')) deduction += 45 // 3 o más rechazos
+  if (f.history === 'denied' && (f.dwhen === 'lt1' || f.dwhen === '1-2')) deduction += 12 // rechazo de menos de 2 años
 
   // 6 · Historial de viajes (6)
   const travel = f.travel === 'yes' ? 6 : 0
+
+  // El total nunca baja de 0: el descuento solo puede restar lo que hay en los demás factores
+  const others = purpose + work + family + funding + travel
+  const history = Math.max(baseHistory - deduction, -others)
 
   const breakdown: FactorResult[] = [
     { key: 'purpose', points: purpose, max: 14 }, { key: 'work', points: work, max: 28 },
     { key: 'family', points: family, max: 25 }, { key: 'funding', points: funding, max: 10 },
     { key: 'history', points: history, max: 17 }, { key: 'travel', points: travel, max: 6 },
   ]
-  const rawScore = breakdown.reduce((s, b) => s + b.points, 0)
-
-  // Limitadores: antecedentes graves topan el puntaje total (se muestran siempre al cliente)
-  const caps: { reason: CapReason; limit: number }[] = []
-  if (f.history === 'deported') caps.push({ reason: 'removal', limit: 35 })
-  if (f.criminal === 'serious') caps.push({ reason: 'serious_record', limit: 35 })
-  if (f.history === 'denied' && (f.dcount === '3' || f.dcount === '4+')) caps.push({ reason: 'repeated_refusals', limit: 44 })
-  if (f.history === 'denied' && (f.dwhen === 'lt1' || f.dwhen === '1-2')) caps.push({ reason: 'recent_refusal', limit: LEVEL_HIGH - 1 })
-  const cap: Assessment['cap'] = caps.length ? caps.reduce((a, b) => (b.limit < a.limit ? b : a)) : null
-
-  const score = cap ? Math.min(rawScore, cap.limit) : rawScore
+  const score = breakdown.reduce((sum, b) => sum + b.points, 0)
   const level = score >= LEVEL_HIGH ? 'high' : score >= LEVEL_MEDIUM ? 'medium' : 'low'
-  return { score, max: SCORE_MAX, rawScore, level, breakdown, cap }
+  return { score, max: SCORE_MAX, level, breakdown }
 }
 
 // ── Referencias al 9 FAM (títulos y direcciones verificados; ver nota arriba) ──

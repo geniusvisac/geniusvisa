@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { calcAssessment, parseAssessmentInput, FACTORS, FACTOR_ORDER, CAP_TEXT, OPTS, type AssessmentInput, type FactorKey } from '@/lib/visa-model'
+import { calcAssessment, parseAssessmentInput, FACTORS, FACTOR_ORDER, OPTS, type AssessmentInput, type FactorKey } from '@/lib/visa-model'
 import { redisConfig } from '@/lib/panel-auth'
 
 export const dynamic = 'force-dynamic'
@@ -90,7 +90,6 @@ export async function POST(req: NextRequest) {
     // El puntaje se calcula aquí con el mismo modelo; no se confía en lo que envíe el navegador
     const a = calcAssessment(input)
     const breakdown = a.breakdown.map(x => `- ${FACTORS[x.key].es.label} (clave: ${x.key}): ${x.points}/${x.max}`).join('\n')
-    const capLine = a.cap ? `\nLIMITADOR APLICADO: ${CAP_TEXT[a.cap.reason].es(a.cap.limit)} (puntaje antes del límite: ${a.rawScore}).` : ''
 
     const prompt = `Eres un asesor experto en visas de no inmigrante de EE. UU. Analizas el perfil con base en los factores que el Departamento de Estado indica a los oficiales consulares en su manual (9 FAM): la presunción de intención inmigrante (INA 214(b)), la residencia en el exterior y los arraigos, la estadía temporal, las actividades no permitidas durante la visita y el historial de solicitudes y rechazos.
 
@@ -100,8 +99,8 @@ PERFIL (datos declarados por la persona):
 ${profileText(input, country)}
 
 PUNTAJE DEL MODELO: ${a.score}/100
-DESGLOSE POR FACTOR:
-${breakdown}${capLine}
+DESGLOSE POR FACTOR (un valor negativo en el historial significa que antecedentes graves restaron puntos):
+${breakdown}
 
 REGLAS:
 - Basa cada punto SOLO en las respuestas del perfil y en el desglose. No inventes datos ni hechos que no estén arriba.
@@ -113,6 +112,7 @@ REGLAS:
 - Consejos de entrevista: honestos y prácticos. Nunca sugieras ocultar ni alterar información.
 - El cuestionario SOLO pregunta lo que aparece en el perfil. NO pregunta: la naturaleza, el valor ni la ubicación de la propiedad; el nombre o tipo de empresa; el salario exacto; el itinerario, las fechas ni el destino del viaje; con quién viaja; ni detalles de los familiares en EE. UU. NUNCA presentes como riesgo la falta de esos detalles ni de documentación, porque nunca se pidieron.
 - Un riesgo solo puede basarse en una respuesta declarada que sea desfavorable o en un factor con puntaje bajo del desglose. Si la persona declaró algo favorable (por ejemplo, que tiene propiedad), preséntalo como fortaleza tal como lo declaró. Reunir documentos de respaldo va en Recomendaciones, nunca como riesgo.
+- NO menciones puntos ni cálculos internos del puntaje. Explica los riesgos en términos del perfil (por ejemplo, «el rechazo reciente» o «el antecedente de deportación»), sin hablar de puntajes.
 - Máximo 3 ítems por lista. Cada texto: 1 o 2 oraciones. El resumen: 3 oraciones.
 - ${lang === 'en' ? 'IDIOMA: escribe TODOS los textos (summary, title y text) en INGLÉS (English). Las claves del JSON no cambian.' : 'IDIOMA: escribe todos los textos en español.'}
 
