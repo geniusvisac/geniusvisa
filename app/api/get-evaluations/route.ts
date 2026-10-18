@@ -1,60 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { checkPanelAuth, redisConfig } from '@/lib/panel-auth'
+
+export const dynamic = 'force-dynamic'
+const NO_STORE = { 'Cache-Control': 'no-store' }
 
 export async function GET(req: NextRequest) {
+  const auth = await checkPanelAuth(req)
+  if (!auth.ok) return NextResponse.json({ error: auth.error }, { status: auth.status, headers: NO_STORE })
+
   try {
-    const url = process.env.UPSTASH_REDIS_REST_URL
-    const token = process.env.UPSTASH_REDIS_REST_TOKEN
+    const cfg = redisConfig()
+    if (!cfg) return NextResponse.json({ evaluaciones: [] }, { headers: NO_STORE })
 
-    if (!url || !token) {
-      return NextResponse.json({ evaluaciones: [] }, {
-        headers: { 'Access-Control-Allow-Origin': '*' }
-      })
-    }
-
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    }
-
-    const keysRes = await fetch(`${url}/zrange/evaluaciones_idx/0/-1/rev`, { headers })
+    const keysRes = await fetch(`${cfg.url}/zrange/evaluaciones_idx/0/-1/rev`, { headers: cfg.headers, cache: 'no-store' })
     const keysData = await keysRes.json()
     const keys: string[] = keysData.result || []
-
-    if (keys.length === 0) {
-      return NextResponse.json({ evaluaciones: [] }, {
-        headers: { 'Access-Control-Allow-Origin': '*' }
-      })
-    }
+    if (keys.length === 0) return NextResponse.json({ evaluaciones: [] }, { headers: NO_STORE })
 
     const batch = keys.slice(0, 200)
     const results = await Promise.all(
       batch.map(async (key) => {
         try {
-          const res = await fetch(`${url}/get/${encodeURIComponent(key)}`, { headers })
+          const res = await fetch(`${cfg.url}/get/${encodeURIComponent(key)}`, { headers: cfg.headers, cache: 'no-store' })
           const data = await res.json()
           if (!data.result) return null
           return { id: key, ...JSON.parse(data.result) }
         } catch { return null }
       })
     )
-
-    return NextResponse.json(
-      { evaluaciones: results.filter(Boolean) },
-      { headers: { 'Access-Control-Allow-Origin': '*' } }
-    )
-  } catch (error) {
-    return NextResponse.json({ evaluaciones: [], error: String(error) }, {
-      headers: { 'Access-Control-Allow-Origin': '*' }
-    })
+    return NextResponse.json({ evaluaciones: results.filter(Boolean) }, { headers: NO_STORE })
+  } catch {
+    return NextResponse.json({ evaluaciones: [], error: 'Error al leer la base de datos' }, { status: 500, headers: NO_STORE })
   }
-}
-
-export async function OPTIONS() {
-  return new NextResponse(null, {
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    }
-  })
 }
