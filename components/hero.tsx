@@ -1,14 +1,84 @@
 'use client'
+import { useEffect, useRef } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { Reveal } from './reveal'
+
 const EVAL_URL = '/evaluacion'
+
 const stats = [
   { value: '15+', label: 'Años de experiencia' },
   { value: '25+', label: 'Países atendidos' },
   { value: '98%', label: 'Clientes satisfechos' },
   { value: '500+', label: 'Familias asesoradas' },
 ]
+
+/* ── Vuelo del avión (único momento de movimiento del Hero) ───────────── */
+const FLIGHT_PATH = 'M -40 470 C 260 500 420 150 760 190 C 990 216 1100 100 1270 20'
+const FLIGHT_DELAY_MS = 600
+const FLIGHT_DURATION_MS = 3200
+const TRAIL_REST_OPACITY = 0 // 0 = la estela se desvanece por completo; 0.25 = queda tenue
+
+const easeInOutCubic = (t: number) =>
+  t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
+
 export function Hero() {
+  const pathRef = useRef<SVGPathElement>(null)
+  const trailRef = useRef<SVGPathElement>(null)
+  const planeRef = useRef<SVGGElement>(null)
+
+  useEffect(() => {
+    const path = pathRef.current
+    const trail = trailRef.current
+    const plane = planeRef.current
+    if (!path || !trail || !plane) return
+    // Respeta a quien pidió menos movimiento: no se anima nada
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const total = path.getTotalLength()
+    trail.style.strokeDasharray = `${total}`
+    trail.style.strokeDashoffset = `${total}`
+
+    const place = (p: number) => {
+      const len = total * p
+      const a = path.getPointAtLength(len)
+      const b = path.getPointAtLength(Math.min(len + 1, total))
+      const angle = (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI
+      plane.setAttribute(
+        'transform',
+        `translate(${a.x} ${a.y}) rotate(${angle + 90}) scale(2.4) translate(-12 -12)`,
+      )
+      trail.style.strokeDashoffset = `${total * (1 - p)}`
+    }
+
+    let raf = 0
+    let startTime: number | null = null
+
+    const tick = (now: number) => {
+      if (startTime === null) startTime = now
+      const t = Math.min((now - startTime) / FLIGHT_DURATION_MS, 1)
+      place(easeInOutCubic(t))
+      if (t < 1) {
+        raf = requestAnimationFrame(tick)
+      } else {
+        plane.style.transition = 'opacity 0.5s ease'
+        plane.style.opacity = '0'
+        trail.style.transition = 'opacity 1.4s ease'
+        trail.style.opacity = `${TRAIL_REST_OPACITY}`
+      }
+    }
+
+    place(0)
+    const timer = window.setTimeout(() => {
+      plane.style.opacity = '1'
+      raf = requestAnimationFrame(tick)
+    }, FLIGHT_DELAY_MS)
+
+    return () => {
+      window.clearTimeout(timer)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+
   return (
     <section
       id="inicio"
@@ -94,6 +164,45 @@ export function Hero() {
         </Reveal>
 
       </div>
+
+      {/* Vuelo del avión: capa decorativa por encima del contenido, sin bloquear clics */}
+      <svg
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-10 h-full w-full"
+        viewBox="0 0 1200 600"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        <defs>
+          <linearGradient
+            id="hero-flight-trail"
+            gradientUnits="userSpaceOnUse"
+            x1="0"
+            y1="470"
+            x2="1270"
+            y2="20"
+          >
+            <stop offset="0" stopColor="#C9A84C" stopOpacity="0" />
+            <stop offset="0.5" stopColor="#C9A84C" stopOpacity="0.7" />
+            <stop offset="1" stopColor="#E3CD8B" stopOpacity="0.95" />
+          </linearGradient>
+        </defs>
+        <path ref={pathRef} d={FLIGHT_PATH} fill="none" stroke="none" />
+        <path
+          ref={trailRef}
+          d={FLIGHT_PATH}
+          fill="none"
+          stroke="url(#hero-flight-trail)"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          style={{ strokeDasharray: 4000, strokeDashoffset: 4000 }}
+        />
+        <g ref={planeRef} style={{ opacity: 0 }}>
+          <path
+            d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"
+            fill="#C9A84C"
+          />
+        </g>
+      </svg>
     </section>
   )
 }
