@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { ArrowRight, MessageCircle, Mail, Clock, Star, Plane, Heart, Users, Sparkles, ShieldCheck, Headset, MapPin } from 'lucide-react'
 import { Reveal } from '@/components/reveal'
 import { WhatsappButton } from '@/components/whatsapp-button'
+import { HeroBackdrop } from '@/components/hero-backdrop'
 import { SITE_URL } from '@/lib/constants'
 
 export const metadata: Metadata = {
@@ -95,10 +96,10 @@ export default function ViajesPage() {
 
       {/* HERO */}
       <section id="hero" className="relative flex min-h-[88vh] items-center overflow-hidden bg-[#1A3A3A] pt-20 md:min-h-screen">
-        <div className="absolute inset-0">
-          <img src="https://images.pexels.com/photos/30037393/pexels-photo-30037393.jpeg?auto=compress&cs=tinysrgb&w=1920" alt="Villas de lujo sobre el agua al atardecer" className="size-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0D2222] via-[#1A3A3A]/70 to-[#1A3A3A]/30" />
-        </div>
+        <HeroBackdrop
+          src="https://images.pexels.com/photos/30037393/pexels-photo-30037393.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          alt="Villas de lujo sobre el agua al atardecer"
+        />
         <div className="relative mx-auto w-full max-w-7xl px-5 pb-20 pt-16 md:px-8">
           <div className="max-w-2xl">
             <Reveal>
