@@ -257,7 +257,7 @@ export function guideForPurpose(purpose: string, history = ''): FamRef[] {
 }
 
 // ── Validación de datos recibidos por el servidor ──
-export interface ParsedInput { input: AssessmentInput; country: string }
+export interface ParsedInput { input: AssessmentInput; country: string; gender: string }
 export type ParseResult = { ok: true; value: ParsedInput } | { ok: false; error: string }
 
 export function parseAssessmentInput(raw: unknown): ParseResult {
@@ -276,5 +276,44 @@ export function parseAssessmentInput(raw: unknown): ParseResult {
   if (!out.history) return { ok: false, error: 'Falta el historial migratorio' }
   const countryRaw = typeof r.country === 'string' ? r.country : ''
   const country = COUNTRIES.some(c => c.v === countryRaw) ? countryRaw : ''
-  return { ok: true, value: { input: out as unknown as AssessmentInput, country } }
+  return { ok: true, value: { input: out as unknown as AssessmentInput, country, gender: out.gender } }
+}
+
+// ── Datos de contacto: las MISMAS reglas en el navegador y en el servidor ──
+const EMAIL_RE = /^[^\s@<>"',;:]+@[^\s@<>"',;:]+\.[^\s@<>"',;:]{2,}$/
+/** Nombre limpio: solo letras, espacios, apóstrofes, puntos y guiones (máx. 80). */
+export const cleanName = (v: unknown): string =>
+  (typeof v === 'string' ? v : '').normalize('NFKC').replace(/\s+/g, ' ')
+    .replace(/[^\p{L}\p{M} '’.-]/gu, '').replace(/\s+/g, ' ').trim().slice(0, 80)
+export const isValidName = (v: string): boolean => cleanName(v).length >= 2
+export const isValidEmail = (v: string): boolean => v.trim().length <= 120 && EMAIL_RE.test(v.trim())
+export const isValidPhone = (v: string): boolean => {
+  const t = v.trim(); const digits = t.replace(/\D/g, '')
+  return t.length <= 30 && /^[0-9+()\-.\s]+$/.test(t) && digits.length >= 7 && digits.length <= 15
+}
+
+export interface ContactInput { name: string; email: string; phone: string }
+export type ContactResult = { ok: true; value: ContactInput } | { ok: false; error: string }
+export function parseContact(raw: unknown): ContactResult {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return { ok: false, error: 'Datos de contacto no válidos' }
+  const r = raw as Record<string, unknown>
+  const name = cleanName(r.name)
+  const email = typeof r.email === 'string' ? r.email.trim() : ''
+  const phone = typeof r.phone === 'string' ? r.phone.trim() : ''
+  if (!isValidName(name)) return { ok: false, error: 'Nombre no válido' }
+  if (!isValidEmail(email)) return { ok: false, error: 'Email no válido' }
+  if (!isValidPhone(phone)) return { ok: false, error: 'Teléfono no válido' }
+  return { ok: true, value: { name, email, phone } }
+}
+
+// ── «Perfil completado»: % de preguntas respondidas (antes vivía en el navegador) ──
+export type CompletenessInput = AssessmentInput & { name: string; gender: string; country: string; email: string; phone: string }
+export function calcCompleteness(f: CompletenessInput): number {
+  const fields: (keyof CompletenessInput)[] = ['name','age','gender','country','history','email','phone','purpose','occupation','jobtime','education','income','whopays','funds','marital','travel','relatives','property','duration','criminal']
+  if (f.history === 'denied') fields.push('dcount','dwhen')
+  if (f.history === 'deported') fields.push('deportform','timegone','protection','uslegal')
+  if (f.history === 'withdrew') fields.push('timegone','protection','uslegal')
+  if (f.history === 'hasvisa') fields.push('visacat','visaexp')
+  const filled = fields.filter(k => String(f[k]).trim() !== '').length
+  return Math.round((filled / fields.length) * 100)
 }
