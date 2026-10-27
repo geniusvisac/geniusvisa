@@ -69,6 +69,68 @@ export const viewport: Viewport = {
   themeColor: '#1A3A3A',
 }
 
+// Datos estructurados (schema.org): la organización, el negocio local y el sitio, enlazados por @id.
+// Ahrefs y los buscadores con IA piden un nodo de tipo Organization en la portada; LocalBusiness solo no lo cubre.
+function structuredData(lang: 'es' | 'en') {
+  const orgId = `${SITE_URL}/#organization`
+  const address = { '@type': 'PostalAddress', addressLocality: 'Tegucigalpa', addressCountry: 'HN' }
+  const sameAs = [
+    'https://instagram.com/geniusvisac',
+    'https://www.facebook.com/share/1BfV3v4agj/?mibextid=wwXIfr',
+    'https://wa.me/50497410936',
+  ]
+  const description = lang === 'en'
+    ? 'Specialized U.S. visa consulting with over 15 years of experience'
+    : 'Consultoría especializada en visas americanas con más de 15 años de experiencia'
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': orgId,
+        name: 'Genius Visa Consultants',
+        url: SITE_URL,
+        logo: { '@type': 'ImageObject', url: `${SITE_URL}/images/logo-visa.png`, width: 1062, height: 1112 },
+        image: `${SITE_URL}/images/viajero-genius-v2.png`,
+        description,
+        email: 'geniusvisac@gmail.com',
+        telephone: '+50497410936',
+        address,
+        contactPoint: [{
+          '@type': 'ContactPoint',
+          contactType: 'customer service',
+          telephone: '+50497410936',
+          email: 'geniusvisac@gmail.com',
+          availableLanguage: ['es', 'en'],
+        }],
+        sameAs,
+      },
+      {
+        '@type': 'LocalBusiness',
+        '@id': `${SITE_URL}/#localbusiness`,
+        name: 'Genius Visa Consultants',
+        url: SITE_URL,
+        image: `${SITE_URL}/images/viajero-genius-v2.png`,
+        description,
+        email: 'geniusvisac@gmail.com',
+        telephone: '+50497410936',
+        address,
+        openingHours: ['Mo-Fr 08:00-18:00', 'Sa 09:00-13:00'],
+        sameAs,
+        parentOrganization: { '@id': orgId },
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${SITE_URL}/#website`,
+        url: SITE_URL,
+        name: 'Genius Visa Consultants',
+        inLanguage: lang === 'en' ? 'en' : 'es',
+        publisher: { '@id': orgId },
+      },
+    ],
+  }
+}
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -83,28 +145,7 @@ export default async function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'LocalBusiness',
-              name: 'Genius Visa Consultants',
-              description: 'Consultoría especializada en visas americanas con más de 15 años de experiencia',
-              url: SITE_URL,
-              telephone: '+50497410936',
-              email: 'geniusvisac@gmail.com',
-              address: {
-                '@type': 'PostalAddress',
-                addressLocality: 'Tegucigalpa',
-                addressCountry: 'HN',
-              },
-              openingHours: ['Mo-Fr 08:00-18:00', 'Sa 09:00-13:00'],
-              sameAs: [
-                'https://instagram.com/geniusvisac',
-                'https://www.facebook.com/share/1BfV3v4agj/?mibextid=wwXIfr',
-                'https://wa.me/50497410936',
-              ],
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData(lang)).replace(/</g, '\\u003c') }}
         />
       </head>
       <body className="font-sans antialiased" suppressHydrationWarning>
