@@ -8,7 +8,7 @@ const messages = [
 ]
 
 export function SocialProof() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState<number | null>(null)
   const [msgIndex, setMsgIndex] = useState(0)
   const [visible, setVisible] = useState(true)
 
@@ -28,6 +28,9 @@ export function SocialProof() {
 
     return () => clearInterval(interval)
   }, [])
+
+  // No mostrar nada hasta tener un numero (evita que se vea un 0 al cargar la pagina)
+  if (count === null) return null
 
   return (
     <div className="fixed bottom-24 right-6 z-40 flex items-center gap-2.5 rounded-full bg-white px-4 py-2.5 shadow-xl border border-gray-100 transition-all duration-400">
