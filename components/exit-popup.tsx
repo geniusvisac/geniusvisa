@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
+import { SITE_URL } from '@/lib/constants'
 
 const EMAILJS_PUBLIC_KEY = 'uA2LH8GsHXpuw_hPd'
 const EMAILJS_SERVICE_ID = 'service_kj6jj6r'
@@ -48,8 +49,8 @@ export function ExitPopup() {
         reply_to: email,
         to_name: 'Cliente',
         from_name: 'Genius Visa Consultants',
-        message: 'Aqui esta tu guia gratuita: https://genius-visa-and-travel.vercel.app/guia-genius-visa-2026.pdf',
-        guide_url: 'https://genius-visa-and-travel.vercel.app/guia-genius-visa-2026.pdf',
+        message: `Aqui esta tu guia gratuita: ${SITE_URL}/guia-genius-visa-2026.pdf`,
+        guide_url: `${SITE_URL}/guia-genius-visa-2026.pdf`,
       })
 
       // Tambien notificar a Genius via Formspree
@@ -59,7 +60,7 @@ export function ExitPopup() {
         body: JSON.stringify({
           email,
           mensaje: 'Solicitud de guia gratuita desde el popup de salida',
-          fuente: 'Exit Popup - genius-visa-and-travel.vercel.app',
+          fuente: 'Exit Popup - geniusvctravel.com',
         }),
       })
 
