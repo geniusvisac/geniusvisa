@@ -1,0 +1,60 @@
+# robots.txt — geniusvctravel.com
+# Buscadores tradicionales y bots de IA permitidos; solo se protege el panel privado.
+
+User-agent: *
+Allow: /
+Disallow: /panel
+Disallow: /api/
+
+# Bots de IA (permitidos de forma explícita)
+User-agent: GPTBot
+Allow: /
+Disallow: /panel
+Disallow: /api/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /panel
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /panel
+Disallow: /api/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /panel
+Disallow: /api/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /panel
+Disallow: /api/
+
+User-agent: Claude-User
+Allow: /
+Disallow: /panel
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /panel
+Disallow: /api/
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /panel
+Disallow: /api/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /panel
+Disallow: /api/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /panel
+Disallow: /api/
+
+Sitemap: https://geniusvctravel.com/sitemap.xml
