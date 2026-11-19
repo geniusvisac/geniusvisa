@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { SITE_URL } from '@/lib/constants'
-import { ReadMore } from '@/components/guide-page'
+import { ReadMore, MidCta, HelpBlock } from '@/components/guide-page'
 
 const PATH = '/guias/me-negaron-la-visa-americana'
 const PAGE_URL = `${SITE_URL}${PATH}`
@@ -223,6 +223,8 @@ export default function MeNegaronLaVisa() {
         </div>
       </section>
 
+      <MidCta />
+
       <section className="bg-[#F8F6F1] py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="font-heading text-3xl text-[#1A3A3A] font-bold mb-3">Primero, entiende qué dice tu negativa</h2>
@@ -301,6 +303,17 @@ export default function MeNegaronLaVisa() {
           </div>
         </div>
       </section>
+
+      <HelpBlock
+        title="No repitas el trámite sin un plan"
+        intro="Cada solicitud cuesta una tarifa que no se devuelve y queda en tu historial. Antes de volver a aplicar, conviene entender qué pasó y qué vas a mostrar distinto."
+        points={[
+          'Revisamos contigo qué ocurrió en tu entrevista y qué dice tu negativa.',
+          'Te decimos con honestidad si conviene volver a aplicar ya o fortalecer tu perfil primero.',
+          'Te ayudamos a ordenar tu historia, tu DS-160 y tus documentos con información real.',
+          'Te preparamos para que la próxima entrevista sea distinta.',
+        ]}
+      />
 
       <section className="bg-[#F8F6F1] py-20 px-6">
         <div className="max-w-4xl mx-auto">

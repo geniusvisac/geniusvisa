@@ -54,6 +54,41 @@ export function ReadMore({ slugs, current }: { slugs: string[]; current: string 
   )
 }
 
+export function MidCta() {
+  return (
+    <section className="bg-white px-6 pb-4">
+      <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl bg-[#1A3A3A] px-7 py-5">
+        <p className="text-white/85 text-sm leading-relaxed text-center sm:text-left">
+          <strong className="text-white">¿Quieres saber cómo se ve tu caso?</strong> Evalúa tu perfil gratis y un asesor te orienta.
+        </p>
+        <a href={EVAL_URL} className="shrink-0 inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-bold text-[#1A3A3A] hover:opacity-90" style={{ backgroundColor: ACCENT }}>Evaluar mi perfil gratis →</a>
+      </div>
+    </section>
+  )
+}
+
+export function HelpBlock({ title, intro, points }: { title: string; intro: string; points: string[] }) {
+  return (
+    <section className="bg-[#1A3A3A] py-20 px-6">
+      <div className="max-w-4xl mx-auto">
+        <span className="inline-block text-sm font-semibold tracking-widest uppercase mb-3" style={{ color: ACCENT }}>Cómo te ayuda Genius</span>
+        <h2 className="font-heading text-3xl text-white font-bold mb-4">{title}</h2>
+        <p className="text-white/70 leading-relaxed mb-8 max-w-3xl">{intro}</p>
+        <div className="grid md:grid-cols-2 gap-4 mb-8">
+          {points.map((pt) => (
+            <div key={pt} className="flex items-start gap-3 rounded-xl bg-white/5 border border-white/10 p-4">
+              <span className="font-bold mt-0.5" style={{ color: ACCENT }}>✓</span>
+              <p className="text-white/80 text-sm leading-relaxed">{pt}</p>
+            </div>
+          ))}
+        </div>
+        <p className="text-white/50 text-xs leading-relaxed mb-6 max-w-3xl">Nadie puede garantizar una visa: la decisión es siempre del oficial consular. Lo que hacemos es ayudarte a presentar tu caso real con claridad y preparación.</p>
+        <a href={EVAL_URL} className="inline-flex items-center justify-center rounded-full px-8 py-4 text-sm font-bold text-[#1A3A3A] hover:opacity-90" style={{ backgroundColor: ACCENT }}>Empezar con la evaluación gratuita →</a>
+      </div>
+    </section>
+  )
+}
+
 export default function GuidePage({ slug }: { slug: string }) {
   const g = guides[slug]
   const url = guideUrl(slug)
@@ -129,6 +164,8 @@ export default function GuidePage({ slug }: { slug: string }) {
         </div>
       </section>
 
+      <MidCta />
+
       {g.sections.map((s, idx) => {
         const light = idx % 2 === 0
         return (
@@ -185,6 +222,8 @@ export default function GuidePage({ slug }: { slug: string }) {
           </section>
         )
       })}
+
+      {g.help && <HelpBlock {...g.help} />}
 
       <section className={`${g.sections.length % 2 === 0 ? 'bg-[#F8F6F1]' : 'bg-white'} py-20 px-6`}>
         <div className="max-w-4xl mx-auto">

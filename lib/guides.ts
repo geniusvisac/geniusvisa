@@ -28,6 +28,7 @@ export type Guide = {
   visaLinks: { label: string; href: string }[]
   ctaTitle: string
   ctaText: string
+  help?: { title: string; intro: string; points: string[] }
 }
 export type GuideMeta = { slug: string; cardTitle: string; summary: string }
 
@@ -145,6 +146,11 @@ export const guides: Record<string, Guide> = {
     visaLinks: ALL_VISAS,
     ctaTitle: '¿Quieres empezar con el pie derecho?',
     ctaText: 'Nuestra evaluación gratuita te muestra qué tan sólido se ve hoy tu perfil y qué puntos conviene fortalecer antes de pagar.',
+    help: {
+      title: 'Haz el trámite con acompañamiento',
+      intro: 'El proceso se puede hacer solo, pero cada paso tiene detalles donde se tropieza: el DS-160, el código de barras, el pago y la cita.',
+      points: ['Revisamos tu perfil antes de que pagues la tarifa, para que decidas con información.', 'Te orientamos en el DS-160 para que tus datos coincidan con tus documentos.', 'Te ayudamos a organizar tu historia y tus documentos de respaldo.', 'Te preparamos para la entrevista en la Embajada de Tegucigalpa.'],
+    },
   },
 
   // ───────────────────────────────────────────── 3
@@ -226,6 +232,11 @@ export const guides: Record<string, Guide> = {
     visaLinks: ALL_VISAS,
     ctaTitle: '¿No sabes qué documentos te convienen?',
     ctaText: 'Haz la evaluación gratuita y un asesor te orienta sobre cómo respaldar tu caso con lo que sí tienes.',
+    help: {
+      title: 'No improvises tu carpeta',
+      intro: 'Qué documentos te convienen depende de tu situación. Llevar los equivocados, o de más, puede debilitar tu caso.',
+      points: ['Un asesor revisa tu situación (empleo, negocio, estudios o familia) y define qué respaldo tiene sentido.', 'Verificamos que tus documentos cuenten la misma historia que tu DS-160.', 'Te decimos con honestidad qué puntos conviene fortalecer antes de la cita.', 'Te enseñamos cuándo y cómo presentarlos, para no entregar de más.'],
+    },
   },
 
   // ───────────────────────────────────────────── 4
@@ -306,6 +317,11 @@ export const guides: Record<string, Guide> = {
     visaLinks: ALL_VISAS,
     ctaTitle: '¿Quieres practicar antes de tu entrevista?',
     ctaText: 'Un asesor puede revisar tu caso contigo y prepararte para explicar tu historia con claridad. Empieza con la evaluación gratuita.',
+    help: {
+      title: 'Practica antes del día de tu cita',
+      intro: 'Tienes pocos minutos para explicar tu caso. Practicar con alguien que conoce el proceso marca la diferencia.',
+      points: ['Simulamos las preguntas más comunes según tu tipo de visa y tu situación.', 'Te ayudamos a explicar tu historia con claridad, sin memorizar ni ensayar discursos.', 'Detectamos respuestas que pueden generar dudas y las trabajamos contigo.', 'Llegas con más seguridad y sabiendo qué esperar.'],
+    },
   },
 
   // ───────────────────────────────────────────── 5
@@ -376,6 +392,11 @@ export const guides: Record<string, Guide> = {
     visaLinks: ALL_VISAS,
     ctaTitle: 'Antes de pagar, revisa tu perfil',
     ctaText: 'La tarifa no se devuelve. Una evaluación gratuita te ayuda a decidir si tu perfil está listo o conviene fortalecerlo primero.',
+    help: {
+      title: 'Que no te cueste dos veces',
+      intro: 'La tarifa consular no se devuelve. Aplicar bien desde el inicio es la forma más barata de hacerlo.',
+      points: ['Evaluamos tu perfil sin costo antes de que pagues la tarifa.', 'Te explicamos qué pagas al gobierno y qué corresponde a nuestro servicio, por escrito.', 'Te orientamos para evitar errores que te dejen fuera de la entrevista.', 'Te ayudamos a decidir si conviene aplicar ya o fortalecer algo primero.'],
+    },
   },
 
   // ───────────────────────────────────────────── 6
@@ -466,6 +487,11 @@ export const guides: Record<string, Guide> = {
     ],
     ctaTitle: '¿Listo para estudiar en Estados Unidos?',
     ctaText: 'Evalúa tu perfil gratis y un asesor te ayuda a preparar tu plan de estudios, tus fondos y tu entrevista.',
+    help: {
+      title: 'Estudia en EE. UU. con un plan sólido',
+      intro: 'La visa F1 exige coordinar admisión, I-20, SEVIS, fondos y entrevista. Un paso mal hecho puede atrasar tu inicio de clases.',
+      points: ['Revisamos tu plan de estudios y cómo demostrarás tus fondos.', 'Te orientamos con el DS-160 y los documentos académicos y económicos.', 'Te ayudamos a explicar por qué esa carrera, esa escuela y tu plan de regresar.', 'Te preparamos para la entrevista consular de estudiante.'],
+    },
   },
 
   // ───────────────────────────────────────────── 7
@@ -548,6 +574,11 @@ export const guides: Record<string, Guide> = {
     ],
     ctaTitle: '¿Tienes una oferta de trabajo en EE. UU.?',
     ctaText: 'Habla con un asesor para entender la parte consular y preparar tu entrevista. La petición legal la maneja el empleador.',
+    help: {
+      title: 'Prepara la parte consular con experiencia',
+      intro: 'Tu empleador y su abogado manejan la petición. Tu entrevista y tu formulario los preparas tú, y ahí te acompañamos.',
+      points: ['Te explicamos el proceso para que sepas qué esperar en cada etapa.', 'Te orientamos con el DS-160 y los documentos de tu perfil profesional.', 'Te preparamos para la entrevista de visa de trabajo en la Embajada.', 'Te ayudamos a evaluar ofertas y a detectar señales de fraude.'],
+    },
   },
 
   // ───────────────────────────────────────────── 8
@@ -629,88 +660,102 @@ export const guides: Record<string, Guide> = {
     ],
     ctaTitle: '¿No sabes cuál es el camino para tu familia?',
     ctaText: 'Cuéntanos tu situación y un asesor te orienta sobre el proceso, antes de que inviertas tiempo y dinero.',
+    help: {
+      title: 'Elige bien el camino para tu familia',
+      intro: 'Visita, dependiente o petición familiar son procesos distintos. Elegir mal significa perder tiempo y dinero.',
+      points: ['Revisamos tu caso y te explicamos qué opción corresponde a tu familia.', 'Preparamos el caso de visita o de acompañante para la entrevista.', 'Te orientamos sobre documentos y el proceso consular.', 'Te indicamos cuándo conviene además un abogado de inmigración autorizado.'],
+    },
   },
 
   // ───────────────────────────────────────────── 9
   'como-elegir-asesor-de-visas': {
     slug: 'como-elegir-asesor-de-visas',
-    metaTitle: 'Cómo elegir un asesor de visas confiable | Genius Visa',
+    metaTitle: 'Asesor de visas en Honduras: cómo elegir | Genius Visa',
     title: '¿Vale la pena contratar un asesor de visas? Cómo elegir uno confiable',
     eyebrow: 'Guía para hondureños',
-    description: 'Cuándo conviene contratar un asesor de visas, qué señales indican confianza, cuáles son alertas de estafa y qué preguntar antes de pagar. Guía para hondureños.',
-    intro: 'Contratar un asesor de visas no es obligatorio, y tampoco es una mala idea. Lo que sí es un error es contratar a la persona equivocada. Esta guía te ayuda a decidir si lo necesitas y, si sí, a distinguir un servicio serio de una estafa.',
+    description: 'Por qué conviene contar con un asesor de visas, cómo distinguir uno serio de una estafa y qué incluye trabajar con Genius Visa Consultants desde Honduras.',
+    intro: 'Nadie está obligado a contratar un asesor para pedir la visa americana. Pero la tarifa consular no se devuelve si te la niegan, y un error en el formulario o en la entrevista puede costarte meses o un año de espera. Por eso mucha gente prefiere ir acompañada. Esta guía te muestra cuándo vale la pena, cómo reconocer a un asesor serio y cómo trabajamos nosotros.',
     readMinutes: 6,
     quick: [
-      'No es obligatorio: puedes hacer el trámite tú mismo en los sitios oficiales.',
-      'Un asesor sirve más en casos con negativas previas, historial complejo o poco tiempo.',
-      'Ningún asesor puede garantizarte la visa ni tiene contactos en el consulado.',
-      'Pide todo por escrito: servicios incluidos, costo y límites, y paga las tarifas oficiales directamente al gobierno.',
+      'No es obligatorio, pero la tarifa no se devuelve y repetir el trámite cuesta dinero y tiempo.',
+      'Un asesor serio ordena tu historia, revisa tu formulario y documentos, y te prepara para la entrevista.',
+      'Ningún asesor puede garantizar la visa ni tiene contactos en el consulado. Quien lo prometa, te miente.',
+      'En Genius Visa Consultants empezamos con una evaluación gratuita de tu perfil, sin compromiso, y te decimos con honestidad cómo se ve tu caso.',
     ],
     sections: [
       {
-        h2: '¿Realmente necesitas un asesor?',
+        h2: 'Por qué conviene ir acompañado',
         paragraphs: [
-          'Si tu caso es sencillo y entiendes el formulario, puedes hacerlo solo. Un asesor suele aportar más valor cuando tu caso tiene complicaciones: una negativa previa, un historial migratorio complejo, ingresos difíciles de explicar o poco tiempo para prepararte.',
-          'Lo que un buen asesor hace es ordenar tu historia, revisar tu formulario y tus documentos, y prepararte para la entrevista. Lo que no puede hacer es decidir por el consulado.',
+          'Puedes hacer el trámite solo en los sitios oficiales, y muchas personas lo logran. El problema es lo que pasa cuando algo sale mal: la tarifa de 185 dólares no se devuelve, hay que esperar otra cita y cada solicitud queda en tu historial.',
+          'La mayoría de las negativas no se deben a que la persona no merezca la visa, sino a que no supo presentar su caso: una historia confusa, un formulario con datos que no coinciden o respuestas que no transmiten con claridad a qué va y por qué volverá. Eso es justo lo que un buen asesor te ayuda a evitar.',
+        ],
+        cards: [
+          { title: 'Antes de pagar', desc: 'Revisamos tu perfil con honestidad para decirte si conviene aplicar ya o fortalecer algo primero.' },
+          { title: 'En el formulario', desc: 'Te orientamos para que tu DS-160 cuente la misma historia que tus documentos, sin contradicciones.' },
+          { title: 'En tus documentos', desc: 'Te ayudamos a decidir qué respaldo tiene sentido en tu situación y a presentarlo con orden.' },
+          { title: 'En la entrevista', desc: 'Te preparamos para explicar tu caso con claridad, con tus propias palabras y con la verdad.' },
         ],
       },
       {
-        h2: 'Señales de que un asesor es confiable',
+        h2: 'Cómo reconocer a un asesor confiable',
+        lead: 'Úsala como lista para comparar a cualquier asesor, incluidos nosotros.',
         bullets: [
           'Te dice con claridad que no puede garantizar la visa.',
-          'Te entrega un contrato o acuerdo por escrito con servicios, costo y condiciones.',
-          'Te explica que las tarifas consulares se pagan directamente al gobierno de EE. UU., no a él.',
+          'Te entrega un acuerdo por escrito con servicios, costo y condiciones.',
+          'Explica que las tarifas consulares se pagan al gobierno de EE. UU., no a él.',
           'Tú llenas el formulario con tus datos reales; él te orienta, no lo inventa por ti.',
           'Te prepara para la entrevista sin dictarte respuestas falsas.',
           'Tiene experiencia comprobable, datos de contacto reales y responde por escrito.',
         ],
       },
       {
-        h2: 'Señales de alerta',
+        h2: 'Señales de alerta: huye si ves esto',
         bullets: [
           'Promete “visa garantizada” o “aprobación asegurada”.',
           'Dice tener contactos en la Embajada o en el consulado.',
           'Vende citas o promete adelantar tu turno. Las citas se programan en el sistema oficial.',
           'Te pide inventar datos, falsificar documentos o decir cosas que no son ciertas.',
-          'Te presiona para pagar ya, no da recibos o te pide tu contraseña de la cuenta oficial.',
-          'No tiene dirección, perfil o datos verificables, o todo es por mensajes sin respaldo.',
+          'Te presiona para pagar ya, no da recibos o te pide la contraseña de tu cuenta oficial.',
+          'No tiene dirección ni perfil verificable, o todo es por mensajes sin respaldo.',
         ],
-        note: 'La Embajada ha advertido que mentir para obtener una visa puede llevar a la pérdida de la visa y a no poder regresar a EE. UU.',
+        note: 'Mentir para obtener una visa puede llevar a perderla y a no poder regresar a EE. UU. Un asesor que te lo sugiere te pone en riesgo.',
       },
       {
-        h2: 'Preguntas que debes hacer antes de pagar',
+        h2: 'Cómo trabajamos en Genius Visa Consultants',
+        lead: 'Así se ve acompañarte con nosotros, de principio a fin.',
         steps: [
-          { title: '¿Qué incluye exactamente el servicio?', desc: 'Pide el detalle por escrito: revisión de formulario, de documentos, preparación de entrevista, cuántas sesiones.' },
-          { title: '¿Cuánto cuesta y qué incluye ese costo?', desc: 'Separa la asesoría de las tarifas oficiales, que no se pagan al asesor.' },
-          { title: '¿Qué pasa si me niegan la visa?', desc: 'Pregunta si hay reembolso, seguimiento o si el pago cubre solo el servicio. Desconfía si te prometen devolver todo o aprobar seguro.' },
-          { title: '¿Cuánta experiencia tiene con mi tipo de caso?', desc: 'Turismo, estudios, trabajo y familia son procesos distintos.' },
-          { title: '¿Quién llena mi formulario?', desc: 'Debes revisarlo tú y estar de acuerdo con cada dato antes de enviarlo.' },
-          { title: '¿Puedo ver referencias o casos reales?', desc: 'Un asesor serio puede mostrarte su trayectoria sin exponer datos de otros clientes.' },
+          { title: 'Evaluación gratuita de tu perfil', desc: 'Respondes unas preguntas en línea y te mostramos qué se ve fuerte en tu caso y qué conviene fortalecer. Sin costo y sin compromiso.' },
+          { title: 'Conversación con un asesor', desc: 'Revisamos tu situación real: trabajo o negocio, estudios, familia, viajes previos y cualquier negativa anterior.' },
+          { title: 'Estrategia para tu caso', desc: 'Definimos qué visa corresponde, cuándo conviene aplicar y qué puntos fortalecer antes de pagar la tarifa.' },
+          { title: 'Formulario y documentos', desc: 'Te orientamos para que tu solicitud sea coherente y esté bien respaldada. Tú siempre revisas y apruebas cada dato.' },
+          { title: 'Preparación de la entrevista', desc: 'Practicamos contigo para que expliques tu historia con claridad, seguridad y honestidad.' },
         ],
+        note: 'No garantizamos la aprobación: la decisión es siempre del oficial consular. Lo que sí hacemos es ayudarte a presentar tu caso real de la mejor manera posible.',
       },
       {
-        h2: 'Cómo trabajamos en Genius',
-        lead: 'Úsala como lista para comparar con cualquier asesor, incluidos nosotros.',
+        h2: 'Por qué las personas nos eligen',
         bullets: [
-          'Genius Visa Consultants tiene más de 15 años orientando solicitantes en más de 25 países.',
-          'Empezamos con una evaluación gratuita de tu perfil, para decirte con honestidad qué se ve fuerte y qué conviene fortalecer.',
-          'Revisamos tu historia, tu formulario y tus documentos, y te preparamos para la entrevista.',
-          'No garantizamos la aprobación: la decisión es siempre del oficial consular.',
+          'Más de 15 años de experiencia orientando solicitantes.',
+          'Clientes atendidos en más de 25 países de Latinoamérica, el Caribe y Europa.',
+          'Un enfoque honesto: te decimos la verdad sobre tu perfil, aunque no sea lo que esperabas oír.',
+          'Un acuerdo claro por escrito y tarifas oficiales que pagas directamente al gobierno, nunca a nosotros.',
+          'Oficina en Tegucigalpa y atención en español e inglés.',
         ],
       },
     ],
     faqs: [
-      { q: '¿Cuánto cobra un asesor de visas?', a: 'Varía según el servicio y la complejidad del caso. Pide siempre el detalle por escrito y confirma que las tarifas oficiales se pagan directamente al gobierno y no al asesor.' },
+      { q: '¿Es obligatorio contratar un asesor de visas?', a: 'No. Puedes hacer el trámite por tu cuenta. Un asesor te ayuda a presentar mejor tu caso y a evitar errores que cuestan tiempo y dinero, sobre todo porque la tarifa consular no se devuelve.' },
+      { q: '¿Cuánto cobra un asesor de visas?', a: 'Depende del servicio y de la complejidad de tu caso. Empieza con nuestra evaluación gratuita y un asesor te explica con claridad qué incluye cada servicio y cuánto cuesta, por escrito.' },
       { q: '¿Un asesor puede conseguirme una cita más rápido?', a: 'No. Las citas se programan en el sistema oficial de la Embajada. Quien venda citas o prometa adelantar tu turno no está actuando de forma confiable.' },
-      { q: '¿Un asesor puede garantizar la aprobación?', a: 'No. La decisión es exclusivamente del oficial consular. Cualquier promesa de aprobación asegurada es una señal de alerta.' },
-      { q: '¿Qué hago si creo que me estafaron?', a: 'Guarda contratos, mensajes y recibos, y repórtalo ante las autoridades competentes de Honduras. Si compartiste tus claves de las cuentas oficiales, cámbialas de inmediato.' },
-      { q: '¿Necesito un abogado en lugar de un asesor?', a: 'Para trámites legales de inmigración, como peticiones familiares o casos con historial migratorio complejo, conviene un abogado de inmigración autorizado. Para preparar visas de no inmigrante, un asesor puede orientarte.' },
+      { q: '¿Genius puede garantizarme la visa?', a: 'No, y desconfía de cualquiera que lo haga. La decisión es exclusivamente del oficial consular. Lo que hacemos es ayudarte a presentar tu caso real con claridad, orden y preparación.' },
+      { q: '¿Qué pasa si ya me negaron la visa?', a: 'Una negativa no cierra el camino. Antes de volver a aplicar conviene entender qué ocurrió y qué ha cambiado en tu caso. Un asesor puede revisarlo contigo para que no pagues otra tarifa sin cambiar nada.' },
+      { q: '¿Necesito un abogado en lugar de un asesor?', a: 'Para trámites legales de inmigración, como peticiones familiares o casos con historial migratorio complejo, conviene además un abogado de inmigración autorizado. Para visas de no inmigrante, como turismo y estudio, te orientamos nosotros.' },
     ],
     sources: [SRC_VISAS],
     related: ['riesgo-de-rechazo-visa-perfil', 'como-sacar-visa-americana-honduras', 'me-negaron-la-visa-americana', 'costo-tiempo-visa-americana-honduras'],
     visaLinks: ALL_VISAS,
-    ctaTitle: 'Empieza sin compromiso',
-    ctaText: 'Haz la evaluación gratuita y conoce nuestra forma de trabajar antes de tomar una decisión.',
+    ctaTitle: 'Empieza hoy con tu evaluación gratuita',
+    ctaText: 'En pocos minutos conoces el punto de partida de tu perfil y un asesor de Genius te orienta sobre los siguientes pasos. Sin compromiso.',
   },
 
   // ───────────────────────────────────────────── 10
@@ -797,6 +842,11 @@ export const guides: Record<string, Guide> = {
     visaLinks: ALL_VISAS,
     ctaTitle: 'Evalúa tu perfil antes de aplicar',
     ctaText: 'Es gratis, en línea y te muestra qué puntos conviene fortalecer antes de pagar la tarifa.',
+    help: {
+      title: 'Convierte tus puntos débiles en un plan',
+      intro: 'Detectar el riesgo es el primer paso. Saber qué hacer con él es lo que cambia el resultado.',
+      points: ['Nuestra evaluación gratuita te muestra qué se ve fuerte y qué conviene fortalecer.', 'Un asesor revisa contigo tu caso real y te propone cómo presentarlo mejor.', 'Te ayudamos a ordenar tu historia, tus documentos y tus respuestas.', 'Evitas pagar una tarifa que no se devuelve sin haber preparado tu caso.'],
+    },
   },
 }
 
