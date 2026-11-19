@@ -9,6 +9,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 1,
+      alternates: {
+        languages: {
+          'es-HN': SITE_URL,
+          en: `${SITE_URL}/en`,
+        },
+      },
     },
     {
       url: `${SITE_URL}/visas/b1-b2`,
@@ -137,6 +143,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 1,
+      alternates: {
+        languages: {
+          'es-HN': SITE_URL,
+          en: `${SITE_URL}/en`,
+        },
+      },
     },
     {
       url: `${SITE_URL}/en/visas/b1-b2`,
