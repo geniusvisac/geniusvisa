@@ -9,9 +9,11 @@ English summary: Ecosistema Genius, based in Tegucigalpa, Honduras, offers U.S. 
 ## Asesoría de visas (Genius Visa Consultants)
 
 - [Inicio](https://geniusvctravel.com/): servicios, experiencia y contacto.
+- [Visa de turista B1/B2](https://geniusvctravel.com/visas/b1-b2): requisitos y proceso de la visa de turismo y negocios.
 - [Visa F1 de estudiante](https://geniusvctravel.com/visas/f1): orientación para estudiantes que desean estudiar en EE. UU.
 - [Visa H1B de trabajo](https://geniusvctravel.com/visas/h1b): información sobre la visa de trabajo H1B.
 - [Visas familiares](https://geniusvctravel.com/visas/familiares): visas basadas en vínculos familiares.
+- [Guía: me negaron la visa americana](https://geniusvctravel.com/guias/me-negaron-la-visa-americana): qué significan las negativas 214(b) y 221(g), si se puede volver a aplicar y qué hacer ahora.
 - [Evaluador de perfil de visa](https://geniusvctravel.com/evaluacion): herramienta gratuita en línea para conocer el nivel de preparación del perfil antes de la entrevista consular.
 
 ## Viajes (Genius VC Travel)
@@ -22,6 +24,8 @@ English summary: Ecosistema Genius, based in Tegucigalpa, Honduras, offers U.S. 
 ## English
 
 - [Home (English)](https://geniusvctravel.com/en): services and contact.
+- [B1/B2 Tourist Visa](https://geniusvctravel.com/en/visas/b1-b2)
+- [F1 Student Visa](https://geniusvctravel.com/en/visas/f1)
 - [H1B Work Visa](https://geniusvctravel.com/en/visas/h1b)
 - [Family visas](https://geniusvctravel.com/en/visas/familiares)
 - [Visa profile evaluator](https://geniusvctravel.com/en/evaluation)

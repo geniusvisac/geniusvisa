@@ -45,6 +45,7 @@ const faqs = [
 const crossLinks = [
   { label: '¿Visa aprobada? Planea tu viaje a EE.UU.', href: '/viajes', color: '#3DB89E' },
   { label: '¿Tu familia viene contigo? Ver Visas Familiares F2', href: '/visas/familiares', color: '#C9A84C' },
+  { label: '¿Te negaron la visa? Guía: qué significa y qué hacer', href: '/guias/me-negaron-la-visa-americana', color: '#C9A84C' },
 ]
 
 export default function VisaF1() {
@@ -141,7 +142,7 @@ export default function VisaF1() {
           <p className="text-white/50 text-sm text-center mb-6 uppercase tracking-widest">También te puede interesar</p>
           <div className="grid sm:grid-cols-2 gap-4">
             {crossLinks.map((link) => (
-              <a key={link.href} href={link.href} className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-6 py-4 text-sm font-medium text-white hover:bg-white/10 transition-colors">
+              <a key={link.href} href={link.href} className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-6 py-4 text-sm font-medium text-white hover:bg-white/10 transition-colors sm:[&:nth-child(odd):last-child]:col-span-2">
                 <span className="size-2 rounded-full shrink-0" style={{ backgroundColor: link.color }} />
                 {link.label}
               </a>
