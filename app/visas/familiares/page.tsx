@@ -46,6 +46,8 @@ const crossLinks = [
   { label: '¿Ya tienes tu visa? Planea tu viaje familiar', href: '/viajes', color: '#3DB89E' },
   { label: '¿Necesitas visa de turismo también? Ver B1/B2', href: '/visas/b1-b2', color: '#3DB89E' },
   { label: '¿Te negaron la visa? Guía: qué significa y qué hacer', href: '/guias/me-negaron-la-visa-americana', color: '#C9A84C' },
+  { label: 'Guía: cómo pedir visa para tus familiares', href: '/guias/visa-familiares-como-pedirla', color: '#3DB89E' },
+  { label: 'Todas las guías de visa', href: '/guias', color: '#C9A84C' },
 ]
 
 export default function VisaFamiliares() {

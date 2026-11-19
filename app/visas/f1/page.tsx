@@ -46,6 +46,8 @@ const crossLinks = [
   { label: '¿Visa aprobada? Planea tu viaje a EE.UU.', href: '/viajes', color: '#3DB89E' },
   { label: '¿Tu familia viene contigo? Ver Visas Familiares F2', href: '/visas/familiares', color: '#C9A84C' },
   { label: '¿Te negaron la visa? Guía: qué significa y qué hacer', href: '/guias/me-negaron-la-visa-americana', color: '#C9A84C' },
+  { label: 'Guía: cómo obtener la visa F1 paso a paso', href: '/guias/visa-f1-estudiante-paso-a-paso', color: '#3DB89E' },
+  { label: 'Todas las guías de visa', href: '/guias', color: '#C9A84C' },
 ]
 
 export default function VisaF1() {

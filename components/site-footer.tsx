@@ -9,6 +9,7 @@ const columns = [
       { label: "Visas de estudio", href: "#visas" },
       { label: "Visas de trabajo", href: "#visas" },
       { label: "Genius VC Travel", href: "#viajes" },
+      { label: "Guías de visa", href: "/guias" },
     ],
   },
   {

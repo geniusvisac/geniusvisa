@@ -65,6 +65,12 @@ export function Navbar() {
               {link.label}
             </a>
           ))}
+          <a
+            href="/guias"
+            className="hidden text-sm text-offwhite/80 transition-colors hover:text-gold xl:block"
+          >
+            Guías
+          </a>
         </div>
 
         <div className="flex items-center gap-3">
@@ -88,7 +94,7 @@ export function Navbar() {
       <div
         className={cn(
           'overflow-hidden border-t border-white/10 bg-teal-deep/98 backdrop-blur-md transition-[max-height] duration-500 lg:hidden',
-          open ? 'max-h-[36rem]' : 'max-h-0',
+          open ? 'max-h-[40rem]' : 'max-h-0',
         )}
       >
         <div className="flex flex-col gap-1 px-5 py-4">
@@ -102,6 +108,13 @@ export function Navbar() {
               {link.label}
             </a>
           ))}
+          <a
+            href="/guias"
+            onClick={() => setOpen(false)}
+            className="rounded-lg px-3 py-3 text-base text-offwhite/85 transition-colors hover:bg-white/5 hover:text-gold"
+          >
+            Guías de visa
+          </a>
           <a
             href="/viajes"
             onClick={() => setOpen(false)}

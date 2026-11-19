@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { SITE_URL } from '@/lib/constants'
+import { ReadMore } from '@/components/guide-page'
 
 const PATH = '/guias/me-negaron-la-visa-americana'
 const PAGE_URL = `${SITE_URL}${PATH}`
@@ -166,7 +167,8 @@ const structuredData = {
       '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Inicio', item: SITE_URL },
-        { '@type': 'ListItem', position: 2, name: 'Me negaron la visa americana', item: PAGE_URL },
+        { '@type': 'ListItem', position: 2, name: 'Guías', item: `${SITE_URL}/guias` },
+        { '@type': 'ListItem', position: 3, name: 'Me negaron la visa americana', item: PAGE_URL },
       ],
     },
   ],
@@ -187,6 +189,7 @@ export default function MeNegaronLaVisa() {
             <span className="hidden text-sm font-semibold tracking-widest uppercase text-white sm:block">Genius Visa Consultants</span>
           </a>
           <div className="flex items-center gap-4">
+            <a href="/guias" className="text-sm text-white/70 hover:text-white transition-colors">Guías</a>
             <a href="/" className="text-sm text-white/70 hover:text-white transition-colors">← Inicio</a>
           </div>
         </nav>
@@ -326,6 +329,11 @@ export default function MeNegaronLaVisa() {
         </div>
       </section>
 
+      <ReadMore
+        slugs={['riesgo-de-rechazo-visa-perfil', 'preguntas-entrevista-visa-americana', 'como-sacar-visa-americana-honduras', 'costo-tiempo-visa-americana-honduras']}
+        current="me-negaron-la-visa-americana"
+      />
+
       <section className="bg-[#0D2222] py-12 px-6">
         <div className="max-w-4xl mx-auto">
           <p className="text-white/50 text-sm text-center mb-6 uppercase tracking-widest">También te puede interesar</p>
@@ -354,6 +362,7 @@ export default function MeNegaronLaVisa() {
       </section>
 
       <div className="bg-[#0D2222] py-6 px-6 text-center border-t border-white/5">
+        <a href="/guias" className="text-sm hover:opacity-80 transition-opacity mr-6" style={{ color: ACCENT }}>Todas las guías</a>
         <a href="/" className="text-sm hover:opacity-80 transition-opacity" style={{ color: ACCENT }}>← Volver al inicio</a>
         <p className="text-white/30 text-xs mt-2">© 2026 Genius Visa Consultants · Tegucigalpa, Honduras</p>
       </div>

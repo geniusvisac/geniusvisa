@@ -46,6 +46,8 @@ const crossLinks = [
   { label: '¿Visa aprobada? Planea tu traslado con Genius VC Travel', href: '/viajes', color: '#3DB89E' },
   { label: '¿Tu familia viene contigo? Ver Visas H4 Familiares', href: '/visas/familiares', color: '#C9A84C' },
   { label: '¿Te negaron la visa? Guía: qué significa y qué hacer', href: '/guias/me-negaron-la-visa-americana', color: '#C9A84C' },
+  { label: 'Guía: cómo funciona la H1B y quién puede aplicar', href: '/guias/visa-h1b-quien-puede-aplicar', color: '#3DB89E' },
+  { label: 'Todas las guías de visa', href: '/guias', color: '#C9A84C' },
 ]
 
 export default function VisaH1B() {

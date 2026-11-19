@@ -46,6 +46,8 @@ const crossLinks = [
   { label: '¿Visa aprobada? Planea tu viaje con Genius VC Travel', href: '/viajes', color: '#3DB89E' },
   { label: '¿Tu familia quiere acompañarte? Ver Visas Familiares', href: '/visas/familiares', color: '#C9A84C' },
   { label: '¿Te negaron la visa? Guía: qué significa y qué hacer', href: '/guias/me-negaron-la-visa-americana', color: '#C9A84C' },
+  { label: 'Guía: documentos para la visa de turista', href: '/guias/documentos-visa-turista-b1-b2', color: '#3DB89E' },
+  { label: 'Todas las guías de visa', href: '/guias', color: '#C9A84C' },
 ]
 
 export default function VisaB1B2() {
