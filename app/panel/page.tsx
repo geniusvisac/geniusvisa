@@ -60,6 +60,14 @@ export default function PanelPage() {
   const [confirmIds, setConfirmIds] = useState<string[]|null>(null)
   const [deleting, setDeleting] = useState(false)
   const [pdfMsg, setPdfMsg] = useState('')
+  const [pdfBusy, setPdfBusy] = useState(false)
+  const makePdf = async (lang?: 'es'|'en') => {
+    if (!selected || pdfBusy) return
+    setPdfBusy(true); setPdfMsg('')
+    const r = await openClientReport(selected, lang, pass)
+    if (!r.ok) setPdfMsg(r.error==='translate' ? 'No se pudo traducir el reporte. Inténtalo de nuevo en un momento.' : 'No se pudo abrir el reporte. Permite las ventanas emergentes de este sitio e inténtalo de nuevo.')
+    setPdfBusy(false)
+  }
   const [notice, setNotice] = useState('')
   const [data, setData] = useState<Evaluacion[]>([])
   const [loading, setLoading] = useState(false)
@@ -383,13 +391,13 @@ export default function PanelPage() {
                       className="flex-1 text-center rounded-full border border-white/20 text-white/70 text-sm font-medium py-2.5">Enviar email</a>
                   </div>
                   <div className="flex gap-2 mt-2">
-                    <button type="button" onClick={()=>{ if(!openClientReport(selected)) setPdfMsg('No se pudo abrir el reporte. Permite las ventanas emergentes de este sitio e inténtalo de nuevo.') ; else setPdfMsg('') }}
-                      className="flex-1 rounded-full bg-[#C9A84C] text-[#1A3A3A] text-sm font-bold py-2.5 hover:opacity-90">↓ Descargar PDF para el cliente</button>
-                    <button type="button" title="Generar el reporte en el otro idioma" onClick={()=>{ if(!openClientReport(selected, detectLang(selected.analysis)==='en'?'es':'en')) setPdfMsg('No se pudo abrir el reporte. Permite las ventanas emergentes de este sitio e inténtalo de nuevo.'); else setPdfMsg('') }}
-                      className="rounded-full border border-white/20 text-white/60 text-xs font-medium px-4 hover:bg-white/5">{detectLang(selected.analysis)==='en'?'PDF en español':'PDF in English'}</button>
+                    <button type="button" disabled={pdfBusy} onClick={()=>makePdf()}
+                      className="flex-1 rounded-full bg-[#C9A84C] text-[#1A3A3A] text-sm font-bold py-2.5 hover:opacity-90 disabled:opacity-60">{pdfBusy?'Preparando…':'↓ Descargar PDF para el cliente'}</button>
+                    <button type="button" disabled={pdfBusy} title="Generar el reporte completo en el otro idioma" onClick={()=>makePdf(detectLang(selected.analysis)==='en'?'es':'en')}
+                      className="rounded-full border border-white/20 text-white/60 text-xs font-medium px-4 hover:bg-white/5 disabled:opacity-60">{detectLang(selected.analysis)==='en'?'PDF en español':'PDF in English'}</button>
                   </div>
                   {pdfMsg && <p className="mt-2 text-xs text-[#E05252]">{pdfMsg}</p>}
-                  <p className="mt-2 text-[11px] text-white/35 leading-snug">Se abre el reporte y aparece “Guardar como PDF”. Es la versión para el cliente: sin citas 9 FAM ni notas internas.</p>
+                  <p className="mt-2 text-[11px] text-white/35 leading-snug">Se abre el reporte y aparece “Guardar como PDF”. En el otro idioma se traduce todo el texto (tarda unos segundos). Es la versión para el cliente: sin citas 9 FAM ni notas internas.</p>
                   <button onClick={()=>setConfirmIds([selected.id])} className="mt-3 w-full rounded-full border border-[#E05252]/40 text-[#E05252] text-xs font-medium py-2 hover:bg-[#E05252]/10">🗑 Eliminar esta evaluación</button>
                 </>
               )

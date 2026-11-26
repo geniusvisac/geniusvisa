@@ -7,7 +7,11 @@ export default function ReportePage() {
   const [data, setData] = useState<any>(null)
 
   useEffect(() => {
-    const raw = sessionStorage.getItem('genius_report')
+    let raw = sessionStorage.getItem('genius_report')
+    if (!raw) {
+      // Traspaso desde el Panel cuando el reporte se tradujo antes de abrirse
+      try { raw = localStorage.getItem('genius_report_handoff'); localStorage.removeItem('genius_report_handoff') } catch {}
+    }
     if (raw) {
       try {
         const parsed = JSON.parse(raw)
