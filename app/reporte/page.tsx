@@ -9,7 +9,20 @@ export default function ReportePage() {
   useEffect(() => {
     const raw = sessionStorage.getItem('genius_report')
     if (raw) {
-      try { setData(JSON.parse(raw)) } catch {}
+      try {
+        const parsed = JSON.parse(raw)
+        setData(parsed)
+        // El nombre del archivo PDF sale del título de la página. Se fija de nuevo justo antes de imprimir
+        // porque el sitio vuelve a poner su título general al terminar de cargar.
+        const who = String(parsed?.form?.name || '').trim().replace(/[^\p{L}\p{N}]+/gu, '_').replace(/^_+|_+$/g, '')
+        const fileTitle = `${parsed?.lang === 'en' ? 'Pre-Qualification_Report' : 'Reporte_PreCalificacion'}${who ? '_' + who : ''}`
+        document.title = fileTitle
+        window.addEventListener('beforeprint', () => { document.title = fileTitle })
+        // Desde el Panel se abre con ?print=1: lanza directamente el cuadro de "Guardar como PDF"
+        if (new URLSearchParams(window.location.search).get('print') === '1') {
+          setTimeout(() => { document.title = fileTitle; window.print() }, 900)
+        }
+      } catch {}
     }
   }, [])
 
@@ -25,16 +38,17 @@ export default function ReportePage() {
     : { levels: {high:'Probable Aprobación',medium:'Aprobación Posible',low:'Alto Riesgo de Rechazo'} as Record<string,string>, title:'Reporte de PreCalificación', print:'Imprimir / Guardar PDF', close:'Cerrar', applicant:'Solicitante', completeness:'Perfil completado', note:'Nota: Resultado orientativo sobre 100 puntos; no constituye asesoría legal y la decisión final depende de la discreción del oficial consular en la entrevista.', name:'Nombre', country:'País', phone:'Teléfono', age:'Edad', years:'años', purpose:'Propósito', summary:'Resumen', strengths:'Fortalezas', risks:'Factores de Riesgo', recs:'Recomendaciones', breakdown:'Desglose por factor', interview:'Preparación para la entrevista', locale:'es-HN' }
   const lc = data.level==='high'?'#3DB89E':data.level==='medium'?'#C9A84C':'#E05252'
   const ll = R.levels[data.level] || R.levels.low
-  const date = new Date().toLocaleDateString(R.locale,{year:'numeric',month:'long',day:'numeric'})
+  const evalDate = data.date ? new Date(data.date) : null
+  const date = (evalDate && !isNaN(evalDate.getTime()) ? evalDate : new Date()).toLocaleDateString(R.locale,{year:'numeric',month:'long',day:'numeric'})
 
   const Section = ({title, color, items}: {title:string;color:string;items:{title:string;text:string}[]}) => (
     <div className="mb-6">
-      <div className="flex items-center gap-2 mb-3 pb-2" style={{borderBottom:`2px solid ${color}`}}>
+      <div className="flex items-center gap-2 mb-3 pb-2" style={{borderBottom:`2px solid ${color}`, breakAfter:'avoid'}}>
         <div className="w-1 h-4 rounded-full" style={{background:color}}></div>
         <h3 className="text-xs font-bold uppercase tracking-widest" style={{color}}>{title} ({items.length})</h3>
       </div>
       {items.map((it,i) => (
-        <div key={i} className="mb-3 p-3 rounded-lg" style={{background:'#f8f8f8'}}>
+        <div key={i} className="mb-3 p-3 rounded-lg" style={{background:'#f8f8f8', breakInside:'avoid'}}>
           <p className="text-sm font-bold text-gray-800 mb-1">{i+1}. {it.title}</p>
           <p className="text-sm text-gray-600 leading-relaxed">{it.text}</p>
         </div>
@@ -107,7 +121,7 @@ export default function ReportePage() {
 
         {/* Note */}
         <p className="text-xs text-gray-400 italic mb-6">
-          {R.note}
+          {R.note.replace('100', String(data.scoreMax || 100))}
         </p>
 
         {/* Breakdown */}
