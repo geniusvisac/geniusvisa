@@ -72,7 +72,14 @@ export default function PropuestaPage() {
           thead { display: table-header-group; }
           tfoot { display: table-footer-group; }
         }
-        @page { margin: 1.2cm; }
+        /* Margen 0 en la hoja: así el navegador no imprime su propio encabezado y pie (fecha, título, dirección web).
+           El espacio superior e inferior lo dan el encabezado y el pie del propio documento. */
+        @page { size: letter; margin: 0; }
+        @media print {
+          .pwrap { padding: 0 1.6cm !important; max-width: none !important; }
+          .sheet > thead > tr > td { padding-top: 1.3cm; }
+          .sheet > tfoot > tr > td { padding-bottom: 1.1cm; }
+        }
         .sheet { width: 100%; border-collapse: collapse; }
         .sheet > thead > tr > td, .sheet > tfoot > tr > td, .sheet > tbody > tr > td { padding: 0; }
       `}</style>
@@ -82,7 +89,7 @@ export default function PropuestaPage() {
         <button onClick={() => window.close()} className="bg-gray-200 text-gray-600 px-4 py-2.5 rounded-full text-sm font-medium hover:bg-gray-300">× Cerrar</button>
       </div>
 
-      <div className="max-w-3xl mx-auto px-8 py-8">
+      <div className="pwrap max-w-3xl mx-auto px-8 py-8">
         <table className="sheet">
           {/* Encabezado en cada página */}
           <thead>
