@@ -39,19 +39,19 @@ function clean(raw: unknown): ProposalData | null {
 
 const logo = (size: number) => new ImageRun({ type: 'png', data: Buffer.from(LOGO_PNG_B64, 'base64'), transformation: { width: size, height: size }, altText: { title: 'Genius', description: 'Logo Genius Visa Consultants', name: 'logo' } })
 const run = (text: string, o: { bold?: boolean; color?: string; size?: number; italics?: boolean; caps?: boolean } = {}) =>
-  new TextRun({ text, font: FONT, size: o.size ?? 20, bold: o.bold, color: o.color ?? DARK, italics: o.italics, allCaps: o.caps })
+  new TextRun({ text, font: FONT, size: o.size ?? 21, bold: o.bold, color: o.color ?? DARK, italics: o.italics, allCaps: o.caps })
 const NONE = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' }
 const noBorders = { top: NONE, bottom: NONE, left: NONE, right: NONE }
 
 const heading = (text: string) => new Paragraph({
-  keepNext: true, spacing: { before: 280, after: 120 },
+  keepNext: true, spacing: { before: 320, after: 140 },
   border: { bottom: { style: BorderStyle.SINGLE, size: 10, color: TEAL, space: 3 } },
   children: [run('▌ ', { color: GOLD, bold: true, size: 20 }), run(text, { bold: true, color: TEAL, size: 19, caps: true })],
 })
 const para = (text: string, o: { size?: number; color?: string; italics?: boolean; after?: number; align?: (typeof AlignmentType)[keyof typeof AlignmentType] } = {}) =>
-  new Paragraph({ spacing: { after: o.after ?? 100, line: 276 }, alignment: o.align, children: [run(text, { size: o.size ?? 20, color: o.color, italics: o.italics })] })
+  new Paragraph({ spacing: { after: o.after ?? 100, line: 276 }, alignment: o.align, children: [run(text, { size: o.size ?? 21, color: o.color, italics: o.italics })] })
 const item = (mark: string, text: string, color = GOLD) => new Paragraph({
-  spacing: { after: 70, line: 264 }, indent: { left: 360, hanging: 300 }, tabStops: [{ type: TabStopType.LEFT, position: 360 }],
+  spacing: { after: 90, line: 276 }, indent: { left: 360, hanging: 300 }, tabStops: [{ type: TabStopType.LEFT, position: 360 }],
   children: [run(mark, { bold: true, color }), run('\t' + text)],
 })
 
@@ -70,7 +70,7 @@ const cp = (text: string, o: { bold?: boolean; color?: string; align?: (typeof A
   new Paragraph({ keepNext: true, alignment: o.align, children: [run(text, { bold: o.bold, color: o.color, size: o.size ?? 19 })] })
 
 function build(p: ProposalData): Document {
-  const COLS = [5400, 2200, 2372]
+  const COLS = [4700, 2800, 2472]
   const money = (r: ProposalRow, o: { strong?: boolean; muted?: boolean } = {}) =>
     new TableRow({
       cantSplit: true,
@@ -122,6 +122,15 @@ function build(p: ProposalData): Document {
     })),
   })
 
+  const docsBox = new Table({
+    width: { size: W, type: WidthType.DXA }, columnWidths: [W],
+    rows: [new TableRow({ cantSplit: true, children: [new TableCell({
+      width: { size: W, type: WidthType.DXA }, margins: { top: 140, bottom: 120, left: 200, right: 200 },
+      shading: { type: ShadingType.CLEAR, color: 'auto', fill: 'F8F8F8' }, borders: noBorders,
+      children: [...p.documents.map(t => item('☐', t, TEAL)), new Paragraph({ spacing: { before: 80 }, children: [run(p.documentsNote, { size: 16, color: '9CA3AF', italics: true })] })],
+    })] })],
+  })
+
   const sign = (label: string) => new Paragraph({
     spacing: { before: 260 }, tabStops: [{ type: TabStopType.RIGHT, position: W - 400, leader: LeaderType.UNDERSCORE }],
     children: [run(label + ':  ', { size: 18 }), run('\t')],
@@ -129,14 +138,14 @@ function build(p: ProposalData): Document {
 
   const header = new Header({ children: [
     new Table({
-      width: { size: W, type: WidthType.DXA }, columnWidths: [1000, 5372, 3600],
+      width: { size: W, type: WidthType.DXA }, columnWidths: [1000, 6300, 2672],
       rows: [new TableRow({ children: [
         new TableCell({ width: { size: 1000, type: WidthType.DXA }, borders: noBorders, verticalAlign: VerticalAlign.CENTER, children: [new Paragraph({ children: [logo(48)] })] }),
-        new TableCell({ width: { size: 5372, type: WidthType.DXA }, borders: noBorders, verticalAlign: VerticalAlign.CENTER, children: [
+        new TableCell({ width: { size: 6300, type: WidthType.DXA }, borders: noBorders, verticalAlign: VerticalAlign.CENTER, children: [
           new Paragraph({ children: [run('GENIUS VISA CONSULTANTS', { bold: true, color: TEAL, size: 26 })] }),
-          new Paragraph({ children: [run('Asesoría Migratoria Profesional · Más de 15 años de experiencia', { color: GOLD, size: 15, bold: true })] }),
+          new Paragraph({ children: [run('Asesoría Migratoria Profesional · Más de 15 años de experiencia', { color: GOLD, size: 14, bold: true, caps: true })] }),
         ] }),
-        new TableCell({ width: { size: 3600, type: WidthType.DXA }, borders: noBorders, verticalAlign: VerticalAlign.CENTER, children: [
+        new TableCell({ width: { size: 2672, type: WidthType.DXA }, borders: noBorders, verticalAlign: VerticalAlign.CENTER, children: [
           new Paragraph({ alignment: AlignmentType.RIGHT, children: [run('+504 9741-0936', { size: 15, color: '9CA3AF' })] }),
           new Paragraph({ alignment: AlignmentType.RIGHT, children: [run('geniusvisac@gmail.com', { size: 15, color: '9CA3AF' })] }),
           new Paragraph({ alignment: AlignmentType.RIGHT, children: [run('geniusvctravel.com', { size: 15, color: '9CA3AF' })] }),
@@ -172,13 +181,12 @@ function build(p: ProposalData): Document {
         new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 20 }, children: [run(p.subtitle, { size: 21, color: '4B5563' })] }),
         new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 160 }, children: [run(p.placeDate, { size: 17, color: '9CA3AF' })] }),
         heading('Descripción del servicio'), para(p.description),
-        ...(p.evaluation ? [heading('Su evaluación'), ...evaluation] : []),
+        ...evaluation,
         heading('¿Qué incluye nuestro servicio?'), ...p.includes.map(t => item('✓', t)),
         heading('Detalle de inversión'), investment,
         ...p.investmentNotes.map(n => new Paragraph({ spacing: { before: 80 }, children: [run(n, { size: 16, color: '9CA3AF', italics: true })] })),
         heading('Forma de pago de honorarios'), ...p.payment.map(t => item('•', t)),
-        heading('Documentos requeridos por persona'), ...p.documents.map(t => item('☐', t, TEAL)),
-        new Paragraph({ spacing: { before: 60 }, children: [run(p.documentsNote, { size: 16, color: '9CA3AF', italics: true })] }),
+        heading('Documentos requeridos por persona'), docsBox,
         heading('¿Por qué elegir Genius Visa Consultants?'), why,
         new Paragraph({ pageBreakBefore: true, keepNext: true, spacing: { after: 60 }, border: { bottom: { style: BorderStyle.SINGLE, size: 10, color: TEAL, space: 3 } }, children: [run('▌ ', { color: GOLD, bold: true }), run('Términos y condiciones', { bold: true, color: TEAL, size: 19, caps: true })] }),
         new Paragraph({ spacing: { after: 120 }, children: [run('Última actualización: junio 2026', { size: 16, color: '9CA3AF' })] }),
